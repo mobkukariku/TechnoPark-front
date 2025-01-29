@@ -23,7 +23,7 @@ export const DirectionCard:FC<DirectionCardProps> = ({
             <Image src={image} alt={title} width={363} height={168} className={"object-cover w-[363px] h-[168px] rounded-[8px]"} />
            <div className={"mt-[38px] flex flex-col z-20 text-center"}>
                <p className={"uppercase font-[700] text-[24px] mb-[8px]"}>{title}</p>
-               <span>{description}</span>
+               <span className={"h-[90px]"}>{description}</span>
                <Link href={link} className={"mt-[24px]"}>
                    <Button className={"w-[60%]"}>Подробнее</Button>
                </Link>

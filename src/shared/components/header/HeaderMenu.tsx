@@ -18,16 +18,20 @@ export const HeaderMenu: React.FC = () =>  {
         <NavigationMenu>
             <NavigationMenuList>
                 <NavigationMenuItem>
-                    <NavigationMenuTrigger>Главная</NavigationMenuTrigger>
+                    <NavigationMenuTrigger>
+                        <Link href="/">
+                            Главная
+                        </Link>
+                    </NavigationMenuTrigger>
                     <NavigationMenuContent >
                         <NavigationMenuLink asChild >
                         <ul className=" flex flex-col w-[200px] p-2">
-                            <p className={"hover:bg-gray-200 p-1 rounded-[10px] transition-colors duration-200"}>
+                            <Link href="/aboutUs" className={"hover:bg-gray-200 p-1 rounded-[10px] transition-colors duration-200"}>
                                 О нас
-                            </p>
-                            <p className={"hover:bg-gray-200 p-1 rounded-[10px] transition-colors duration-200"}>
-                                О нас
-                            </p>
+                            </Link>
+                            <Link href="/ourTeam" className={"hover:bg-gray-200 p-1 rounded-[10px] transition-colors duration-200"}>
+                                Наша команда
+                            </Link>
                         </ul>
 
                         </NavigationMenuLink>
@@ -39,12 +43,12 @@ export const HeaderMenu: React.FC = () =>  {
                         <NavigationMenuContent>
                             <NavigationMenuLink asChild>
                                 <ul className="flex flex-row justify-between w-[400px] p-2">
-                                    <p className={"hover:bg-gray-200 w-full p-1 text-center rounded-[10px] transition-colors duration-200"}>
-                                        О нас
-                                    </p>
-                                    <p className={"hover:bg-gray-200 p-1 w-full text-center rounded-[10px] transition-colors duration-200"}>
-                                        О нас
-                                    </p>
+                                        <Link href="/hardware" className={"hover:bg-gray-200 w-full p-1 text-center rounded-[10px] transition-colors duration-200"}>
+                                            Hardware
+                                        </Link>
+                                        <Link href="/software" className={"hover:bg-gray-200 p-1 w-full text-center rounded-[10px] transition-colors duration-200"}>
+                                            Software
+                                        </Link>
                                 </ul>
 
                             </NavigationMenuLink>
