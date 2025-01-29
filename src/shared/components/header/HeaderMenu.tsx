@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -56,14 +55,14 @@ export const HeaderMenu: React.FC = () =>  {
                     </div>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href="/docs" legacyBehavior passHref>
+                    <Link href="/news" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                             Новости
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href="/docs" legacyBehavior passHref>
+                    <Link href="/contacts" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                             Контакты
                         </NavigationMenuLink>
