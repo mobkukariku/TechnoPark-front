@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes borderError {
+    0% {
+        border-color: #ff0000;
+    }
+    100% {
+        border-color: #ff6b6b;
+    }
+}
+
+.input-error {
+    animation: borderError 0.3s ease-in-out;
+}
