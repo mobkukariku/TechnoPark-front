@@ -21,3 +21,6 @@ export {CreateNewsForm} from "./admin/news/CreateNewsForm"
 export {NewsBreadcrumb} from "./news/NewsBreadcrumb";
 export {NewsPageList} from "./news/NewsPageList";
 export {NewsPageItem} from "./news/NewsPageItem";
+export {NewsFiltration} from "./news/NewsFiltration";
+export {ContactsMainInfo} from "./contacts/ContactsMainInfo";
+export {ContactsDetails} from "./contacts/ContactsDetails";

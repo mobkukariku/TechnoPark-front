@@ -61,7 +61,7 @@ export const JoinUsForm: FC = () => {
     return (
         <div className="max-w-[500px] z-20 relative mx-auto">
             <form
-                className="bg-[#D8E7FF] rounded-[14px] pt-[38px] pb-[58px] flex flex-col justify-center items-center"
+                className="bg-[#D8E7FF] relative z-50 shadow rounded-[14px] pt-[38px] pb-[58px] flex flex-col justify-center items-center"
                 onSubmit={handleSubmit(onSubmit, showErrors)}
             >
                 <p className="font-bold text-[32px] text-center">Оставьте заявку!</p>
@@ -69,7 +69,7 @@ export const JoinUsForm: FC = () => {
                     <Controller
                         name="firstName"
                         control={control}
-                        render={({ field }) => (
+                        render={({field}) => (
                             <Input
                                 {...field}
                                 type="text"
@@ -81,7 +81,7 @@ export const JoinUsForm: FC = () => {
                     <Controller
                         name="lastName"
                         control={control}
-                        render={({ field }) => (
+                        render={({field}) => (
                             <Input
                                 {...field}
                                 type="text"
@@ -93,7 +93,7 @@ export const JoinUsForm: FC = () => {
                     <Controller
                         name="email"
                         control={control}
-                        render={({ field }) => (
+                        render={({field}) => (
                             <Input
                                 {...field}
                                 type="email"
@@ -110,7 +110,7 @@ export const JoinUsForm: FC = () => {
                     <Controller
                         name="coverLetter"
                         control={control}
-                        render={({ field }) => (
+                        render={({field}) => (
                             <Textarea
                                 {...field}
                                 placeholder="Сопроводительное письмо"
@@ -125,7 +125,10 @@ export const JoinUsForm: FC = () => {
                 position="top-right"
                 reverseOrder={false}
             />
-
+            <div
+                className={"absolute z-0 rounded-full left-[-200px] blur-[100px]  opacity-70 top-[0px] w-[300px] h-[300px] bg-[#4E48FE5C]"}/>
+            <div
+                className={"absolute z-0 rounded-full right-[-200px] opacity-70 blur-[200px] top-[350px] w-[330px] h-[330px] bg-[#1170FF5C]"}/>
         </div>
     );
 };

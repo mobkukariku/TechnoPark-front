@@ -27,7 +27,7 @@ export const NewsPageItem: FC<NewsPageItemProps> = ({
 
     return (
 
-            <div className={"flex gap-[15px]"}>
+            <div className={"flex gap-[15px] relative z-50"}>
                 <div className="relative w-[319px] h-[165px] overflow-hidden rounded-[8px]">
                     <Image
                         src={imageURL}

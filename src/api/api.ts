@@ -8,6 +8,15 @@ export const axiosInstance = axios.create({
     withCredentials: true,
 })
 
+export interface GetNewsParams {
+    tags?: string;
+    search?: string;
+    sort?: string;
+    data?: string | null;
+    page?: number;
+    limit?: number;
+}
+
 
 export const postRequest = async (name: string, surname: string, email: string, direction: string, message: string) => {
     try {
@@ -52,11 +61,11 @@ export const logout = async () => {
 }
 
 
-export const getNews = async () => {
+export const getNews = async (params:GetNewsParams= {}) => {
     try{
-        const response = await axiosInstance.get('/news');
+        const response = await axiosInstance.get('/news', {params});
 
-        return response.data.news;
+        return response.data;
     }catch(error){
         throw error;
     }

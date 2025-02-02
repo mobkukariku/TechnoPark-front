@@ -10,3 +10,4 @@ export {
     SelectValue
 } from './select';
 export {Textarea} from './textarea';
+export {Checkbox} from './checkbox';

@@ -1,11 +1,11 @@
 import { create } from "zustand";
-import {getNews, postNews} from "@/api/api";
+import { getNews, GetNewsParams, postNews } from "@/api/api";
 
 interface NewsData {
     title: string;
     content: string;
     imageURL: string;
-    tags: string[];
+    tags: string;
     createdAt: string;
     updatedAt: string;
 }
@@ -13,46 +13,72 @@ interface NewsData {
 interface NewsState {
     newsData: NewsData[];
     isLoading: boolean;
-    error: string | null;
-    setError: (error: string | null) => void;
-    addNews: (news: NewsData) => void;
-    setNewsData: (newsData: NewsData[]) => void;
-    getNewsData: () => NewsData[];
+    search: string;
+    tags: string;
+    sort: string;
+    limit: number;
+    page: number;
+    totalPages: number;
+    lastSearchParams: GetNewsParams | null;
+    setSearch: (search: string) => void;
+    setTags: (tags: string) => void;
+    setSort: (sort: string) => void;
+    setPage: (page: number) => void;
     fetchNewsData: () => Promise<void>;
     submitNews: (title: string, content: string, imageFile: File | null, tags: string) => Promise<void>;
 }
 
 const useNewsStore = create<NewsState>((set, get) => ({
     newsData: [],
-    error: null,
     isLoading: false,
-    setNewsData: (newsData: NewsData[]) => set({ newsData }),
-    getNewsData: () => get().newsData,
+    error: null,
+    search: "",
+    tags: "",
+    limit: 5,
+    page: 1,
+    totalPages: 0,
+    sort: "newest",
+    data: null,
+    lastSearchParams: null,
+
+    setSearch: (search) => set({ search }),
+    setTags: (tags) => set({ tags }),
+    setSort: (sort) => set({ sort }),
+    setPage: (page) => set({ page }),
     fetchNewsData: async () => {
-        set({ isLoading: true });
+        const { isLoading, search, tags, sort, lastSearchParams, page, limit } = get();
+        const currentParams: GetNewsParams = { search, tags, sort, page, limit };
+
+        if (isLoading || JSON.stringify(currentParams) === JSON.stringify(lastSearchParams)) {
+            return;
+        }
+
+        set({ isLoading: true, lastSearchParams: currentParams });
+
         try {
-            const data = await getNews();
-            set({ newsData: data, isLoading: false });
+            const response = await getNews(currentParams);
+            set({ newsData: response.news.length === 0 ? [] : response.news, totalPages: response.totalPages, isLoading: false });
         } catch (error) {
+            set({ newsData: [], isLoading: false,});
             throw error;
-        }finally {
-            set({ isLoading: false });
         }
     },
-    addNews: (news: NewsData) => {
-        set((state) => ({
-            newsData: [...state.newsData, news],
-        }));
-    },
-    setError: (error: string | null) => set({ error }),
-    submitNews: async (title: string, content: string, image: File | null, tags: string) => {
-        set({ isLoading: true, error: null });
+
+    submitNews: async (title, content, image, tags) => {
+        const { isLoading } = get();
+        if (isLoading) return;
+
+        set({ isLoading: true });
+
         try {
             const newNews = await postNews(title, content, image, tags);
-            get().addNews(newNews);
-            set({ isLoading: false });
+            set((state) => ({
+                newsData: [...state.newsData, newNews],
+                isLoading: false,
+            }));
         } catch (error) {
-            set({ error: "Failed to post news", isLoading: false });
+            set({ isLoading: false });
+            console.error(error);
         }
     },
 }));

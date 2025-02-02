@@ -28,9 +28,6 @@ export const HeaderMenu: React.FC = () =>  {
                             <Link href="/aboutUs" className={"hover:bg-gray-200 p-1 rounded-[10px] transition-colors duration-200"}>
                                 О нас
                             </Link>
-                            <Link href="/ourTeam" className={"hover:bg-gray-200 p-1 rounded-[10px] transition-colors duration-200"}>
-                                Наша команда
-                            </Link>
                         </ul>
 
                         </NavigationMenuLink>
