@@ -1,10 +1,11 @@
 import {FC} from "react";
-import {DirectionBanner, SoftwareBreadcrumb, SoftwareInfo} from "@/shared/components";
+import {CustomBreadcrumb, DirectionBanner, Header,  SoftwareInfo} from "@/shared/components";
 
 const SoftwarePage:FC = () => {
     return (
         <>
-            <SoftwareBreadcrumb />
+            <Header />
+            <CustomBreadcrumb name={"Software"} link={"/software"} />
             <DirectionBanner title={"SOFTWARE"} imageURL={"/software/software.png"} />
             <SoftwareInfo />
         </>

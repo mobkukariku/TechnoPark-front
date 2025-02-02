@@ -1,6 +1,7 @@
 import {FC} from "react";
 import {Button} from "@/shared/ui";
 import {Container} from "@/shared/components";
+import Link from "next/link";
 
 export const ShortAboutUs:FC = () => {
     return (
@@ -12,7 +13,9 @@ export const ShortAboutUs:FC = () => {
                </div>
                <span className={"text-[20px] font-[500] leading-[29px]"}>SDU Technopark — это инновационный хаб, объединяющий стартапы, ученых и предпринимателей для создания передовых технологических решений. Мы предоставляем современную инфраструктуру, ресурсы и поддержку для разработки и внедрения инновационных проектов в области программного обеспечения и аппаратных технологий...</span>
                <div className={"flex justify-end"}>
-                   <Button className={"text-[18px]"} variant={"outline"}>Подробнее</Button>
+                   <Link href={"/aboutUs"}>
+                       <Button  className={"text-[18px]"} variant={"outline"}>Подробнее</Button>
+                   </Link>
                </div>
            </div>
        </Container>

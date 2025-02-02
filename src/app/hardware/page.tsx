@@ -1,10 +1,11 @@
 import {FC} from "react";
-import {DirectionBanner, HardwareBreadcrumb, HardwareInfo} from "@/shared/components";
+import {CustomBreadcrumb, DirectionBanner, HardwareInfo, Header} from "@/shared/components";
 
 const HardwarePage:FC = () => {
     return(
         <>
-            <HardwareBreadcrumb />
+            <Header />
+            <CustomBreadcrumb name={"Hardware"} link={"/hardware"} />
             <DirectionBanner title={"HARDWARE"} imageURL={"/hardware/banner.png"} />
             <HardwareInfo />
         </>

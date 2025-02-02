@@ -1,16 +1,9 @@
 import {FC} from "react";
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbSeparator,
-} from "@/shared/ui/breadcrumb"
-import {House} from "lucide-react";
 import {Container} from "@/shared/components";
+import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator} from "@/shared/ui/breadcrumb";
+import {House} from "lucide-react";
 
-
-export const SoftwareBreadcrumb:FC = () => {
+export const NewsBreadcrumb:FC = () => {
     return (
         <Container>
             <Breadcrumb className={"bg-[#D8E7FF] rounded-[8px] p-[8px] uppercase font-[600] flex  items-center gap-[10px]"}>
@@ -21,11 +14,10 @@ export const SoftwareBreadcrumb:FC = () => {
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem className={"text-[#2D7DFF]"}>
-                        <BreadcrumbLink href="/software">Software</BreadcrumbLink>
+                        <BreadcrumbLink href="/aboutUs">Новости</BreadcrumbLink>
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
         </Container>
-
     )
 }

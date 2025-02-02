@@ -1,9 +1,10 @@
 import {FC} from "react";
-import {FormBreadcrumb, JoinUsForm} from "@/shared/components";
+import {FormBreadcrumb, Header, JoinUsForm} from "@/shared/components";
 
 const joinusPage:FC = () => {
     return (
         <>
+            <Header />
             <FormBreadcrumb />
             <JoinUsForm />
         </>

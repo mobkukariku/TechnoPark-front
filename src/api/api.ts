@@ -1,10 +1,11 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-    baseURL: 'http://localhost:7007/api',
+    baseURL: "http://localhost:7007/api",
     headers: {
         'Content-Type': 'application/json',
     },
+    withCredentials: true,
 })
 
 
@@ -15,6 +16,75 @@ export const postRequest = async (name: string, surname: string, email: string, 
         });
         return response.data;
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 }
+
+export const login = async (email: string, password: string) => {
+    try {
+        const response = await axiosInstance.post('/auth/login', {
+            email: email,
+            password: password
+        },);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const getProfile = async () => {
+    try{
+        const response = await axiosInstance.get('/profile');
+        return response.data.user;
+    }catch(error){
+        throw error;
+    }
+}
+
+export const logout = async () => {
+    try{
+        const response = await axiosInstance.post('/auth/logout');
+        return response.data;
+    }
+    catch(error){
+        throw error;
+    }
+}
+
+
+export const getNews = async () => {
+    try{
+        const response = await axiosInstance.get('/news');
+
+        return response.data.news;
+    }catch(error){
+        throw error;
+    }
+}
+
+export const postNews = async (
+    title: string,
+    content: string,
+    imageFile: File | null,
+    tags: string,
+) => {
+    try {
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('content', content);
+        if (imageFile) {
+            formData.append('image', imageFile);
+        }
+        formData.append("tags", tags);
+
+        const response = await axiosInstance.post('/news', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
