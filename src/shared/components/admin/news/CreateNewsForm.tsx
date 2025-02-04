@@ -51,7 +51,6 @@ export const CreateNewsForm: FC = () => {
         }
     };
 
-
     const showErrors = () => {
         Object.values(errors).forEach(error => {
             if (error?.message) {
@@ -61,13 +60,27 @@ export const CreateNewsForm: FC = () => {
     };
 
     return (
-        <div className="max-w-[500px] z-20 relative mx-auto">
+        <div className="w-full">
             <form
-                className="bg-[#D8E7FF] rounded-[14px] pt-[38px] pb-[58px] flex flex-col justify-center items-center"
+                className="bg-[#D8E7FF] w-[800px] ml-[400px]  mt-[20px] rounded-[14px] px-[30px] pt-[38px] pb-[58px] transition-all duration-300 ease-in-out"
                 onSubmit={handleSubmit(onSubmit, showErrors)}
             >
                 <p className="font-bold text-[32px] text-center">Создать новость</p>
-                <div className="flex flex-col w-fit mt-[50px] gap-[23px]">
+                <div className="flex flex-col mt-[50px] gap-[23px]">
+                    <Controller
+                        name="image"
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                            <Input
+                                type="file"
+                                onChange={(e) => {
+                                    const file = e.target.files ? e.target.files[0] : null;
+                                    onChange(file);
+                                }}
+                                className={`transition-colors ${errors.image ? "border-red-500" : ""}`}
+                            />
+                        )}
+                    />
                     <Controller
                         name="title"
                         control={control}
@@ -76,18 +89,7 @@ export const CreateNewsForm: FC = () => {
                                 {...field}
                                 type="text"
                                 placeholder="Название"
-                                className={`w-[340px] transition-colors ${errors.title ? "border-red-500" : ""}`}
-                            />
-                        )}
-                    />
-                    <Controller
-                        name="content"
-                        control={control}
-                        render={({ field }) => (
-                            <Textarea
-                                {...field}
-                                placeholder="Содержание"
-                                className={`w-[340px] transition-colors ${errors.content ? "border-red-500" : ""}`}
+                                className={`transition-colors ${errors.title ? "border-red-500" : ""}`}
                             />
                         )}
                     />
@@ -99,21 +101,18 @@ export const CreateNewsForm: FC = () => {
                                 {...field}
                                 type="text"
                                 placeholder="Теги (через запятую)"
-                                className={`w-[340px] transition-colors ${errors.tags ? "border-red-500" : ""}`}
+                                className={`transition-colors ${errors.tags ? "border-red-500" : ""}`}
                             />
                         )}
                     />
                     <Controller
-                        name="image"
+                        name="content"
                         control={control}
-                        render={({ field: { onChange, value } }) => (
-                            <Input
-                                type="file"
-                                onChange={(e) => {
-                                    const file = e.target.files ? e.target.files[0] : null;
-                                    onChange(file); // Обновляем поле с файлом
-                                }}
-                                className={`w-[340px] transition-colors ${errors.image ? "border-red-500" : ""}`}
+                        render={({ field }) => (
+                            <Textarea
+                                {...field}
+                                placeholder="Содержание"
+                                className={`h-[400px] transition-colors ${errors.content ? "border-red-500" : ""}`}
                             />
                         )}
                     />
