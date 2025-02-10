@@ -5,7 +5,6 @@ const HardwarePage:FC = () => {
     return(
         <>
             <Header />
-            <CustomBreadcrumb name={"Hardware"} link={"/hardware"} />
             <DirectionBanner title={"HARDWARE"} imageURL={"/hardware/banner.png"} />
             <HardwareInfo />
         </>

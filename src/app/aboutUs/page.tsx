@@ -5,7 +5,6 @@ const AboutUsPage:FC = () => {
     return (
         <>
             <Header />
-            <CustomBreadcrumb name={"О нас"} link={"/aboutUs"} />
             <DirectionBanner title={"О НАС"} imageURL={"/aboutus/about-us-banner.png"} />
             <AboutUsContent />
         </>

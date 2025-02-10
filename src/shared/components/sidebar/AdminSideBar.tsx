@@ -33,44 +33,23 @@ export const AdminSideBar: FC = () => {
         navMain: [
             {
                 title: "Home",
-                url: "#",
+                url: "/admin",
                 icon: SquareTerminal,
-                isActive: true,
-                items: [
-                    { title: "History", url: "#" },
-                    { title: "Starred", url: "#" },
-                    { title: "Settings", url: "#" },
-                ],
             },
             {
                 title: "News",
-                url: "#",
+                url: "/admin/news",
                 icon: Newspaper,
-                items: [
-                    { title: "List of News", url: "/admin/news/" },
-                    { title: "Create News", url: "/admin/news/create" },
-                ],
             },
             {
                 title: "Members",
                 url: "#",
                 icon: Users,
-                items: [
-                    { title: "List of Members", url: "#" },
-                    { title: "Add new Member", url: "#" },
-                    { title: "Delete Member", url: "#" },
-                ],
             },
             {
                 title: "Settings",
                 url: "#",
                 icon: Settings2,
-                items: [
-                    { title: "General", url: "#" },
-                    { title: "Team", url: "#" },
-                    { title: "Billing", url: "#" },
-                    { title: "Limits", url: "#" },
-                ],
             },
         ],
     };

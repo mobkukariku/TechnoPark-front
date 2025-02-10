@@ -1,30 +1,49 @@
-"use client"
-import { FC, useEffect, useCallback } from "react";
+"use client";
+import { FC, useEffect } from "react";
 import useNewsStore from "@/store/useNewsStore";
-import Image from "next/image";
-import {NewsItem} from "@/shared/components";
-export const NewsList: FC = () => {
-    const { newsData, fetchNewsData, isLoading } = useNewsStore();
+import { AdminNewsItem } from "./AdminNewsItem";
+import { NewsPagination } from "@/shared/components/news/NewsPagination";
 
-    const fetchData = useCallback(() => {
-        if (newsData.length===0 && !isLoading) {
-            fetchNewsData();
-        }
-    }, [newsData,  fetchNewsData]);
+export const NewsList: FC = () => {
+    const { newsData, fetchNewsData, isLoading, page, totalPages, setPage, setLimit, deleteNews } = useNewsStore();
 
     useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+        if (!isLoading) {
+            fetchNewsData();
+        }
+        setLimit(10);
+    }, [page]);
 
+    const handlePageChange = (page: number) => {
+        setPage(page);
+    };
+
+    const handleDelete = async (id: string) => {
+        try {
+            await deleteNews(id);
+            await fetchNewsData();
+        } catch (error) {
+            console.error("Ошибка при удалении новости:", error);
+        }
+    };
 
     return (
         <div className={""}>
-            <div className={"flex gap-2 "}>
-                {newsData.map((news, index) => (
-                    <NewsItem key={index} imageURL={news.imageURL} title={news.title} createdAt={news.createdAt} />
+            <div className={"grid grid-cols-4 mr-[20px] rounded-[22px] bg-[#D8E7FF] p-[20px] gap-5"}>
+                {newsData.map((news) => (
+                    <AdminNewsItem
+                        key={news._id}
+                        id={news._id}
+                        imageURL={news.imageURL}
+                        title={news.title}
+                        createdAt={news.createdAt}
+                        onDelete={handleDelete}
+                    />
                 ))}
             </div>
+            <div className={"my-[20px]"}>
+                <NewsPagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
+            </div>
         </div>
-
     );
 };

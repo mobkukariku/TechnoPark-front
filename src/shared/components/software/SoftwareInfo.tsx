@@ -4,14 +4,14 @@ import Image from "next/image";
 export const SoftwareInfo:FC = () => {
     return (
         <Container className={"mt-[50px]"}>
-            <div className={"flex justify-around"}>
+            <div className={"flex justify-around flex-wrap"}>
                 <Image src={"software/info-flat.svg"} alt={"info"} width={507} height={399} />
-                <div className={"flex flex-col mt-[50px]"}>
-                    <p className={"text-[32px] font-[600]"}>
+                <div className={"flex flex-col mt-[50px] max-[1000px]:mb-[100px]"}>
+                    <p className={"text-[32px] text-center max-[500px]:text-[24px] font-[600]"}>
                         Почему{" "}
-                        <span className={"uppercase text-white font-[700] bg-[#2D7DFF] px-2 rounded-[8px]"}>Software</span> направление?
+                        <span className={"uppercase text-white font-[700] max-[500px]:text-center bg-[#2D7DFF] px-2 rounded-[8px]"}>Software</span> направление?
                     </p>
-                    <ul className={"space-y-[20px] text-[20px] w-[500px] mt-[28px] list-disc list-inside"}>
+                    <ul className={"space-y-[20px] max-[500px]:space-y-[10px] max-[500px]:mx-[10px]  text-[20px] max-[500px]:text-[16px] max-w-[500px] w-full mt-[28px] list-disc list-inside"}>
                         <li>
                             Инновационные технологии: мы работаем с самыми современными инструментами разработки.
                         </li>

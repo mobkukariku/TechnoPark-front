@@ -1,7 +1,8 @@
 import { create } from "zustand";
-import { getNews, GetNewsParams, postNews } from "@/api/api";
+import {deleteNews, getNews, GetNewsParams, postNews} from "@/api/api";
 
 interface NewsData {
+    _id: string;
     title: string;
     content: string;
     imageURL: string;
@@ -15,16 +16,20 @@ interface NewsState {
     isLoading: boolean;
     search: string;
     tags: string;
+    filterTags: string;
     sort: string;
     limit: number;
     page: number;
     totalPages: number;
     lastSearchParams: GetNewsParams | null;
     setSearch: (search: string) => void;
+    setLimit: (limit: number) => void;
+    setFilterTags: (tags: string) => void;
     setTags: (tags: string) => void;
     setSort: (sort: string) => void;
     setPage: (page: number) => void;
     fetchNewsData: () => Promise<void>;
+    deleteNews: (id: string) => Promise<void>;
     submitNews: (title: string, content: string, imageFile: File | null, tags: string) => Promise<void>;
 }
 
@@ -33,6 +38,7 @@ const useNewsStore = create<NewsState>((set, get) => ({
     isLoading: false,
     error: null,
     search: "",
+    filterTags: "",
     tags: "",
     limit: 5,
     page: 1,
@@ -41,13 +47,15 @@ const useNewsStore = create<NewsState>((set, get) => ({
     data: null,
     lastSearchParams: null,
 
+    setFilterTags: (filterTags: string) => set({ filterTags }),
+    setLimit: (limit: number) => set({limit}),
     setSearch: (search) => set({ search }),
     setTags: (tags) => set({ tags }),
     setSort: (sort) => set({ sort }),
     setPage: (page) => set({ page }),
     fetchNewsData: async () => {
-        const { isLoading, search, tags, sort, lastSearchParams, page, limit } = get();
-        const currentParams: GetNewsParams = { search, tags, sort, page, limit };
+        const { isLoading, search, filterTags, sort, lastSearchParams, page, limit } = get();
+        const currentParams: GetNewsParams = { search, tags:filterTags, sort, page, limit };
 
         if (isLoading || JSON.stringify(currentParams) === JSON.stringify(lastSearchParams)) {
             return;
@@ -78,9 +86,25 @@ const useNewsStore = create<NewsState>((set, get) => ({
             }));
         } catch (error) {
             set({ isLoading: false });
-            console.error(error);
+            throw error;
         }
     },
+    deleteNews: async (id:string) => {
+        const { isLoading } = get();
+        if (isLoading) return;
+
+        set({ isLoading: false });
+
+        try{
+            await deleteNews(id);
+            set((state) => ({
+                newsData: [...state.newsData,],
+            }));
+        }catch(error) {
+            set({ isLoading: false });
+            throw error;
+        }
+    }
 }));
 
 export default useNewsStore;

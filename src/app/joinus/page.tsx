@@ -5,7 +5,6 @@ const joinusPage:FC = () => {
     return (
         <>
             <Header />
-            <FormBreadcrumb />
             <JoinUsForm />
         </>
     )

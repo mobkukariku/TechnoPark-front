@@ -1,5 +1,5 @@
 "use client"
-import {FC, useCallback, useEffect} from "react";
+import {FC, useEffect} from "react";
 import useNewsStore from "@/store/useNewsStore";
 import {NewsPageItem} from "@/shared/components/news/NewsPageItem";
 import {Container, Header, NewsFiltration} from "@/shared/components";
@@ -14,29 +14,34 @@ export const NewsPageList:FC = () => {
             fetchNewsData();
         }
     }, [newsData, page, totalPages, isLoading]);
+
     const handlePageChange = (page: number) => {
         setPage(page);
     };
 
     return (
-        <Container className={"flex relative z-50 mt-[20px]"}>
-            <div className={"w-[915px] relative z-50 mb-[100px]"}>
-                <div className={"h-[1100px] "}>
-                    <p className={"uppercase text-[32px] mb-[30px] font-bold"}>Новости</p>
-                    <div className={"flex flex-col gap-[35px] "}>
-                        {newsData.map((item, index) => (
-                            <NewsPageItem key={index} title={item.title} content={item.content}
-                                          imageURL={item.imageURL} createdAt={item.createdAt}/>
-                        ))}
+        <Container className="relative z-20 mt-[20px] ">
+            <div className="flex flex-row max-[1000px]:justify-center max-[1000px]:flex-wrap-reverse">
+                <div className="w-[915px] flex flex-wrap max-[1000px]:mt-[50px] relative z-20 mb-[100px] max-[500px]:mb-[50px]
+                                max-[500px]:w-full max-[500px]:flex max-[500px]:justify-center">
+                    <div className="max-[500px]:h-fit flex max-[1000px]:justify-center flex-col max-[1000px]:items-center
+                                    max-[500px]:w-full max-[500px]:items-center">
+                        <p className="uppercase text-[32px] max-[500px]:text-[24px] mb-[30px] font-bold max-[500px]:text-center">Новости</p>
+                        <div className="flex flex-col gap-[35px] max-[500px]:items-center">
+                            {newsData.map((item, index) => (
+                                <NewsPageItem key={index} title={item.title} content={item.content}
+                                              imageURL={item.imageURL} createdAt={item.createdAt}/>
+                            ))}
+                        </div>
                     </div>
                 </div>
+                <NewsFiltration/>
+            </div>
+            <div className={"mb-[20px]"}>
                 <NewsPagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange}/>
             </div>
-            <NewsFiltration/>
-            <div
-                className={"absolute z-0 rounded-full left-[-200px]  blur-[100px] opacity-70 top-[0px] w-[300px] h-[300px] bg-[#4E48FE5C]"}/>
-            <div
-                className={"absolute z-0 rounded-full right-[-80px] opacity-70 blur-[100px] top-[390px] w-[330px] h-[330px] bg-[#1170FF5C]"}/>
+            <div className={"absolute z-0 rounded-full left-[-200px]  max-[500px]:w-[200px] max-[500px]:h-[200px] blur-[100px]  max-[500px]:left-[-20px] max-[500px]:top-[50px]  opacity-70 top-[200px] w-[300px] h-[300px] bg-[#4E48FE5C]"}/>
+            <div className={"absolute z-0 rounded-full right-[-200px]  max-[500px]:w-[250px] max-[500px]:h-[250px] blur-[100px]  opacity-70 max-[500px]:right-[0px] max-[500px]:top-[300px]  top-[550px] w-[330px] h-[330px] bg-[#1170FF5C]"}/>
         </Container>
-    )
-}
+    );
+};

@@ -5,7 +5,6 @@ const SoftwarePage:FC = () => {
     return (
         <>
             <Header />
-            <CustomBreadcrumb name={"Software"} link={"/software"} />
             <DirectionBanner title={"SOFTWARE"} imageURL={"/software/software.png"} />
             <SoftwareInfo />
         </>

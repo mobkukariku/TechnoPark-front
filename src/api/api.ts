@@ -97,3 +97,13 @@ export const postNews = async (
         throw error;
     }
 };
+
+
+export const deleteNews = async (id: string) => {
+    try{
+        const response = await axiosInstance.delete(`/news/${id}`);
+        return response.data;
+    }catch (error) {
+        throw error;
+    }
+}

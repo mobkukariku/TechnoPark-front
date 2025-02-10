@@ -6,7 +6,6 @@ const NewsPage:FC = () => {
     return (
         <>
             <Header/>
-            <CustomBreadcrumb name={"Новости"} link={"/news"} />
             <NewsPageList />
         </>
     )

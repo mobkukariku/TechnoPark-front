@@ -17,10 +17,13 @@ export {AdminSideBar} from "./sidebar/AdminSideBar";
 export {NewsItem} from "./news/NewsItem";
 export{NewsList} from "./admin/news/NewsList";
 export {ShortNews} from "./landing/ShortNews";
-export {CreateNewsForm} from "./admin/news/CreateNewsForm"
 export {NewsBreadcrumb} from "./news/NewsBreadcrumb";
 export {NewsPageList} from "./news/NewsPageList";
 export {NewsPageItem} from "./news/NewsPageItem";
 export {NewsFiltration} from "./news/NewsFiltration";
 export {ContactsMainInfo} from "./contacts/ContactsMainInfo";
 export {ContactsDetails} from "./contacts/ContactsDetails";
+export {NewsButtons} from "./admin/news/NewsButtons";
+export {TagCheckboxes} from "./filtration/TagCheckBoxes"
+export {ShortNewsCarousel} from "./landing/ShortNewsCarousel"
+export {BurgerMenu} from "./header/BurgerMenu"

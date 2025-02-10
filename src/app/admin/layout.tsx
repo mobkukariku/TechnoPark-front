@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SidebarProvider>
             <AdminSideBar />
             <SidebarTrigger />
-            <div className={`${inter.variable}`}>{children}</div>
+            <main className="flex-1">{children}</main>
         </SidebarProvider>
     );
 }

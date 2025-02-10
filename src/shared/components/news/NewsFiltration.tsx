@@ -1,63 +1,24 @@
-"use client";
-import { FC, useEffect } from "react";
-import {Checkbox, Input} from "@/shared/ui";
+"use client"
 import useNewsStore from "@/store/useNewsStore";
+import {FC, useEffect} from "react";
+import {Input} from "@/shared/ui";
+import {TagCheckboxes} from "@/shared/components";
 import {SortingSelect} from "@/shared/components/news/SortingSelect";
 
 export const NewsFiltration: FC = () => {
-    const { search, tags, setSearch, setTags,  fetchNewsData, isLoading, sort, setSort } = useNewsStore();
-
-    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearch(e.target.value);
-    };
-
-    const handleTag = (tag: string) => {
-        const isChecked = tags.includes(tag);
-        const updatedTags = isChecked
-            ? tags.replace(new RegExp(`\\b${tag}\\b,?`, 'g'), '')
-            : tags ? `${tags},${tag}` : tag;
-
-        setTags(updatedTags);
-    };
-
-
-    const handleSort = (value: string) => {
-        setSort(value);
-    }
-
-
-    useEffect(() => {
-       if(!isLoading) {
-           fetchNewsData();
-       }
-    }, [search, tags, sort]);
-
+    const { search, setSearch, fetchNewsData, isLoading, sort, setSort, filterTags } = useNewsStore();
+    useEffect(() => { if (!isLoading) fetchNewsData(); }, [search, sort, filterTags]);
     return (
-        <div className="w-[280px] flex flex-col gap-[20px] relative z-50">
+        <div className="w-[280px] max-[1000px]:w-full flex flex-col gap-[20px] max-[500px]:gap-[10px] relative z-50">
             <p className="text-[20px] font-semibold">Фильтрация</p>
-
-            <Input className="w-full bg-white relative z-50" placeholder="Поиск" value={search} onChange={handleSearch} />
-
+            <Input className="w-full bg-white" placeholder="Поиск" value={search} onChange={(e) => setSearch(e.target.value)} />
             <div className="flex flex-col gap-[10px]">
                 <p className="opacity-40 font-semibold">Теги</p>
-                <div className="flex flex-col gap-[15px]">
-                    {["guests", "events", "competitions", "other"].map(tag => (
-                        <div key={tag} className={"flex items-center gap-[5px] peer"}>
-                            <Checkbox id={tag} value={tag} onClick={() => handleTag(tag)} />
-                            <label
-                                htmlFor={tag}
-                                className=" font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                            >
-                                {tag}
-                            </label>
-                        </div>
-                    ))}
-                </div>
+                <TagCheckboxes className={"flex-col max-[500px]:flex-row flex-wrap"} isFilter={true} />
             </div>
-
             <div className="flex flex-col gap-[10px]">
                 <p className="opacity-40 font-semibold">Сортировка</p>
-                <SortingSelect value={sort} hadnleChange={handleSort} />
+                <SortingSelect value={sort} hadnleChange={setSort} />
             </div>
         </div>
     );

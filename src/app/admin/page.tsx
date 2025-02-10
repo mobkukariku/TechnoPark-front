@@ -3,7 +3,7 @@ import {FC} from "react";
 const AdminPage:FC = () => {
     return (
         <>
-asdsa
+            asdsa
         </>
     )
 }
