@@ -27,3 +27,4 @@ export {NewsButtons} from "./admin/news/NewsButtons";
 export {TagCheckboxes} from "./filtration/TagCheckBoxes"
 export {ShortNewsCarousel} from "./landing/ShortNewsCarousel"
 export {BurgerMenu} from "./header/BurgerMenu"
+export {HierarchySidebar} from "./hierarchy/HierarchySidebar"
