@@ -1,30 +1,28 @@
-export { CustomBreadcrumb } from "./breadcrumb/CustomBreadcrumb";
-export {Header} from "./header/Header";
-export {Container} from "./container/Container";
-export {LandingBanner} from "./landing/LandingBanner";
-export {ShortAboutUs} from "./landing/ShortAboutUs";
-export {Directions} from "./landing/Directions";
-export {DirectionCard} from "./landing/DirectionCard";
-export {DirectionBanner} from "./direction/DirectionBanner";
-export {HardwareInfo} from "./hardware/HardwareInfo";
-export {SoftwareInfo} from "./software/SoftwareInfo";
-export {JoinUsForm} from "./joinus/JoinUsForm";
-export {JoinUsSelect} from "./joinus/JoinUsSelect";
-export {FormBreadcrumb} from "./joinus/FormBreadcrumb";
-export {AboutUsContent} from "./aboutus/AboutUsContent";
-export {LoginForm} from "./login/LoginForm";
-export {AdminSideBar} from "./sidebar/AdminSideBar";
-export {NewsItem} from "./news/NewsItem";
-export{NewsList} from "./admin/news/NewsList";
-export {ShortNews} from "./landing/ShortNews";
-export {NewsBreadcrumb} from "./news/NewsBreadcrumb";
-export {NewsPageList} from "./news/NewsPageList";
-export {NewsPageItem} from "./news/NewsPageItem";
-export {NewsFiltration} from "./news/NewsFiltration";
-export {ContactsMainInfo} from "./contacts/ContactsMainInfo";
-export {ContactsDetails} from "./contacts/ContactsDetails";
-export {NewsButtons} from "./admin/news/NewsButtons";
-export {TagCheckboxes} from "./filtration/TagCheckBoxes"
-export {ShortNewsCarousel} from "./landing/ShortNewsCarousel"
-export {BurgerMenu} from "./header/BurgerMenu"
-export {HierarchySidebar} from "./hierarchy/HierarchySidebar"
+
+
+//landing info
+export {LandingBanner, ShortAboutUs, Directions, DirectionCard, ShortNews, ShortNewsCarousel} from "./landing"
+export {ContactsMainInfo, ContactsDetails} from "./contacts";
+export {SoftwareInfo} from "./software";
+export {HardwareInfo} from "./hardware";
+export {AboutUsContent} from "./aboutus";
+export {DirectionBanner} from "./direction";
+
+
+
+//updating сomponents
+export {NewsPageList, NewsPageItem, NewsFiltration, NewsItem, CurrentNewsInfo} from "./news";
+export {AdminSideBar} from "./sidebar";
+export {TagCheckboxes} from "./filtration"
+export{NewsList, NewsButtons} from "./admin";
+export {HierarchySidebar} from "./hierarchy"
+
+//usefull
+export {Container} from "./container";
+export {Header, BurgerMenu, HeaderMenu} from "./header";
+
+
+// forms
+export {RegisterForm} from "./register";
+export {LoginForm} from "./login";
+export {JoinUsForm, JoinUsSelect} from "./joinus";

@@ -1,6 +1,6 @@
 import {FC} from "react";
 import {Container} from "@/shared/components";
-import {OurMissions} from "@/shared/components/aboutus/OurMissions";
+import {OurMissions} from "@/shared/components/aboutus";
 
 export const AboutUsContent:FC = () => {
     return (

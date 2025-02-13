@@ -19,7 +19,7 @@ interface FormData {
     password: string;
 }
 
-export const LoginForm: FC = () => {
+export const RegisterForm: FC = () => {
 
     const {
         handleSubmit,

@@ -29,7 +29,7 @@ export const NewsPageList:FC = () => {
                         <p className="uppercase text-[32px] max-[500px]:text-[24px] mb-[30px] font-bold max-[500px]:text-center">Новости</p>
                         <div className="flex flex-col gap-[35px] max-[500px]:items-center">
                             {newsData.map((item, index) => (
-                                <NewsPageItem key={index} title={item.title} content={item.content}
+                                <NewsPageItem _id={item._id} key={index} title={item.title} content={item.content}
                                               imageURL={item.imageURL} createdAt={item.createdAt}/>
                             ))}
                         </div>

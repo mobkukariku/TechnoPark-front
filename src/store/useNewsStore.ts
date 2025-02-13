@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import {deleteNews, getNews, GetNewsParams, postNews} from "@/api/api";
+import {deleteNews, getNews, getNewsByID, GetNewsParams, postNews} from "@/api/api";
 
 interface NewsData {
     _id: string;
@@ -13,6 +13,7 @@ interface NewsData {
 
 interface NewsState {
     newsData: NewsData[];
+    currentNews: NewsData | null;
     isLoading: boolean;
     search: string;
     tags: string;
@@ -24,6 +25,7 @@ interface NewsState {
     lastSearchParams: GetNewsParams | null;
     setSearch: (search: string) => void;
     setLimit: (limit: number) => void;
+    setCurrentPage: (newsId: string | Array<string> | undefined) => void;
     setFilterTags: (tags: string) => void;
     setTags: (tags: string) => void;
     setSort: (sort: string) => void;
@@ -42,6 +44,7 @@ const useNewsStore = create<NewsState>((set, get) => ({
     tags: "",
     limit: 5,
     page: 1,
+    currentNews: null,
     totalPages: 0,
     sort: "newest",
     data: null,
@@ -85,15 +88,16 @@ const useNewsStore = create<NewsState>((set, get) => ({
                 isLoading: false,
             }));
         } catch (error) {
-            set({ isLoading: false });
             throw error;
+        }finally {
+            set({ isLoading: false });
         }
     },
     deleteNews: async (id:string) => {
         const { isLoading } = get();
         if (isLoading) return;
 
-        set({ isLoading: false });
+        set({ isLoading: true });
 
         try{
             await deleteNews(id);
@@ -101,8 +105,26 @@ const useNewsStore = create<NewsState>((set, get) => ({
                 newsData: [...state.newsData,],
             }));
         }catch(error) {
-            set({ isLoading: false });
             throw error;
+        }finally {
+            set({ isLoading: false });
+        }
+    },
+    setCurrentPage: async (newsId: string | Array<string> | undefined) => {
+        const { isLoading } = get();
+        if (isLoading) return;
+
+
+        set({ isLoading: true });
+        try{
+            console.log(1)
+            const selectedNews:NewsData = await getNewsByID(newsId);
+            set({ currentNews: selectedNews });
+            console.log(selectedNews);
+        }catch(error) {
+            throw error;
+        }finally {
+            set({ isLoading: false });
         }
     }
 }));

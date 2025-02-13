@@ -1,6 +1,8 @@
 import {FC} from "react";
 import Image from "next/image";
+import Link from "next/link";
 interface NewsPageItemProps {
+    _id: string;
     title: string;
     content: string;
     imageURL: string;
@@ -8,6 +10,7 @@ interface NewsPageItemProps {
 }
 
 export const NewsPageItem: FC<NewsPageItemProps> = ({
+    _id,
     title,
     content,
     imageURL,
@@ -29,15 +32,19 @@ export const NewsPageItem: FC<NewsPageItemProps> = ({
 
             <div className={"flex max-[500px]:flex-col gap-[15px] max-[500px]:gap-[0px] relative z-50"}>
                 <div className="relative w-[319px] h-[165px] overflow-hidden rounded-[8px]">
-                    <Image
-                        src={imageURL}
-                        alt={title}
-                        layout="fill"
-                        objectFit="cover"
-                    />
+                   <Link href={`/news/${_id}`}>
+                       <Image
+                           src={imageURL}
+                           alt={title}
+                           layout="fill"
+                           objectFit="cover"
+                       />
+                   </Link>
                 </div>
                 <div className={"flex flex-col mt-[10px]"}>
-                    <p className={"font-bold text-[20px]"}>{title}</p>
+                    <Link href={`/news/${_id}`}>
+                        <p className={"font-bold hover:text-[#5998FF] transition-colors text-[20px]"}>{title}</p>
+                    </Link>
                     <span className={"text-[#8B8B8B] text-[14px]"}>{formatDate(createdAt)}</span>
                     <span className={"mt-[15px]"}>{content}</span>
                 </div>

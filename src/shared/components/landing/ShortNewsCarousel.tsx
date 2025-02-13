@@ -6,12 +6,11 @@ import {
     Carousel,
     CarouselContent,
     CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
 } from "@/shared/ui/carousel";
 import { NewsItem } from "@/shared/components";
 
 interface ShortNewsProps {
+    _id:string,
     title: string;
     imageURL: string;
     createdAt: string;
@@ -44,8 +43,8 @@ export const ShortNewsCarousel: FC = () => {
         <Carousel opts={{ align: "start" }} className="w-full my-[30px]">
             <CarouselContent>
                 {newsData.map((item, index) => (
-                    <CarouselItem key={index} className="basis-1/3 max-[1000px]:basis-1/2 max-[500px]:basis-full">
-                        <NewsItem imageURL={item.imageURL} title={item.title} createdAt={item.createdAt} />
+                    <CarouselItem key={index}  className="basis-1/3 max-[1000px]:basis-1/2 max-[500px]:basis-full">
+                        <NewsItem _id={item._id} imageURL={item.imageURL} title={item.title} createdAt={item.createdAt} />
                     </CarouselItem>
                 ))}
             </CarouselContent>

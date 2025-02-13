@@ -6,6 +6,7 @@ export const axiosInstance = axios.create({
         'Content-Type': 'application/json',
     },
     withCredentials: true,
+    timeout: 5000,
 })
 
 export interface GetNewsParams {
@@ -104,6 +105,15 @@ export const deleteNews = async (id: string) => {
         const response = await axiosInstance.delete(`/news/${id}`);
         return response.data;
     }catch (error) {
+        throw error;
+    }
+}
+
+export const getNewsByID = async (id: string | Array<string> | undefined) => {
+    try{
+        const response = await axiosInstance.get(`/news/${id}`);
+        return response.data.news;
+    }catch(error){
         throw error;
     }
 }
