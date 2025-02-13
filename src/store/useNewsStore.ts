@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import {deleteNews, getNews, getNewsByID, GetNewsParams, postNews} from "@/api/api";
+import {deleteNews, getLastNews, getNews, getNewsByID, GetNewsParams, postNews} from "@/api/api";
 
 interface NewsData {
     _id: string;
@@ -14,7 +14,9 @@ interface NewsData {
 interface NewsState {
     newsData: NewsData[];
     currentNews: NewsData | null;
+    lastNews: NewsData[] ;
     isLoading: boolean;
+    isLastNewsLoading: boolean;
     search: string;
     tags: string;
     filterTags: string;
@@ -29,6 +31,7 @@ interface NewsState {
     setFilterTags: (tags: string) => void;
     setTags: (tags: string) => void;
     setSort: (sort: string) => void;
+    setLastNews: (exceptId: string | Array<string> | undefined) => void;
     setPage: (page: number) => void;
     fetchNewsData: () => Promise<void>;
     deleteNews: (id: string) => Promise<void>;
@@ -38,7 +41,9 @@ interface NewsState {
 const useNewsStore = create<NewsState>((set, get) => ({
     newsData: [],
     isLoading: false,
+    isLastNewsLoading: false,
     error: null,
+    lastNews: [],
     search: "",
     filterTags: "",
     tags: "",
@@ -49,7 +54,6 @@ const useNewsStore = create<NewsState>((set, get) => ({
     sort: "newest",
     data: null,
     lastSearchParams: null,
-
     setFilterTags: (filterTags: string) => set({ filterTags }),
     setLimit: (limit: number) => set({limit}),
     setSearch: (search) => set({ search }),
@@ -117,14 +121,26 @@ const useNewsStore = create<NewsState>((set, get) => ({
 
         set({ isLoading: true });
         try{
-            console.log(1)
             const selectedNews:NewsData = await getNewsByID(newsId);
             set({ currentNews: selectedNews });
-            console.log(selectedNews);
         }catch(error) {
             throw error;
         }finally {
             set({ isLoading: false });
+        }
+    },
+    setLastNews: async (exceptId: string | Array<string> | undefined) => {
+        const { isLastNewsLoading } = get();
+        if (isLastNewsLoading) return;
+
+        set({ isLastNewsLoading: true });
+        try{
+            const lastNews = await getLastNews(exceptId);
+            set({ lastNews: lastNews });
+        }catch(error) {
+            throw error;
+        }finally {
+            set({ isLastNewsLoading: false });
         }
     }
 }));

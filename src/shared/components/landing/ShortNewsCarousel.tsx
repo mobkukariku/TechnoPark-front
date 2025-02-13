@@ -8,6 +8,7 @@ import {
     CarouselItem,
 } from "@/shared/ui/carousel";
 import { NewsItem } from "@/shared/components";
+import {ShortNewsSkeleton} from "@/shared/components/landing";
 
 interface ShortNewsProps {
     _id:string,
@@ -35,18 +36,23 @@ export const ShortNewsCarousel: FC = () => {
         fetchNews();
     }, []);
 
-    if (isLoading) {
-        return <p>Загрузка...</p>;
-    }
 
     return (
         <Carousel opts={{ align: "start" }} className="w-full my-[30px]">
             <CarouselContent>
-                {newsData.map((item, index) => (
-                    <CarouselItem key={index}  className="basis-1/3 max-[1000px]:basis-1/2 max-[500px]:basis-full">
-                        <NewsItem _id={item._id} imageURL={item.imageURL} title={item.title} createdAt={item.createdAt} />
-                    </CarouselItem>
-                ))}
+                {!isLoading ? (
+                    newsData.map((item, index) => (
+                            <CarouselItem key={index}  className="basis-1/3 max-[1000px]:basis-1/2 max-[500px]:basis-full">
+                                <NewsItem _id={item._id} imageURL={item.imageURL} title={item.title} createdAt={item.createdAt} />
+                            </CarouselItem>
+                        ))
+                ) : (
+                    Array.from({ length: 3 }).map((_, index) => (
+                        <CarouselItem key={index}  className="basis-1/3 max-[1000px]:basis-1/2 max-[500px]:basis-full">
+                            <ShortNewsSkeleton />
+                        </CarouselItem>
+                    ))
+                )}
             </CarouselContent>
         </Carousel>
     );

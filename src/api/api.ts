@@ -117,3 +117,15 @@ export const getNewsByID = async (id: string | Array<string> | undefined) => {
         throw error;
     }
 }
+
+
+export const getLastNews = async (id: string | string[] | undefined) => {
+    try {
+        const response = await axiosInstance.get(`/news/sidebar`, {
+            params: { exceptId: id }
+        });
+        return response.data;
+    } catch (err) {
+        throw err;
+    }
+};

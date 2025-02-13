@@ -13,7 +13,7 @@ export const LandingBanner:FC = () => {
                     </span>
                 </div>
                 <div className={"relative z-20"}>
-                    <Image alt={"landing"} width={459} height={459} src={"./landing/landingBanner.svg"} />
+                    <Image alt={"landing"} width={459} height={459} src={"/landing/landingBanner.svg"} />
                 </div>
             <div className={"absolute z-0  max-[500px]:w-[208px] blur-[50px]  max-[500px]:h-[208px] max-[500px]:left-[150px] rounded-full left-[220px]   top-[0px] w-[388px] h-[388px] bg-[#89B6FF5C]"}/>
             <div className={"absolute z-0 rounded-full max-[500px]:right-[120px] blur-[50px] right-[200px] max-[500px]:w-[208px]  max-[500px]:h-[208px]  top-[100px] w-[428px] h-[428px] bg-[#4E48FE5C]"}/>

@@ -1,5 +1,5 @@
 "use client";
-import {FC, JSX, SVGProps, useEffect, useState} from "react";
+import {FC,  useEffect, useState} from "react";
 import Image from "next/image";
 import { BurgerMenu, Container } from "@/shared/components";
 import { Button } from "@/shared/ui";
@@ -29,7 +29,7 @@ export const Header: FC = () => {
                     {isDesktop ? (
                         <div className="flex items-center w-full justify-between gap-[39px] relative z-20">
                             <div className="flex gap-[20px] items-center">
-                                <Link href="/">
+                                <Link href="/" >
                                     <Image width={105} height={44} src="/logo.svg" alt="Логотип" />
                                 </Link>
                                 <HeaderMenu />

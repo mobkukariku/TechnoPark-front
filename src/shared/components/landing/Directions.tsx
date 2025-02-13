@@ -12,14 +12,14 @@ export const Directions: FC = () => {
             </div>
             <div className={"mt-[61px] flex flex-wrap gap-[57px] max-[1000px]:gap-[20px] relative z-50 justify-center mb-[113px]"}>
                 <DirectionCard
-                    directionImage={"landing/hardware.svg"}
+                    directionImage={"/landing/hardware.svg"}
                     image={"https://www.figma.com/file/6gbT120loIYOOu4SHCmIli/image/2c77b164a259775e39ad5975d431db95eb332cfc"}
                     title={"Hardware"}
                     description={"Создание и производство физических устройств и компонентов, включая IoT и умные устройства"}
                     link={"/hardware"}
                 />
                 <DirectionCard
-                    directionImage={"landing/software.svg"}
+                    directionImage={"/landing/software.svg"}
                     image={"https://www.figma.com/file/6gbT120loIYOOu4SHCmIli/image/2c77b164a259775e39ad5975d431db95eb332cfc"}
                     title={"Software"}
                     description={"Разработка программного обеспечения для различных систем"}

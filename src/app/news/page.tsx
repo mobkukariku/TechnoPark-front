@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {CustomBreadcrumb, Header, NewsPageList} from "@/shared/components";
+import { Header, NewsPageList} from "@/shared/components";
 
 const NewsPage:FC = () => {
 

@@ -1,9 +1,8 @@
 "use client";
-import { FC, useEffect, useState } from "react";
+import { FC, } from "react";
 import { Container, ShortNewsCarousel } from "@/shared/components";
 import Link from "next/link";
 import Image from "next/image";
-import { getNews } from "@/api/api";
 
 
 export const ShortNews: FC = () => {
@@ -26,7 +25,7 @@ export const ShortNews: FC = () => {
             </div>
             <div className={"max-w-[1700px] mx-auto"}>
                 <Image
-                    src={"landing/element.svg"}
+                    src={"/landing/element.svg"}
                     width={846}
                     height={819}
                     alt={"element"}
