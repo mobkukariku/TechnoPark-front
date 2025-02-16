@@ -12,7 +12,7 @@ import { Button, Textarea } from "@/shared/ui";
 import { CirclePlus } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { TagCheckboxes } from "@/shared/components";
-import { toast, Toaster } from "react-hot-toast";
+import  toast, {Toaster } from "react-hot-toast";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useNewsStore from "@/store/useNewsStore";
 import { useRouter } from "next/navigation";
@@ -42,9 +42,8 @@ export const CreateNewsDialog: FC = () => {
 
     const onSubmit = async (data: FormData) => {
         try {
-            // Pass the form data to submitNews
             await submitNews(data.title, data.content, data.image, tags);
-            toast.success("Заявка отправлена!");
+            toast.success("Новость была создана!");
             router.push("/admin");
         } catch {
             toast.error("Ошибка при отправке");

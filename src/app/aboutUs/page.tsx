@@ -1,5 +1,5 @@
 import {FC} from "react";
-import { AboutUsContent, CustomBreadcrumb, DirectionBanner, Header} from "@/shared/components";
+import { AboutUsContent,  DirectionBanner, Header} from "@/shared/components";
 
 const AboutUsPage:FC = () => {
     return (

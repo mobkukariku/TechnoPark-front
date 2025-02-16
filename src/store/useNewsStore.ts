@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import {deleteNews, getLastNews, getNews, getNewsByID, GetNewsParams, postNews} from "@/api/api";
+import {deleteNews, getLastNews, getNews, getNewsByID, GetDataParams, postNews} from "@/api/api";
 
 interface NewsData {
     _id: string;
@@ -24,7 +24,7 @@ interface NewsState {
     limit: number;
     page: number;
     totalPages: number;
-    lastSearchParams: GetNewsParams | null;
+    lastSearchParams: GetDataParams | null;
     setSearch: (search: string) => void;
     setLimit: (limit: number) => void;
     setCurrentPage: (newsId: string | Array<string> | undefined) => void;
@@ -47,7 +47,7 @@ const useNewsStore = create<NewsState>((set, get) => ({
     search: "",
     filterTags: "",
     tags: "",
-    limit: 5,
+    limit: 10,
     page: 1,
     currentNews: null,
     totalPages: 0,
@@ -62,7 +62,7 @@ const useNewsStore = create<NewsState>((set, get) => ({
     setPage: (page) => set({ page }),
     fetchNewsData: async () => {
         const { isLoading, search, filterTags, sort, lastSearchParams, page, limit } = get();
-        const currentParams: GetNewsParams = { search, tags:filterTags, sort, page, limit };
+        const currentParams: GetDataParams = { search, tags:filterTags, sort, page, limit };
 
         if (isLoading || JSON.stringify(currentParams) === JSON.stringify(lastSearchParams)) {
             return;
@@ -97,20 +97,20 @@ const useNewsStore = create<NewsState>((set, get) => ({
             set({ isLoading: false });
         }
     },
-    deleteNews: async (id:string) => {
-        const { isLoading } = get();
+    deleteNews: async (id: string) => {
+        const { isLoading, newsData } = get();
         if (isLoading) return;
 
         set({ isLoading: true });
 
-        try{
+        try {
             await deleteNews(id);
-            set((state) => ({
-                newsData: [...state.newsData,],
-            }));
-        }catch(error) {
-            throw error;
-        }finally {
+            set({
+                newsData: newsData.filter((news) => news._id !== id), // Удаляем новость из Zustand
+            });
+        } catch (error) {
+            console.error("Ошибка при удалении новости:", error);
+        } finally {
             set({ isLoading: false });
         }
     },

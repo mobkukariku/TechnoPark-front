@@ -1,10 +1,10 @@
 import {FC} from "react";
-import {HierarchySidebar} from "@/shared/components";
+import {MembersList} from "@/shared/components/members/MembersList";
 
 const HierarchyPage:FC = () => {
     return (
         <div>
-            <HierarchySidebar />
+            <MembersList/>
         </div>
     )
 }

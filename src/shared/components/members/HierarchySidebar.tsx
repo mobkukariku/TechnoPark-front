@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from "react";
 import { TreeDataItem, TreeView } from "@/shared/ui/tree-view";
 import { axiosInstance } from "@/api/api";
 import { useRouter } from "next/navigation";
+import {Sidebar, SidebarHeader} from "@/shared/ui/sidebar";
 
 export const HierarchySidebar: FC = () => {
     const [data, setData] = useState<TreeDataItem[]>([]);
@@ -29,7 +30,14 @@ export const HierarchySidebar: FC = () => {
     if (loading) return <p>Загрузка...</p>;
     if (error) return <p>{error}</p>;
 
-    return <TreeView data={data} />;
+    return (
+        <Sidebar>
+            <SidebarHeader>
+                <h1 className={"font-bold text-[20px]"}>Список Участников</h1>
+            </SidebarHeader>
+            <TreeView data={data} />
+        </Sidebar>
+    );
 };
 
 const transformDepartmentsToTree = (departments: any[], router: any): TreeDataItem[] => {

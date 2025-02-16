@@ -9,14 +9,16 @@ export const axiosInstance = axios.create({
     timeout: 5000,
 })
 
-export interface GetNewsParams {
+export interface GetDataParams {
     tags?: string;
     search?: string;
     sort?: string;
     data?: string | null;
     page?: number;
     limit?: number;
+    direction?: string;
 }
+
 
 
 export const postRequest = async (name: string, surname: string, email: string, direction: string, message: string) => {
@@ -62,7 +64,7 @@ export const logout = async () => {
 }
 
 
-export const getNews = async (params:GetNewsParams= {}) => {
+export const getNews = async (params:GetDataParams= {}) => {
     try{
         const response = await axiosInstance.get('/news', {params});
 
@@ -129,3 +131,35 @@ export const getLastNews = async (id: string | string[] | undefined) => {
         throw err;
     }
 };
+
+
+export const getMembersforAdmins = async (params:string) => {
+    try{
+        const response = await axiosInstance.get('/members/all', {
+            params: { search: params }
+        });
+        return response.data;
+    }catch(error){
+        throw error;
+    }
+}
+
+export const getMembersForUsers = async (params:string) => {
+    try{
+        const response = await axiosInstance.get('/members', {
+            params: { search: params }
+        });
+        return response.data;
+    }catch(error){
+        throw error;
+    }
+}
+
+export const getProjects =  async (params:GetDataParams = {}) => {
+    try{
+        const response = await axiosInstance.get('/projects', {params})
+        return response.data;
+    }catch(error){
+        throw error;
+    }
+}

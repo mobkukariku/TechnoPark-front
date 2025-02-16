@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {CustomBreadcrumb, DirectionBanner, HardwareInfo, Header} from "@/shared/components";
+import { DirectionBanner, HardwareInfo, Header} from "@/shared/components";
 
 const HardwarePage:FC = () => {
     return(

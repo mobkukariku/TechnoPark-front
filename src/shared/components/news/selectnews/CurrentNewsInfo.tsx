@@ -46,9 +46,11 @@ export const CurrentNewsInfo: FC<{newsId: string | Array<string> | undefined}> =
                                 <div className={"flex flex-row gap-[30px] mt-[24px] justify-start "}>
                                     <NewsIcons/>
                                     <div className="">
-                                        <p className={"max-w-[700px]  "}>
+                                        <p className="max-w-[700px] break-words">
                                             {currentNews?.content}
                                         </p>
+
+
                                     </div>
                                 </div>
                             </div>

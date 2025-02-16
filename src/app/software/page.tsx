@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {CustomBreadcrumb, DirectionBanner, Header,  SoftwareInfo} from "@/shared/components";
+import {DirectionBanner, Header,  SoftwareInfo} from "@/shared/components";
 
 const SoftwarePage:FC = () => {
     return (

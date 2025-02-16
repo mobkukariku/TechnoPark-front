@@ -6,7 +6,6 @@ import Image from "next/image";
 
 
 export const ShortNews: FC = () => {
-
     return (
         <div className={"relative"}>
             <div className={"bg-[#D8E7FF] relative z-50"}>

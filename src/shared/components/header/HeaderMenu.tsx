@@ -24,9 +24,12 @@ export const HeaderMenu: React.FC = () =>  {
                     </NavigationMenuTrigger>
                     <NavigationMenuContent >
                         <NavigationMenuLink asChild >
-                        <ul className=" flex flex-col w-[200px] p-2">
-                            <Link href="/aboutUs" className={"hover:bg-gray-200 p-1 rounded-[10px] transition-colors duration-200"}>
+                        <ul className=" flex flex-col gap-[10px] w-[200px] p-2">
+                            <Link href="/aboutUs" className={"hover:bg-gray-200 py-1 px-2 rounded-[10px] transition-colors duration-200"}>
                                 О нас
+                            </Link>
+                            <Link href="/members" className={"hover:bg-gray-200 py-1 px-2 rounded-[10px] transition-colors duration-200"}>
+                                Участники
                             </Link>
                         </ul>
 

@@ -2,7 +2,7 @@
 import { FC, useEffect } from "react";
 import {
     Newspaper,
-    Settings2,
+    Presentation,
     SquareTerminal,
     Users,
 } from "lucide-react";
@@ -43,20 +43,16 @@ export const AdminSideBar: FC = () => {
             },
             {
                 title: "Members",
-                url: "#",
+                url: "/admin/members",
                 icon: Users,
             },
             {
-                title: "Settings",
-                url: "#",
-                icon: Settings2,
+                title: "Projects",
+                url: "/admin/projects",
+                icon: Presentation,
             },
         ],
     };
-
-    if (isProfileLoading) {
-        return <div>Loading...</div>;
-    }
 
     const user = profile || {
         name: "shadcn",
@@ -70,7 +66,11 @@ export const AdminSideBar: FC = () => {
                 <NavMain items={data.navMain} />
             </SidebarContent>
             <SidebarFooter>
-                <NavUser user={{ email: user.email, name: user.name, imageURL: user.imageURL }} />
+                {isProfileLoading ? (
+                    <div>Loading...</div>
+                ) : (
+                    <NavUser user={{ email: user.email, name: user.name, imageURL: user.imageURL }} />
+                )}
             </SidebarFooter>
             <SidebarRail />
         </Sidebar>
