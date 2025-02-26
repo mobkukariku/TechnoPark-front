@@ -1,6 +1,8 @@
-import { FC } from "react";
+"use client"
+import {FC, useEffect, useState} from "react";
 import { Controller } from "react-hook-form";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/shared/ui";
+import {getDirections} from "@/api/api";
 
 interface JoinUsSelectProps {
     control: any;
@@ -8,7 +10,27 @@ interface JoinUsSelectProps {
     error?: string;
 }
 
+interface Directions {
+    id: string;
+    name: string;
+}
+
 export const JoinUsSelect: FC<JoinUsSelectProps> = ({ control, name, error }) => {
+    const [directions, setDirections] = useState<Directions[]>([])
+
+    useEffect(() => {
+        const fetchDirections = async () => {
+            try {
+                const data = await getDirections();
+                setDirections(data);
+            } catch (error) {
+                console.error("Error fetching directions:", error);
+            }
+        };
+        fetchDirections();
+    }, []);
+
+
     return (
         <div>
             <Controller
@@ -22,8 +44,9 @@ export const JoinUsSelect: FC<JoinUsSelectProps> = ({ control, name, error }) =>
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>Направление</SelectLabel>
-                                <SelectItem value="software">Software</SelectItem>
-                                <SelectItem value="hardware">Hardware</SelectItem>
+                                {directions.map((item:Directions) => (
+                                    <SelectItem key={item.id} value={item.id}>{item.name}</SelectItem>
+                                ))}
                             </SelectGroup>
                         </SelectContent>
                     </Select>

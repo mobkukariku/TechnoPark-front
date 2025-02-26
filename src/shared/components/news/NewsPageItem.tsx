@@ -5,7 +5,7 @@ interface NewsPageItemProps {
     _id: string;
     title: string;
     content: string;
-    imageURL: string;
+    imageURL: string | null;
     createdAt: string;
 }
 
@@ -37,12 +37,14 @@ export const NewsPageItem: FC<NewsPageItemProps> = ({
             <div className={"flex max-[500px]:flex-col gap-[15px] max-[500px]:gap-[0px] relative z-50"}>
                 <div className="relative w-[319px] h-[165px] overflow-hidden rounded-[8px]">
                    <Link href={`/news/${_id}`}>
-                       <Image
-                           src={imageURL}
-                           alt={title}
-                           layout="fill"
-                           objectFit="cover"
-                       />
+                       {imageURL ? (
+                           <Image
+                               src={imageURL}
+                               alt={title}
+                               layout="fill"
+                               objectFit="cover"
+                           />
+                       ) : null}
                    </Link>
                 </div>
                 <div className={"flex flex-col mt-[10px]"}>

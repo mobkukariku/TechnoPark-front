@@ -1,14 +1,18 @@
 import { create } from "zustand";
-import {deleteNews, getLastNews, getNews, getNewsByID, GetDataParams, postNews} from "@/api/api";
+import {deleteNews, getLastNews, getNews, getNewsByID, GetDataParams, postNews, getTags} from "@/api/api";
 
 interface NewsData {
-    _id: string;
+    id: string;
     title: string;
     content: string;
-    imageURL: string;
-    tags: string;
+    imageURL: string | null;
+    tags: string[];
     createdAt: string;
     updatedAt: string;
+}
+interface TagsData{
+    id: string;
+    name: string
 }
 
 interface NewsState {
@@ -18,12 +22,14 @@ interface NewsState {
     isLoading: boolean;
     isLastNewsLoading: boolean;
     search: string;
+    allTags: TagsData[];
     tags: string;
     filterTags: string;
     sort: string;
     limit: number;
     page: number;
     totalPages: number;
+    fetchTags: () => Promise<void>;
     lastSearchParams: GetDataParams | null;
     setSearch: (search: string) => void;
     setLimit: (limit: number) => void;
@@ -49,6 +55,7 @@ const useNewsStore = create<NewsState>((set, get) => ({
     tags: "",
     limit: 10,
     page: 1,
+    allTags: [],
     currentNews: null,
     totalPages: 0,
     sort: "newest",
@@ -72,7 +79,7 @@ const useNewsStore = create<NewsState>((set, get) => ({
 
         try {
             const response = await getNews(currentParams);
-            set({ newsData: response.news.length === 0 ? [] : response.news, totalPages: response.totalPages, isLoading: false });
+            set({ newsData: response.length === 0 ? [] : response, totalPages: response.totalPages, isLoading: false });
         } catch (error) {
             set({ newsData: [], isLoading: false,});
             throw error;
@@ -106,7 +113,7 @@ const useNewsStore = create<NewsState>((set, get) => ({
         try {
             await deleteNews(id);
             set({
-                newsData: newsData.filter((news) => news._id !== id), // Удаляем новость из Zustand
+                newsData: newsData.filter((news) => news.id !== id), // Удаляем новость из Zustand
             });
         } catch (error) {
             console.error("Ошибка при удалении новости:", error);
@@ -142,7 +149,23 @@ const useNewsStore = create<NewsState>((set, get) => ({
         }finally {
             set({ isLastNewsLoading: false });
         }
+    },
+    fetchTags: async () => {
+        const { isLoading } = get();
+        if (isLoading) return;
+
+        set({isLoading:true});
+
+        try{
+            const data = await getTags();
+            set({allTags:data})
+        }catch (error){
+            throw error;
+        }finally {
+            set({isLoading:false});
+        }
     }
+
 }));
 
 export default useNewsStore;

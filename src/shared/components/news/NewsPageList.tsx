@@ -32,7 +32,7 @@ export const NewsPageList: FC = () => {
                                 <NewsListSkeleton />
                             ) : (
                                 newsData.map((item, index) => (
-                                    <NewsPageItem _id={item._id} key={index} title={item.title} content={item.content}
+                                    <NewsPageItem _id={item.id} key={index} title={item.title} content={item.content}
                                                   imageURL={item.imageURL} createdAt={item.createdAt} />
                                 ))
                             )}

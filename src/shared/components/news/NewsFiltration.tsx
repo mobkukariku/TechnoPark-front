@@ -14,7 +14,7 @@ export const NewsFiltration: FC = () => {
             <Input className="w-full bg-white" placeholder="Поиск" value={search} onChange={(e) => setSearch(e.target.value)} />
             <div className="flex flex-col gap-[10px]">
                 <p className="opacity-40 font-semibold">Теги</p>
-                <TagCheckboxes className={"flex-col max-[500px]:flex-row flex-wrap"} isFilter={true} />
+                <TagCheckboxes className={"flex flex-wrap gap-2"} isFilter={true} />
             </div>
             <div className="flex flex-col gap-[10px]">
                 <p className="opacity-40 font-semibold">Сортировка</p>

@@ -24,12 +24,11 @@ interface FormData {
     selectedCourse: string;
 }
 
-
 export const JoinUsForm: FC = () => {
     const {
         handleSubmit,
         control,
-        formState: { errors }
+        formState: { errors, isSubmitting }
     } = useForm({
         resolver: yupResolver(validationSchema),
         defaultValues: {
@@ -118,7 +117,17 @@ export const JoinUsForm: FC = () => {
                             />
                         )}
                     />
-                    <Button type="submit">Отправить</Button>
+                    <Button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`w-full flex items-center justify-center ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
+                    >
+                        {isSubmitting ? (
+                            <div className="animate-spin border-4 border-white border-t-transparent rounded-full w-5 h-5"></div>
+                        ) : (
+                            "Отправить"
+                        )}
+                    </Button>
                 </div>
             </form>
             <Toaster

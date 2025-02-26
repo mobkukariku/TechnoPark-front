@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-    baseURL: "http://localhost:7007/api",
+    baseURL: "http://localhost:4000/api",
     headers: {
         'Content-Type': 'application/json',
     },
@@ -114,7 +114,7 @@ export const deleteNews = async (id: string) => {
 export const getNewsByID = async (id: string | Array<string> | undefined) => {
     try{
         const response = await axiosInstance.get(`/news/${id}`);
-        return response.data.news;
+        return response.data;
     }catch(error){
         throw error;
     }
@@ -160,6 +160,24 @@ export const getProjects =  async (params:GetDataParams = {}) => {
         const response = await axiosInstance.get('/projects', {params})
         return response.data;
     }catch(error){
+        throw error;
+    }
+}
+
+export const getTags = async () => {
+    try{
+        const response = await axiosInstance.get('/tags')
+        return response.data;
+    }catch (error){
+        throw error;
+    }
+}
+
+export const getDirections = async () => {
+    try{
+        const response = await axiosInstance.get('/directions')
+        return response.data;
+    }catch (error){
         throw error;
     }
 }

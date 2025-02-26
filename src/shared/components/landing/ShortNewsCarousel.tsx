@@ -8,10 +8,10 @@ import {
     CarouselItem,
 } from "@/shared/ui/carousel";
 import { NewsItem } from "@/shared/components";
-import {ShortNewsSkeleton} from "@/shared/components/landing";
+import { ShortNewsSkeleton } from "@/shared/components/landing";
 
 interface ShortNewsProps {
-    _id:string,
+    id: string;
     title: string;
     imageURL: string;
     createdAt: string;
@@ -25,7 +25,15 @@ export const ShortNewsCarousel: FC = () => {
         const fetchNews = async () => {
             try {
                 const response = await getNews({ page: 1, limit: 3, sort: "newest" });
-                setNewsData(response.news || []);
+
+                const formattedNews = response.map((item: ShortNewsProps) => ({
+                    id: item.id,
+                    title: item.title,
+                    imageURL: item.imageURL,
+                    createdAt: item.createdAt,
+                }));
+
+                setNewsData(formattedNews || []);
             } catch (error) {
                 console.error("Ошибка при загрузке новостей:", error);
             } finally {
@@ -36,19 +44,18 @@ export const ShortNewsCarousel: FC = () => {
         fetchNews();
     }, []);
 
-
     return (
         <Carousel opts={{ align: "start" }} className="w-full my-[30px]">
             <CarouselContent>
                 {!isLoading ? (
                     newsData.map((item, index) => (
-                            <CarouselItem key={index}  className="basis-1/3 max-[1000px]:basis-1/2 max-[500px]:basis-full">
-                                <NewsItem _id={item._id} imageURL={item.imageURL} title={item.title} createdAt={item.createdAt} />
-                            </CarouselItem>
-                        ))
+                        <CarouselItem key={index} className="basis-1/3 max-[1000px]:basis-1/2 max-[500px]:basis-full">
+                            <NewsItem id={item.id} imageURL={item.imageURL} title={item.title} createdAt={item.createdAt} />
+                        </CarouselItem>
+                    ))
                 ) : (
                     Array.from({ length: 3 }).map((_, index) => (
-                        <CarouselItem key={index}  className="basis-1/3 max-[1000px]:basis-1/2 max-[500px]:basis-full">
+                        <CarouselItem key={index} className="basis-1/3 max-[1000px]:basis-1/2 max-[500px]:basis-full">
                             <ShortNewsSkeleton />
                         </CarouselItem>
                     ))
