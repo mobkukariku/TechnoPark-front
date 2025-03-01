@@ -5,6 +5,12 @@ import plugin from "tailwindcss/plugin";
 /** @type {import('tailwindcss').Config} */
 export default {
 	darkMode: ["class"],
+	compilerOptions: {
+		"baseUrl": "./",
+		"paths": {
+			"@/*": ["./src/*"]
+		}
+	},
 	content: [
 		"./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
 		"./src/shared/**/*.{js,ts,jsx,tsx,mdx}",

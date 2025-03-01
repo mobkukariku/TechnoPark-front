@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from "react";
 import { TreeDataItem, TreeView } from "@/shared/ui/tree-view";
 import { axiosInstance } from "@/api/api";
 import { useRouter } from "next/navigation";
-import {Sidebar, SidebarHeader} from "@/shared/ui/sidebar";
+import { Sidebar, SidebarHeader } from "@/shared/ui/sidebar";
 
 export const HierarchySidebar: FC = () => {
     const [data, setData] = useState<TreeDataItem[]>([]);
@@ -14,7 +14,7 @@ export const HierarchySidebar: FC = () => {
     useEffect(() => {
         const fetchDepartments = async () => {
             try {
-                const res = await axiosInstance.get("/departments/hierarchy");
+                const res = await axiosInstance.get("/departments/tree");
                 const transformedData = transformDepartmentsToTree(res.data, router);
                 setData(transformedData);
             } catch (err) {
@@ -33,7 +33,7 @@ export const HierarchySidebar: FC = () => {
     return (
         <Sidebar>
             <SidebarHeader>
-                <h1 className={"font-bold text-[20px]"}>Список Участников</h1>
+                <h1 className="font-bold text-[20px]">Список Участников</h1>
             </SidebarHeader>
             <TreeView data={data} />
         </Sidebar>
@@ -42,24 +42,22 @@ export const HierarchySidebar: FC = () => {
 
 const transformDepartmentsToTree = (departments: any[], router: any): TreeDataItem[] => {
     return departments.map((dept) => {
-        const head = dept.headId
+        const head = dept.head
             ? {
-                id: `head-${dept.headId._id}`,
-                name: `👤 ${dept.headId.name} ${dept.headId.surname}`,
-                onClick: () => router.push(`/members/${dept.headId._id}`),
+                id: `head-${dept.head.id}`,
+                name: `👤 ${dept.head.name}`,
+                onClick: () => router.push(`/members/${dept.head.id}`),
             }
-            : { id: "no-head", name: "Без главы" };
+            : { id: `head-${dept.id}-none`, name: "Без главы" };
 
-        const members = dept.members?.length
-            ? dept.members.map((m: any) => ({
-                id: `member-${m._id}`,
-                name: `👥 ${m.name} ${m.surname}`,
-                onClick: () => router.push(`/members/${m._id}`),
-            }))
-            : [];
+        const members = dept.members?.map((m: any) => ({
+            id: `member-${m.id}`,
+            name: `👥 ${m.name}`,
+            onClick: () => router.push(`/members/${m.id}`),
+        })) || [];
 
         return {
-            id: dept._id,
+            id: dept.id,
             name: `🏢 ${dept.name}`,
             children: [head, ...members, ...(dept.subDepartments?.length ? transformDepartmentsToTree(dept.subDepartments, router) : [])],
         };

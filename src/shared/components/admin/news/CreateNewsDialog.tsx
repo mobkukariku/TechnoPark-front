@@ -33,18 +33,17 @@ const validationSchema = Yup.object({
 
 export const CreateNewsDialog: FC = () => {
     const { handleSubmit, control } = useForm<FormData>({
-        //@ts-ignore
+        //@ts-expect-error: Type mismatch due to resolver type
         resolver: yupResolver(validationSchema),
         defaultValues: { title: "", content: "", image: null }
     });
     const { submitNews, tags } = useNewsStore();
-    const router = useRouter();
 
     const onSubmit = async (data: FormData) => {
         try {
             await submitNews(data.title, data.content, data.image, tags);
             toast.success("Новость была создана!");
-            router.push("/admin");
+            console.log(tags);
         } catch {
             toast.error("Ошибка при отправке");
         }
@@ -78,7 +77,7 @@ export const CreateNewsDialog: FC = () => {
                                 <Input {...field} type="text" placeholder="Название" />
                             )}
                         />
-                        <TagCheckboxes className={"flex-col"} />
+                        <TagCheckboxes className={"flex flex-wrap gap-[10px]"} />
                         <Controller
                             name="content"
                             control={control}
@@ -89,7 +88,6 @@ export const CreateNewsDialog: FC = () => {
                         <Button type="submit">Отправить</Button>
                     </div>
                 </form>
-                <Toaster position="top-right" />
             </DialogContent>
         </Dialog>
     );

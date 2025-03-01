@@ -12,7 +12,7 @@ export const BurgerMenu: FC = () => {
             </div>
             <div>
                 <div className="flex flex-col w-[100%] bg-gray-100 p-4 rounded-[10px] border border-[#2D7DFF] dark:bg-gray-800">
-                    <div className="grid gap-4 py-4">
+                    <div className="grid gap-4 pt-4">
                         <Collapsible className="grid gap-4">
                             <CollapsibleTrigger
                                 className="flex w-full items-center my-[10px] text-lg font-semibold [&[data-state=open]>svg]:rotate-90">
@@ -58,6 +58,9 @@ export const BurgerMenu: FC = () => {
                         </Link>
                         <Link href="/contacts" className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
                             Контакты
+                        </Link>
+                        <Link href="/joinus" className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
+                           <Button className={"w-full"}>Присоединится</Button>
                         </Link>
                     </div>
                 </div>

@@ -5,7 +5,7 @@ export const SoftwareInfo:FC = () => {
     return (
         <Container className={"mt-[50px]"}>
             <div className={"flex justify-around flex-wrap"}>
-                <Image src={"software/info-flat.svg"} alt={"info"} width={507} height={399} />
+                <Image src={"/software/info-flat.svg"} alt={"info"} width={507} height={399} />
                 <div className={"flex flex-col mt-[50px] max-[1000px]:mb-[100px]"}>
                     <p className={"text-[32px] text-center max-[500px]:text-[24px] font-[600]"}>
                         Почему{" "}

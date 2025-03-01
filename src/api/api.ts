@@ -16,7 +16,7 @@ export interface GetDataParams {
     data?: string | null;
     page?: number;
     limit?: number;
-    direction?: string;
+    departmentId?: string;
 }
 
 
@@ -46,8 +46,8 @@ export const login = async (email: string, password: string) => {
 
 export const getProfile = async () => {
     try{
-        const response = await axiosInstance.get('/profile');
-        return response.data.user;
+        const response = await axiosInstance.get('/users/me');
+        return response.data;
     }catch(error){
         throw error;
     }
@@ -78,7 +78,7 @@ export const postNews = async (
     title: string,
     content: string,
     imageFile: File | null,
-    tags: string,
+    tags: string[],
 ) => {
     try {
         const formData = new FormData();
@@ -87,7 +87,8 @@ export const postNews = async (
         if (imageFile) {
             formData.append('image', imageFile);
         }
-        formData.append("tags", tags);
+        tags.forEach(tag => formData.append("tagIds[]", tag));
+
 
         const response = await axiosInstance.post('/news', formData, {
             headers: {
@@ -100,6 +101,7 @@ export const postNews = async (
         throw error;
     }
 };
+
 
 
 export const deleteNews = async (id: string) => {
@@ -135,7 +137,7 @@ export const getLastNews = async (id: string | string[] | undefined) => {
 
 export const getMembersforAdmins = async (params:string) => {
     try{
-        const response = await axiosInstance.get('/members/all', {
+        const response = await axiosInstance.get('/users', {
             params: { search: params }
         });
         return response.data;

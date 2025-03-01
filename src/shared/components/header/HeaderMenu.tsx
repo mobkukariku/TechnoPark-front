@@ -11,25 +11,28 @@ import {
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
 } from "@/shared/ui/navigation-menu"
+import {useTranslations} from "use-intl";
 
 export const HeaderMenu: React.FC = () =>  {
+    const t = useTranslations('HeaderMenu');
+
     return (
         <NavigationMenu>
             <NavigationMenuList>
                 <NavigationMenuItem>
                     <NavigationMenuTrigger>
                         <Link href="/">
-                            Главная
+                            {t('home')}
                         </Link>
                     </NavigationMenuTrigger>
                     <NavigationMenuContent >
                         <NavigationMenuLink asChild >
                         <ul className=" flex flex-col gap-[10px] w-[200px] p-2">
                             <Link href="/aboutUs" className={"hover:bg-gray-200 py-1 px-2 rounded-[10px] transition-colors duration-200"}>
-                                О нас
+                                {t('aboutus')}
                             </Link>
                             <Link href="/members" className={"hover:bg-gray-200 py-1 px-2 rounded-[10px] transition-colors duration-200"}>
-                                Участники
+                                {t('members')}
                             </Link>
                         </ul>
 
@@ -37,7 +40,7 @@ export const HeaderMenu: React.FC = () =>  {
                     </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem className={""}>
-                    <NavigationMenuTrigger>Направление</NavigationMenuTrigger>
+                    <NavigationMenuTrigger>{t('direction')}</NavigationMenuTrigger>
                     <div className="">
                         <NavigationMenuContent>
                             <NavigationMenuLink asChild>
@@ -57,14 +60,14 @@ export const HeaderMenu: React.FC = () =>  {
                 <NavigationMenuItem>
                     <Link href="/news" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                            Новости
+                            {t("news")}
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                     <Link href="/contacts" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                            Контакты
+                            {t("contacts")}
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>

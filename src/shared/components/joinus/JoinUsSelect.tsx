@@ -38,7 +38,7 @@ export const JoinUsSelect: FC<JoinUsSelectProps> = ({ control, name, error }) =>
                 control={control}
                 render={({ field }) => (
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <SelectTrigger className={`w-[340px] ${error ? "border-red-500" : ""}`}>
+                        <SelectTrigger className={`w-[340px] border-[#437DFF] ${error ? "border-red-500" : ""}`}>
                             <SelectValue placeholder="Выберите направление" />
                         </SelectTrigger>
                         <SelectContent>

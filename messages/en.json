@@ -1,0 +1,83 @@
+{
+  "Header": {
+    "enter": "Join Us"
+  },
+  "HeaderMenu": {
+    "home": "Home",
+    "aboutus": "About Us",
+    "members": "Members",
+    "direction": "Direction",
+    "news": "News",
+    "contacts": "Our contacts"
+  },
+  "LandingBanner": {
+    "title": "CREATE THE FUTURE WITH US IN",
+    "description": "This is a space where real-world problems are solved, and a base where theory turns into practical skills. A workshop where knowledge and skills are passed from senior generations to newcomers from the very first year.",
+    "imageAlt": "Landing banner"
+  },
+  "ShortAboutUs": {
+    "title": "About Us",
+    "description": "SDU Technopark is an innovation hub that brings together startups, scientists, and entrepreneurs to create cutting-edge technological solutions. We provide modern infrastructure, resources, and support for the development and implementation of innovative projects in the field of software and hardware technologies...",
+    "button": "Learn More"
+  },
+  "Directions": {
+    "title": "What do we do?",
+    "description": "You can learn about the activities of the Technopark and our projects by visiting the pages below. You can also learn more about us in the 'News' section.",
+    "hardware": {
+      "title": "Hardware",
+      "description": "Creation and production of physical devices and components, including IoT and smart devices"
+    },
+    "software": {
+      "title": "Software",
+      "description": "Development of software for various systems"
+    }
+  },
+  "ShortNews": {
+    "title": "News",
+    "showMore": "Show more..."
+  },
+  "aboutUs": {
+    "pageTitle": "ABOUT US",
+    "title": "SDU TechnoPark",
+    "description": "SDU TechnoPark is an innovation center located in the heart of Kaskelen, Kazakhstan. We create an ecosystem for developing new technologies, startups, and projects in science and business. Our goal is to become a platform for innovation and to train highly qualified specialists who are ready to implement tomorrow's solutions today.",
+    "mission": "OUR MISSION"
+  },
+  "ourMissions": {
+    "mission1": {
+      "title": "Development of Innovative Technologies",
+      "description": "We focus on supporting and implementing advanced technologies in real practice..."
+    },
+    "mission2": {
+      "title": "Startup Support",
+      "description": "We create conditions for the successful launch and growth of innovative startups..."
+    },
+    "mission3": {
+      "title": "Educational Programs",
+      "description": "We conduct educational events, hackathons, and workshops..."
+    },
+    "mission4": {
+      "title": "Business Collaboration",
+      "description": "We actively collaborate with companies, providing solutions for the market..."
+    }
+  },
+  "hardware": {
+    "why": "Why",
+    "direction": "direction",
+    "points": {
+      "point1": "Development of smart devices and IoT solutions.",
+      "point2": "Research in robotics and microelectronics.",
+      "point3": "Prototyping and implementation of technologies in the real sector."
+    }
+  },
+  "projects": {
+    "title": "Our Projects:",
+    "show_more": "Show more...",
+    "hide": "Hide"
+  },
+  "contacts": {
+    "title": "Contacts",
+    "description": "We are always open to new ideas, collaborations, and questions! If you need more information or want to discuss a project, feel free to contact us.",
+    "address": "Address",
+    "phone": "Phone"
+  }
+}

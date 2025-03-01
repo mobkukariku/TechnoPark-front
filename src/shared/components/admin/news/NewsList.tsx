@@ -10,8 +10,12 @@ export const NewsList: FC = () => {
 
     useEffect(() => {
         setLimit(10);
+    }, []);
+
+    useEffect(() => {
         fetchNewsData();
-    }, [page, fetchNewsData]);
+    }, [page]);
+
 
     const handlePageChange = (page: number) => {
         setPage(page);
@@ -31,11 +35,11 @@ export const NewsList: FC = () => {
     return (
         <div>
             <div className="mr-[20px] rounded-[22px] p-[20px] flex flex-col gap-[10px]">
-                {newsData.map((news, index) => (
+                {newsData.map((news) => (
                     <AdminNewsItem
-                        key={news._id || index}
-                        id={news._id}
-                        imageURL={news.imageURL}
+                        key={news.id }
+                        id={news.id}
+                        imageURL={news.imageURL || ""}
                         title={news.title}
                         createdAt={news.createdAt}
                         onDelete={handleDelete}

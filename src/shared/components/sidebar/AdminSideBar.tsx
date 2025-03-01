@@ -23,6 +23,8 @@ export const AdminSideBar: FC = () => {
     const isProfileLoading = useProfileStore(state => state.isProfileLoading);
     const fetchProfile = useProfileStore(state => state.fetchProfile);
 
+    console.log(profile)
+
     useEffect(() => {
         if (!profile && !isProfileLoading) {
             fetchProfile();
@@ -69,7 +71,7 @@ export const AdminSideBar: FC = () => {
                 {isProfileLoading ? (
                     <div>Loading...</div>
                 ) : (
-                    <NavUser user={{ email: user.email, name: user.name, imageURL: user.imageURL }} />
+                    <NavUser user={{ email: user.email, name: user.name}} />
                 )}
             </SidebarFooter>
             <SidebarRail />

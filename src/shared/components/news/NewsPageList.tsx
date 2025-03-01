@@ -13,7 +13,7 @@ export const NewsPageList: FC = () => {
         if (!isLoading) {
             fetchNewsData();
         }
-    }, [newsData, page, totalPages, isLoading]);
+    }, []);
 
     const handlePageChange = (page: number) => {
         setPage(page);

@@ -71,9 +71,7 @@ const useNewsStore = create<NewsState>((set, get) => ({
         const { isLoading, search, filterTags, sort, lastSearchParams, page, limit } = get();
         const currentParams: GetDataParams = { search, tags:filterTags, sort, page, limit };
 
-        if (isLoading || JSON.stringify(currentParams) === JSON.stringify(lastSearchParams)) {
-            return;
-        }
+
 
         set({ isLoading: true, lastSearchParams: currentParams });
 
@@ -92,8 +90,10 @@ const useNewsStore = create<NewsState>((set, get) => ({
 
         set({ isLoading: true });
 
+        const selectedtags = tags.split(",")
+
         try {
-            const newNews = await postNews(title, content, image, tags);
+            const newNews = await postNews(title, content, image, selectedtags);
             set((state) => ({
                 newsData: [...state.newsData, newNews],
                 isLoading: false,

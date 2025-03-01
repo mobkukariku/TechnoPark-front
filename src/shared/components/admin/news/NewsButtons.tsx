@@ -16,8 +16,8 @@ export const NewsButtons: FC = () => {
                 <Input placeholder="Search" className="w-[500px]" value={search} onChange={(e) => setSearch(e.target.value)} />
                 <CreateNewsDialog />
             </div>
-           <div className={"my-[20px]"}>
-               <TagCheckboxes className={"flew-row"} isFilter={true} />
+           <div className={"my-[20px] "}>
+               <TagCheckboxes className={"flex gap-[10px] flex-wrap"} isFilter={true} />
            </div>
         </div>
     );

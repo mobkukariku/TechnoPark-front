@@ -1,4 +1,4 @@
-import "../globals.css";
+import "../../globals.css";
 import { AdminSideBar } from "@/shared/components";
 import { SidebarProvider, SidebarTrigger } from "@/shared/ui/sidebar";
 

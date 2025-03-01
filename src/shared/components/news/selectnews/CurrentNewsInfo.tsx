@@ -31,11 +31,11 @@ export const CurrentNewsInfo: FC<{newsId: string | Array<string> | undefined}> =
                         <div className={"flex  justify-between"}>
                             <div className={""}>
                                 <p className={"text-[#444444] mb-[10px] "}>{formatDate(currentNews?.createdAt)}</p>
-                                <div className="relative h-[388px] w-[813px] overflow-hidden rounded-[8px]">
+                                <div className="relative h-[388px] w-[213px] overflow-hidden rounded-[8px]">
                                     {currentNews?.imageURL && (
                                         <Image
                                             src={currentNews.imageURL}
-                                            width={813}
+                                            width={213}
                                             height={288}
                                             alt="pic"
                                             className="object-cover w-full h-full"
@@ -54,7 +54,7 @@ export const CurrentNewsInfo: FC<{newsId: string | Array<string> | undefined}> =
                                     </div>
                                 </div>
                             </div>
-                            <NewsSideBar _id={currentNews?._id}/>
+                            <NewsSideBar _id={currentNews?.id}/>
                         </div>
                     </>
                 ) : (

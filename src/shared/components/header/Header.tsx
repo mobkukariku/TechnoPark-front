@@ -7,10 +7,15 @@ import { HeaderMenu } from "@/shared/components/header/HeaderMenu";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {AlignJustify, X} from "lucide-react";
+import {useTranslations} from "use-intl";
+import {LangSelect} from "@/shared/components/header/LangSelect";
 
 export const Header: FC = () => {
     const [isDesktop, setIsDesktop] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const t = useTranslations('Header');
+
+
 
     useEffect(() => {
         const handleResize = () => {
@@ -34,11 +39,14 @@ export const Header: FC = () => {
                                 </Link>
                                 <HeaderMenu />
                             </div>
-                            <Link href="/joinus" className="relative z-50">
-                                <Button size="default" variant="default" className="text-[18px]">
-                                    Присоединиться
-                                </Button>
-                            </Link>
+                           <div className={"flex gap-2"}>
+                               <LangSelect/>
+                               <Link href="/joinus" className="relative z-50">
+                                   <Button size="default" variant="default" className="text-[18px]">
+                                       {t('enter')}
+                                   </Button>
+                               </Link>
+                           </div>
                         </div>
                     ) : (
                         <>

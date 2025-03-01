@@ -12,7 +12,7 @@ export const SortingSelect:FC<{value:string, hadnleChange:(value:string) => void
 
     return (
         <Select value={value} onValueChange={hadnleChange}>
-            <SelectTrigger>
+            <SelectTrigger className={"border-[#2D7DFF]"}>
                 <SelectValue placeholder="Select a sorting" />
             </SelectTrigger>
             <SelectContent>

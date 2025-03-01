@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import "../globals.css";
+import "../../globals.css";
 import { HierarchySidebar} from "@/shared/components";
 import { SidebarProvider, SidebarTrigger } from "@/shared/ui/sidebar";
 
