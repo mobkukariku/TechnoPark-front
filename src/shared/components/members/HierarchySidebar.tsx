@@ -1,7 +1,7 @@
 "use client";
 import { FC, useEffect, useState } from "react";
 import { TreeDataItem, TreeView } from "@/shared/ui/tree-view";
-import { axiosInstance } from "@/api/api";
+import { axiosInstance } from "@/api/axiosInstance";
 import { useRouter } from "next/navigation";
 import { Sidebar, SidebarHeader } from "@/shared/ui/sidebar";
 

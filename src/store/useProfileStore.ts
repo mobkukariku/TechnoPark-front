@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import {getProfile, logout} from "@/api/api";
+import {getProfile, logout} from "@/api/authApi";
 
 interface ProfileData {
     id: string;
@@ -24,7 +24,7 @@ const useProfileStore = create<ProfileState>((set, get) => ({
     fetchProfile: async () => {
         set({ isProfileLoading: true });
         try {
-            const profile:ProfileData = await getProfile();
+            const profile:ProfileData = await getProfile() as ProfileData;
             set({ profile, isProfileLoading: false });
         } catch (error) {
             set({ isProfileLoading: false });

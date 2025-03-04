@@ -1,7 +1,7 @@
 "use client"
 
 import { FC } from "react";
-import useMembersStore from "@/store/useMembersStore";
+import useMembersStore, {Member} from "@/store/useMembersStore";
 
 
 import * as React from "react"
@@ -28,24 +28,7 @@ import {
     TableRow,
 } from "@/shared/ui/table"
 
-export type Department = {
-    _id: string;
-    name: string;
-}
 
-
-export type Member = {
-    _id: string;
-    name: string;
-    surname: string;
-    email: string;
-    position: string;
-    phoneNumber: string;
-    telegram: string;
-    linkedinURL: string;
-    departmentId: Department;
-    isHead: boolean;
-};
 
 
 
@@ -55,7 +38,7 @@ export const columns: ColumnDef<Member>[] = [
     {
         accessorKey: "name",
         header: "Name",
-        cell: ({ row }) => <div>{row.original.name} {row.original.surname}</div>,
+        cell: ({ row }) => <div>{row.original.name}</div>,
     },
     {
         accessorKey: "email",
@@ -63,38 +46,14 @@ export const columns: ColumnDef<Member>[] = [
         cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
     },
     {
-        accessorKey: "position",
-        header: "Position",
-        cell: ({ row }) => <div>{row.getValue("position")}</div>,
+        accessorKey: "role",
+        header: "Role",
+        cell: ({ row }) => <div>{row.getValue("role")}</div>,
     },
     {
-        accessorKey: "phoneNumber",
-        header: "Phone",
-        cell: ({ row }) => <div>{row.getValue("phoneNumber")}</div>,
-    },
-    {
-        accessorKey: "telegram",
-        header: "Telegram",
-        cell: ({ row }) => <div>{row.getValue("telegram")}</div>,
-    },
-    {
-        accessorKey: "linkedinURL",
-        header: "LinkedIn",
-        cell: ({ row }) => (
-            <a
-                href={row.getValue("linkedinURL")}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 underline"
-            >
-                Profile
-            </a>
-        ),
-    },
-    {
-        accessorKey: "department",
-        header: "Department",
-        cell: ({ row }) => <div>{row.original.departmentId?.name || "N/A"}</div>,
+        accessorKey: "isActive",
+        header: "isActive",
+        cell: ({ row }) => <div>{row.getValue("isActive") ? "работает" : "не работает"}</div>,
     },
 ];
 

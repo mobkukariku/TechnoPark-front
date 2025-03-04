@@ -13,13 +13,17 @@ export const NewsSideBar: FC<{ _id: string | Array<string> | undefined }> = ({ _
         return new Date(date).toLocaleDateString("ru-RU");
     };
 
+    useEffect(() => {
+        setLastNews(_id)
+    }, []);
+
     return (
-        <div className="w-[250px]">
+        <div className="w-[250px] ">
             <p className="text-center font-semibold text-[20px] mt-[10px]">Последние новости</p>
             <div className="max-w-[290px] mt-[21px] flex flex-col gap-[20px]">
                 {lastNews.map((item) => (
                     <div key={item.id} className="flex flex-col gap-[6px]">
-                        <Link href={`/src/app/%5Blocale%5D/news/${item.id}`}>
+                        <Link href={`/news/${item.id}`}>
                             <h2 className="font-medium cursor-pointer hover:text-[#5998FF] transition-colors">
                                 {item.title}
                             </h2>

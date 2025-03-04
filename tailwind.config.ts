@@ -185,5 +185,9 @@ export default {
 		require("tailwindcss-animate"),
 		// eslint-disable-next-line @typescript-eslint/no-require-imports
 		require("@tailwindcss/line-clamp"),
+		// eslint-disable-next-line @typescript-eslint/no-require-imports
+		require("@tailwindcss/typography")
 	],
 } satisfies Config;
+
+

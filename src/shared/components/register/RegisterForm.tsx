@@ -5,7 +5,7 @@ import {Button, Input,} from "@/shared/ui";
 import {toast, Toaster} from "react-hot-toast";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import {login} from "@/api/api";
+import {login} from "@/api/axiosInstance";
 
 
 const validationSchema = Yup.object({

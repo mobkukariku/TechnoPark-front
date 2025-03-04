@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import {toast, Toaster} from "react-hot-toast";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import {login} from "@/api/api";
+import {login} from "@/api/authApi";
 
 
 const validationSchema = Yup.object({
@@ -39,7 +39,7 @@ export const LoginForm: FC = () => {
             await login(data.email, data.password);
             toast.success("Заявка отправлена!");
             router.push("/admin");
-        } catch (error) {
+        } catch {
             toast.error("Ошибка при отправке");
         }
     };

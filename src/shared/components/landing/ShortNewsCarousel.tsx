@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, useEffect, useState } from "react";
-import { getNews } from "@/api/api";
+import { getNews } from "@/api/newsApi";
 import {
     Carousel,
     CarouselContent,
@@ -24,7 +24,7 @@ export const ShortNewsCarousel: FC = () => {
     useEffect(() => {
         const fetchNews = async () => {
             try {
-                const response = await getNews({ page: 1, limit: 3, sort: "newest" });
+                const response:ShortNewsProps[] = await getNews({ page: 1, limit: 3, sort: "newest" }) as ShortNewsProps[];
 
                 const formattedNews = response.map((item: ShortNewsProps) => ({
                     id: item.id,

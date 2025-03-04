@@ -1,10 +1,11 @@
 import {FC} from "react";
-import {ProjectsList} from "@/shared/components";
+import {AdminProjectsList, AdminProjectsButtons} from "@/shared/components";
 
 const ProjectsPage:FC = () => {
     return (
         <div>
-            <ProjectsList />
+            <AdminProjectsButtons/>
+            <AdminProjectsList />
         </div>
     )
 }

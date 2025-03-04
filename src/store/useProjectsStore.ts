@@ -1,12 +1,10 @@
 import {create} from "zustand";
-import {GetDataParams, getProjects} from "@/api/api";
+import {createProject as createProjectAPI, getProjects} from "@/api/projectsApi";
 
 interface ImageProps {
-    id: string,
-    imageUrl: string,
+    id: string;
+    imageUrl: string;
 }
-
-
 
 interface ProjectData {
     id: string;
@@ -31,10 +29,11 @@ interface ProjectState {
     setSort: (sort: string) => void;
     setPage: (page: number) => void;
     fetchProjectsData: () => Promise<void>;
+    createProject: (data: { title: string; description: string; departmentId: string; images: File[] }) => Promise<void>;
 }
 
 const useProjectsStore = create<ProjectState>((set, get) => ({
-    projects:[],
+    projects: [],
     isLoading: false,
     search: "",
     sort: "newest",
@@ -43,22 +42,39 @@ const useProjectsStore = create<ProjectState>((set, get) => ({
     departmentId: "",
     totalPages: 0,
     setDepartmentId: (departmentId: string) => set({ departmentId }),
-    setLimit: (limit: number) => set({limit}),
+    setLimit: (limit: number) => set({ limit }),
     setSearch: (search) => set({ search }),
     setSort: (sort) => set({ sort }),
     setPage: (page) => set({ page }),
+
     fetchProjectsData: async () => {
-        const { isLoading, search,  sort,  page, limit, departmentId } = get();
-        const currentParams: GetDataParams = { search,  sort, page, limit, departmentId };
+        const { isLoading } = get();
 
         if (isLoading) return;
-        set({ isLoading: true});
-        try{
-            const response = await getProjects(currentParams);
-            set({ projects: response.length === 0 ? [] : response, isLoading:false});
-        }catch(error){
-            throw error;
-        }finally {
+        set({ isLoading: true });
+
+        try {
+            const response: ProjectData[] = await getProjects() as ProjectData[];
+            set({ projects: response.length === 0 ? [] : response, isLoading: false });
+        } catch (error) {
+            console.error("Ошибка загрузки проектов:", error);
+        } finally {
+            set({ isLoading: false });
+        }
+    },
+
+    createProject: async ({ title, description, departmentId, images }) => {
+        set({ isLoading: true });
+
+        try {
+            const data: ProjectData = await createProjectAPI({title, description, departmentId, images}) as ProjectData;
+
+            set((state) => ({
+                projects: [...state.projects, data],
+                isLoading: false,
+            }));
+        } catch (error) {
+            console.error("Ошибка при создании проекта:", error);
             set({ isLoading: false });
         }
     },

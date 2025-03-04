@@ -14,7 +14,7 @@ export {DirectionBanner} from "./direction";
 export {NewsPageList, NewsPageItem, NewsFiltration, NewsItem, CurrentNewsInfo} from "./news";
 export {AdminSideBar} from "./sidebar";
 export {TagCheckboxes} from "./filtration"
-export{NewsList, NewsButtons, MembersTable} from "./admin";
+export{NewsList, NewsButtons, MembersTable, AdminProjectsList, AdminProjectsButtons} from "./admin";
 export {HierarchySidebar} from "./members";
 export {ProjectsList} from "./projects";
 

@@ -12,9 +12,79 @@
     }
 }
 
+
+.prose p{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 .input-error {
     animation: borderError 0.3s ease-in-out;
 }
+
+.toast-container {
+    z-index: 9999 !important;
+}
+
+.tiptap-content {
+    white-space: pre-line;
+}
+
+
+.ProseMirror h1 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.ProseMirror h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.ProseMirror h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.ProseMirror blockquote {
+    border-left: 4px solid #ccc;
+    padding-left: 10px;
+    font-style: italic;
+    color: #555;
+}
+
+.ProseMirror ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.ProseMirror ol {
+    list-style-type: decimal;
+    padding-left: 20px;
+}
+
+.ProseMirror li {
+    margin-bottom: 4px;
+}
+
+.resizable-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.resize-handle {
+    width: 10px;
+    height: 10px;
+    background: red;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    cursor: nwse-resize;
+}
+
+
+
 
 @layer base {
   :root {

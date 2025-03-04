@@ -23,7 +23,7 @@ export const AdminSideBar: FC = () => {
     const isProfileLoading = useProfileStore(state => state.isProfileLoading);
     const fetchProfile = useProfileStore(state => state.fetchProfile);
 
-    console.log(profile)
+
 
     useEffect(() => {
         if (!profile && !isProfileLoading) {

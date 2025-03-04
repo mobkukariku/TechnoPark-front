@@ -29,19 +29,21 @@ export const Header: FC = () => {
     }, []);
 
     return (
-            <Container className="mb-[67px] relative z-50 p-0">
+            <Container className="mb-[67px] relative z-40 p-0">
                 <header className="mt-[20px] w-full relative z-50 flex justify-between items-center">
                     {isDesktop ? (
-                        <div className="flex items-center w-full justify-between gap-[39px] relative z-20">
+                        <div className="flex items-start w-full justify-between gap-[39px] relative z-20">
                             <div className="flex gap-[20px] items-center">
-                                <Link href="/" >
-                                    <Image width={105} height={44} src="/logo.svg" alt="Логотип" />
+                                <Link href="/"  prefetch={true}>
+                                    <Image width={61} height={61} src="/logo.svg" alt="Логотип" />
                                 </Link>
-                                <HeaderMenu />
+                                <div className={"mt-[20px]"}>
+                                    <HeaderMenu />
+                                </div>
                             </div>
-                           <div className={"flex gap-2"}>
+                           <div className={"flex mt-[20px] gap-2"}>
                                <LangSelect/>
-                               <Link href="/joinus" className="relative z-50">
+                               <Link href="/joinus" className="relative z-50" prefetch={true}>
                                    <Button size="default" variant="default" className="text-[18px]">
                                        {t('enter')}
                                    </Button>
@@ -51,15 +53,18 @@ export const Header: FC = () => {
                     ) : (
                         <>
                             <div className="flex w-full items-center justify-between">
-                                <Link href="/">
+                                <Link href="/" prefetch={true}>
                                     <Image width={70} height={29} src="/logo.svg" alt="Логотип" />
                                 </Link>
-                                <Button
-                                    variant="link"
-                                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                >
-                                    {isMenuOpen ? <X  /> : <AlignJustify />}
-                                </Button>
+                                <div className={"flex gap-[10px]"}>
+                                    <LangSelect/>
+                                    <Button
+                                        variant="link"
+                                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                    >
+                                        {isMenuOpen ? <X  /> : <AlignJustify />}
+                                    </Button>
+                                </div>
                             </div>
                             <AnimatePresence>
                                 {isMenuOpen && (

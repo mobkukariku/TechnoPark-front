@@ -4,7 +4,7 @@ import useProjectsStore from "@/store/useProjectsStore";
 import Image from "next/image";
 import {Button} from "@/shared/ui";
 
-export const ProjectsList:FC = () => {
+export const AdminProjectsList:FC = () => {
 
     const {projects, fetchProjectsData, isLoading } = useProjectsStore();
 
@@ -12,16 +12,16 @@ export const ProjectsList:FC = () => {
         if(!isLoading){
             fetchProjectsData();
         }
-    }, []);
+    }, [fetchProjectsData]);
 
     return (
-        <div>
+        <div className={"mr-[20px] rounded-[22px] p-[20px] flex flex-col gap-[10px]"}>
             {projects.map((item,) => (
-                <div key={item._id} className="flex items-center justify-between border-2 p-3 rounded-[14px] gap-4">
+                <div key={item.id} className="flex items-center justify-between border-2 p-3 rounded-[14px] gap-4">
                     {/* Изображение новости */}
                     <div className="relative h-[92px] w-[178px] overflow-hidden rounded-[8px]">
                         <Image
-                            src={item.imageURLs[0][0]}
+                            src={item.images[0].imageUrl}
                             alt={item.title}
                             layout="fill"
                             objectFit="cover"

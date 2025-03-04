@@ -1,7 +1,6 @@
 "use client"
 import {FC, useEffect} from "react";
-import {Button, Checkbox, Input} from "@/shared/ui";
-import {CirclePlus} from "lucide-react";
+import { Input} from "@/shared/ui";
 import useNewsStore from "@/store/useNewsStore";
 import {TagCheckboxes} from "@/shared/components";
 import {CreateNewsDialog} from "@/shared/components/admin/news/CreateNewsDialog";

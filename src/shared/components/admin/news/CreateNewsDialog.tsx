@@ -8,15 +8,15 @@ import {
 } from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input"
 import { FC } from "react";
-import { Button, Textarea } from "@/shared/ui";
+import { Button } from "@/shared/ui";
 import { CirclePlus } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { TagCheckboxes } from "@/shared/components";
-import  toast, {Toaster } from "react-hot-toast";
+import  toast from "react-hot-toast";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useNewsStore from "@/store/useNewsStore";
-import { useRouter } from "next/navigation";
 import * as Yup from "yup";
+import NewsContentEditor from "@/shared/components/admin/news/NewsContentEditor";
 
 interface FormData {
     title: string;
@@ -54,7 +54,7 @@ export const CreateNewsDialog: FC = () => {
             <DialogTrigger asChild>
                 <Button><CirclePlus />Добавить</Button>
             </DialogTrigger>
-            <DialogContent className="max-w-[800px]">
+            <DialogContent className="max-w-[1000px]">
                 <DialogHeader>
                     <DialogTitle className="font-bold text-[32px] text-center">Создать новость</DialogTitle>
                 </DialogHeader>
@@ -81,10 +81,11 @@ export const CreateNewsDialog: FC = () => {
                         <Controller
                             name="content"
                             control={control}
-                            render={({ field }) => (
-                                <Textarea {...field} placeholder="Содержание" className="h-[400px]" />
+                            render={({ field: { onChange, value } }) => (
+                                <NewsContentEditor onChange={onChange} content={value}  />
                             )}
                         />
+
                         <Button type="submit">Отправить</Button>
                     </div>
                 </form>

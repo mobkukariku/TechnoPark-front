@@ -28,30 +28,28 @@ export const CurrentNewsInfo: FC<{newsId: string | Array<string> | undefined}> =
                     <>
                         <h1 className={"text-[32px] font-bold leading-[35px]"}>{currentNews?.title}</h1>
                         <hr className={"my-[15px]"}/>
-                        <div className={"flex  justify-between"}>
+                        <div className={"flex flex-wrap  max-[1061px]:justify-center max-[1061px]:gap-[77px]  justify-between"}>
                             <div className={""}>
                                 <p className={"text-[#444444] mb-[10px] "}>{formatDate(currentNews?.createdAt)}</p>
-                                <div className="relative h-[388px] w-[213px] overflow-hidden rounded-[8px]">
+                                <div className="relative h-[388px]  w-[813px] max-[812px]:w-[569px] max-[812px]:h-[272px] overflow-hidden rounded-[8px]">
                                     {currentNews?.imageURL && (
                                         <Image
                                             src={currentNews.imageURL}
-                                            width={213}
-                                            height={288}
-                                            alt="pic"
+                                            alt="Новостное изображение"
+                                            fill
+                                            quality={100}
+                                            priority
                                             className="object-cover w-full h-full"
                                         />
+
                                     )}
                                 </div>
 
                                 <div className={"flex flex-row gap-[30px] mt-[24px] justify-start "}>
-                                    <NewsIcons/>
-                                    <div className="">
-                                        <p className="max-w-[700px] break-words">
-                                            {currentNews?.content}
-                                        </p>
-
-
-                                    </div>
+                                    <div
+                                        dangerouslySetInnerHTML={{ __html: currentNews?.content || "" }}
+                                        className="max-w-[800px] prose break-words"
+                                    />
                                 </div>
                             </div>
                             <NewsSideBar _id={currentNews?.id}/>
@@ -59,7 +57,7 @@ export const CurrentNewsInfo: FC<{newsId: string | Array<string> | undefined}> =
                     </>
                 ) : (
                     <CurrentNewsSkeleton  />
-            )}
+                )}
             </div>
         </Container>
     )

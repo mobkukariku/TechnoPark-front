@@ -30,6 +30,7 @@ export const ShortNews: FC = () => {
                 <Image
                     src="/landing/element.svg"
                     width={846}
+                    quality={20}
                     height={819}
                     alt="element"
                     className="top-[-600px] absolute z-0"

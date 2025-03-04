@@ -1,6 +1,15 @@
-import {Member} from "@/shared/components/admin/members/MembersTable";
 import {create} from "zustand";
-import {getMembersforAdmins, getMembersForUsers} from "@/api/api";
+import {getMembersForAdmins, getMembersForUsers} from "@/api/usersApi";
+
+
+export type Member = {
+    _id: string;
+    name: string;
+    email: string;
+    role: string;
+    isActive: boolean;
+};
+
 
 interface MembersState {
     membersForAdmin: Member[];
@@ -28,7 +37,7 @@ const useMembersStore = create<MembersState>((set, get) => ({
         set({isLoading: true});
 
         try{
-            const members = await getMembersForUsers(search);
+            const members: Member[] = await getMembersForUsers(search) as Member[];
             set({membersForUsers: members});
         }catch(err){
             throw err;
@@ -45,7 +54,7 @@ const useMembersStore = create<MembersState>((set, get) => ({
         set({isLoading: true});
 
         try{
-            const members = await getMembersforAdmins(search);
+            const members: Member[] = await getMembersForAdmins(search) as Member[];
             set({membersForAdmin: members});
         }catch (error) {
             throw error;

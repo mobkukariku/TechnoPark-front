@@ -79,5 +79,23 @@
     "description": "We are always open to new ideas, collaborations, and questions! If you need more information or want to discuss a project, feel free to contact us.",
     "address": "Address",
     "phone": "Phone"
+  },
+  "joinUs": {
+    "title": "Submit Your Application!",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "coverLetter": "Cover Letter",
+    "submit": "Submit",
+    "success": "Application submitted!",
+    "error": "Error submitting application.",
+    "requiredFirstName": "First name is required",
+    "requiredLastName": "Last name is required",
+    "requiredEmail": "Email is required",
+    "invalidEmail": "Invalid email format",
+    "requiredCoverLetter": "Cover letter is required",
+    "requiredCourse": "Please select a course",
+    "selectDirection": "Select a direction",
+    "direction": "Direction"
   }
 }
