@@ -4,6 +4,8 @@ import { TreeDataItem, TreeView } from "@/shared/ui/tree-view";
 import { axiosInstance } from "@/api/axiosInstance";
 import { useRouter } from "next/navigation";
 import { Sidebar, SidebarHeader } from "@/shared/ui/sidebar";
+import {transformDepartmentsToTree} from "@/shared/components/members/transformDepartmentsToTree";
+
 
 export const HierarchySidebar: FC = () => {
     const [data, setData] = useState<TreeDataItem[]>([]);
@@ -17,7 +19,7 @@ export const HierarchySidebar: FC = () => {
                 const res = await axiosInstance.get("/departments/tree");
                 const transformedData = transformDepartmentsToTree(res.data, router);
                 setData(transformedData);
-            } catch (err) {
+            } catch {
                 setError("Ошибка загрузки иерархии");
             } finally {
                 setLoading(false);
@@ -38,28 +40,4 @@ export const HierarchySidebar: FC = () => {
             <TreeView data={data} />
         </Sidebar>
     );
-};
-
-const transformDepartmentsToTree = (departments: any[], router: any): TreeDataItem[] => {
-    return departments.map((dept) => {
-        const head = dept.head
-            ? {
-                id: `head-${dept.head.id}`,
-                name: `👤 ${dept.head.name}`,
-                onClick: () => router.push(`/members/${dept.head.id}`),
-            }
-            : { id: `head-${dept.id}-none`, name: "Без главы" };
-
-        const members = dept.members?.map((m: any) => ({
-            id: `member-${m.id}`,
-            name: `👥 ${m.name}`,
-            onClick: () => router.push(`/members/${m.id}`),
-        })) || [];
-
-        return {
-            id: dept.id,
-            name: `🏢 ${dept.name}`,
-            children: [head, ...members, ...(dept.subDepartments?.length ? transformDepartmentsToTree(dept.subDepartments, router) : [])],
-        };
-    });
 };

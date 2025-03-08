@@ -1,14 +1,36 @@
 import { create } from "zustand";
 import {getProfile, logout} from "@/api/authApi";
 
-interface ProfileData {
+type ProfileData = {
     id: string;
     name: string;
     email: string;
 }
 
+export type ProfileFull = {
+    skills?: string[];
+    description?: string;
+    imageURL?: string ;
+    position?: string;
+};
+export type Contacts = {
+    id: string;
+    userId: string;
+    type: string;
+    value: string;
+};
+
+
+export type ProfileFullInfo = ProfileData & {
+    memberProfile?: ProfileFull,
+    contacts?: Contacts[]
+}
+
+
+
+
 interface ProfileState {
-    profile: ProfileData | null;
+    profile: ProfileFullInfo | null;
     isProfileLoading: boolean;
     setProfile: (profile: ProfileData) => void;
     getProfile: () => ProfileData | null;
@@ -24,7 +46,7 @@ const useProfileStore = create<ProfileState>((set, get) => ({
     fetchProfile: async () => {
         set({ isProfileLoading: true });
         try {
-            const profile:ProfileData = await getProfile() as ProfileData;
+            const profile:ProfileFullInfo = await getProfile() as ProfileFullInfo;
             set({ profile, isProfileLoading: false });
         } catch (error) {
             set({ isProfileLoading: false });

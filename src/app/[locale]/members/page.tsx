@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {MembersList} from "@/shared/components/members/MembersList";
+import {MembersList} from "@/shared/components";
 
 const HierarchyPage:FC = () => {
     return (

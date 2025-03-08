@@ -1,5 +1,6 @@
 import {create} from "zustand";
-import {createProject as createProjectAPI, getProjects} from "@/api/projectsApi";
+import {createProject as createProjectAPI, getProjects, } from "@/api/projectsApi";
+import {GetDataParams} from "@/api/dataParams";
 
 interface ImageProps {
     id: string;
@@ -48,13 +49,14 @@ const useProjectsStore = create<ProjectState>((set, get) => ({
     setPage: (page) => set({ page }),
 
     fetchProjectsData: async () => {
-        const { isLoading } = get();
+        const { isLoading, search, sort, page, limit, departmentId } = get();
+        const currentParams: GetDataParams = { search, sort, page, limit, departmentId };
 
         if (isLoading) return;
         set({ isLoading: true });
 
         try {
-            const response: ProjectData[] = await getProjects() as ProjectData[];
+            const response: ProjectData[] = await getProjects(currentParams) as ProjectData[];
             set({ projects: response.length === 0 ? [] : response, isLoading: false });
         } catch (error) {
             console.error("Ошибка загрузки проектов:", error);
@@ -67,7 +69,7 @@ const useProjectsStore = create<ProjectState>((set, get) => ({
         set({ isLoading: true });
 
         try {
-            const data: ProjectData = await createProjectAPI({title, description, departmentId, images}) as ProjectData;
+            const data: ProjectData = await createProjectAPI({title, description, departmentId, images}) as ProjectData; // Явно указываем, что нам нужен data
 
             set((state) => ({
                 projects: [...state.projects, data],

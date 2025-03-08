@@ -11,7 +11,7 @@ import {login} from "@/api/authApi";
 
 const validationSchema = Yup.object({
     email: Yup.string().email("Неверный формат почты").required("Почта обязательна"),
-    password: Yup.string().min(8, "Минимум 8 символов").required("Пароль обязателен"),
+    password: Yup.string().min(6, "Минимум 6 символов").required("Пароль обязателен"),
 });
 
 interface FormData {

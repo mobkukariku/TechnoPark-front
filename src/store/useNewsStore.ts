@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import {deleteNews, getLastNews, getNews, getNewsByID, GetDataParams, postNews} from "@/api/newsApi";
+import {GetDataParams} from "@/api/dataParams"
+import {deleteNews, getLastNews, getNews, getNewsByID, postNews} from "@/api/newsApi";
 import {getTags} from "@/api/tagsApi"
 
 interface NewsData {

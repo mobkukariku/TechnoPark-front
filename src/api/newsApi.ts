@@ -1,14 +1,5 @@
 import { getData, postData, deleteData } from "./axiosInstance";
-
-export interface GetDataParams {
-    tags?: string;
-    search?: string;
-    sort?: string;
-    date?: string | null;
-    page?: number;
-    limit?: number;
-    departmentId?: string;
-}
+import {GetDataParams} from "@/api/dataParams";
 
 export const getNews = async (params: GetDataParams = {}) =>
     getData('/news', params);

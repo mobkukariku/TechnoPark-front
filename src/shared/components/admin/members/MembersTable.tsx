@@ -29,11 +29,6 @@ import {
 } from "@/shared/ui/table"
 
 
-
-
-
-
-
 export const columns: ColumnDef<Member>[] = [
     {
         accessorKey: "name",
@@ -51,11 +46,34 @@ export const columns: ColumnDef<Member>[] = [
         cell: ({ row }) => <div>{row.getValue("role")}</div>,
     },
     {
+        accessorKey: "departmentMemberships",
+        header: "Department ID",
+        cell: ({ row }) => (
+            <div>
+                {row.original.departmentMemberships?.map(dep => (
+                    <div key={dep.departmentId}>{dep.departmentId}</div>
+                )) || "—"}
+            </div>
+        ),
+    },
+    {
+        accessorKey: "departmentRole",
+        header: "Department Role",
+        cell: ({ row }) => (
+            <div>
+                {row.original.departmentMemberships?.map(dep => (
+                    <div key={dep.departmentId}>{dep.role}</div>
+                )) || "—"}
+            </div>
+        ),
+    },
+    {
         accessorKey: "isActive",
         header: "isActive",
         cell: ({ row }) => <div>{row.getValue("isActive") ? "работает" : "не работает"}</div>,
-    },
+    }
 ];
+
 
 export const MembersTable: FC = () => {
     const { isLoading, membersForAdmin, fetchMembersforAdmins, search, setSearch } = useMembersStore();

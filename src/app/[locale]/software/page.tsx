@@ -7,7 +7,7 @@ const SoftwarePage:FC = () => {
             <Header />
             <DirectionBanner title={"SOFTWARE"} imageURL={"/software/software.png"} />
             <SoftwareInfo />
-            <ProjectsList />
+            <ProjectsList id={"137db4ee-88fb-4480-a5df-c09f6b1dde19"} />
         </>
     );
 }

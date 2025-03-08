@@ -13,9 +13,10 @@ export {DirectionBanner} from "./direction";
 //updating сomponents
 export {NewsPageList, NewsPageItem, NewsFiltration, NewsItem, CurrentNewsInfo} from "./news";
 export {AdminSideBar} from "./sidebar";
-export {TagCheckboxes} from "./filtration"
+export {TagCheckboxes} from "./filtration";
+export {ProfileContactsInfo} from "./profile";
 export{NewsList, NewsButtons, MembersTable, AdminProjectsList, AdminProjectsButtons} from "./admin";
-export {HierarchySidebar} from "./members";
+export {HierarchySidebar, MembersList, CurrentMemberInfo, WorkExperience, SkillsList, CertificatesList} from "./members";
 export {ProjectsList} from "./projects";
 
 //usefull
@@ -24,6 +25,5 @@ export {Header, BurgerMenu, HeaderMenu} from "./header";
 
 
 // forms
-export {RegisterForm} from "./register";
 export {LoginForm} from "./login";
 export {JoinUsForm, JoinUsSelect} from "./joinus";

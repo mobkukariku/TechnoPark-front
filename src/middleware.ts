@@ -3,12 +3,11 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const intlMiddleware = createMiddleware({
-    locales: ["en", "ru"], // Языки
-    defaultLocale: "en",   // Язык по умолчанию
+    locales: ["en", "ru"],
+    defaultLocale: "en",
 });
 
 export function middleware(req: NextRequest) {
-    // 1️⃣ Проверяем токен для `/admin`
     const token = req.cookies.get("token")?.value;
     const url = req.nextUrl.pathname;
 
@@ -16,7 +15,6 @@ export function middleware(req: NextRequest) {
         return NextResponse.redirect(new URL("/", req.url));
     }
 
-    // 2️⃣ Применяем next-intl middleware
     return intlMiddleware(req);
 }
 

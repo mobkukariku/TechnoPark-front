@@ -5,13 +5,15 @@ import useProjectsStore from "@/store/useProjectsStore";
 import { ProjectImageCarousel } from "@/shared/components/projects/ProjectsImageCarousel";
 import { useTranslations } from "next-intl";
 
-export const ProjectsList: FC = () => {
-    const { projects, fetchProjectsData, setLimit, isLoading, limit } = useProjectsStore();
+export const ProjectsList: FC<{id:string}> = ({id}) => {
+    const { projects, fetchProjectsData, setLimit, isLoading, limit, setDepartmentId } = useProjectsStore();
     const [isPressed, setIsPressed] = useState(false);
     const t = useTranslations("projects");
 
+
     useEffect(() => {
         if (!isLoading) {
+            setDepartmentId(id);
             fetchProjectsData();
         }
     }, [fetchProjectsData, limit]);

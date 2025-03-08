@@ -3,6 +3,7 @@ import {FC, useEffect} from "react";
 import useMembersStore from "@/store/useMembersStore";
 import Image from "next/image"
 import {Input} from "@/shared/ui";
+import Link from "next/link";
 
 export const MembersList:FC = () => {
 
@@ -23,16 +24,21 @@ export const MembersList:FC = () => {
                {membersForUsers.map((item, index) =>(
                    <div key={index} className={"border-[1.5px] pt-[30px] w-[295px] h-[324px] rounded-[10px] border-[#2D7DFF]"}>
                        <div className={"flex flex-col justify-center gap-[10px] items-center text-center"}>
-                           <div className="relative w-[165px] h-[165px] rounded-full overflow-hidden ">
-                               <Image
-                                   src={"/test.jpeg"}
-                                   alt={"title"}
-                                   layout="fill"
-                                   objectFit="cover"
-                               />
-                           </div>
-                           <span className={"text-[14px] text-[#777777]"}>{item.position}</span>
-                           <p className={"text-[20px] font-semibold"}>{item.name} {item.surname}</p>
+                           <Link href={`/members/${item.id}`}>
+                               <div className="relative w-[165px] h-[165px] rounded-full overflow-hidden ">
+                                   <Image
+                                       src={item.memberProfile?.imageURL || "/test.jpeg"}
+                                       alt={"title"}
+                                       layout="fill"
+                                       objectFit="cover"
+                                   />
+                               </div>
+                           </Link>
+                           <hr className={"border-1 mt-[10px] w-[80%]"}/>
+                           <span className={"text-[14px] text-[#777777]"}>{item.memberProfile?.position}</span>
+                           <Link href={`/members/${item.id}`}>
+                               <p className={"text-[20px] font-semibold"}>{item.name} </p>
+                           </Link>
                        </div>
                    </div>
                ))}

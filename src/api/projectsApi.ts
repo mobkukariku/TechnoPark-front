@@ -1,5 +1,5 @@
-import { getData, postData } from "./axiosInstance";
-import { GetDataParams } from "./newsApi";
+import {getData, postData} from "./axiosInstance";
+import {GetDataParams} from "@/api/dataParams";
 
 export const getProjects = async (params: GetDataParams = {}) =>
     getData('/projects', params);
