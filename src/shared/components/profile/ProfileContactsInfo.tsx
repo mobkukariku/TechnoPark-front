@@ -1,9 +1,11 @@
 "use client"
 import {FC, useEffect} from "react";
-import {CertificatesList, Container, SkillsList, WorkExperience} from "@/shared/components";
-import {MemberContacts} from "@/shared/components/members";
+import {CertificatesList, Container, SkillsList, WorkExperience, MemberContacts, MemberInfo} from "@/shared/components";
 import useProfileStore from "@/store/useProfileStore";
 import {Pencil} from "lucide-react";
+import {ProfileContactsDialog} from "@/shared/components/profile/ProfileContactsDialog";
+import Link from "next/link";
+import {ContactsEditDialog} from "@/shared/components/profile/contacts";
 
 export const ProfileContactsInfo:FC = () => {
 
@@ -18,15 +20,24 @@ export const ProfileContactsInfo:FC = () => {
             <Container className={" mt-[30px]"}>
                 {profile ? (
                     <div className={"relative"}>
-                        <MemberContacts member={profile} />
-                        <Pencil  className={"absolute top-[30px] right-0  cursor-pointer hover:text-[#2D7DFF] transition-colors"}/>
+                        <MemberInfo member={profile} />
+                        <ProfileContactsDialog className={"absolute"} />
+                    </div>
+                ) : <p>Загрузка...</p>}
+
+                {profile ? (
+                    <div className={"relative"}>
+                        <MemberContacts profile={profile} />
+                        <ContactsEditDialog />
                     </div>
                 ) : <p>Загрузка...</p>}
 
                 {profile ? (
                     <div className={"relative"}>
                         <WorkExperience id={profile.id}  />
-                        <Pencil  className={"absolute top-[30px] right-0  cursor-pointer hover:text-[#2D7DFF] transition-colors"}/>
+                        <Link href={'/profile/work-exp'}>
+                            <Pencil  className={"absolute top-[30px] right-0  cursor-pointer hover:text-[#2D7DFF] transition-colors"}/>
+                        </Link>
                     </div>
                 ) : <p>Загрузка...</p>}
                 <div className={"relative"}>

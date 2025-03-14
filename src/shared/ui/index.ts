@@ -11,5 +11,7 @@ export {
 } from './select';
 export {Textarea} from './textarea';
 export {Checkbox} from './checkbox';
+export {InputWithLabel} from "./InputWithLabel";
+export {TextareaWithLabel} from "./TextareaWithLabel";
 
 export {Tags} from './tags';

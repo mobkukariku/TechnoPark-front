@@ -14,9 +14,10 @@ export {DirectionBanner} from "./direction";
 export {NewsPageList, NewsPageItem, NewsFiltration, NewsItem, CurrentNewsInfo} from "./news";
 export {AdminSideBar} from "./sidebar";
 export {TagCheckboxes} from "./filtration";
-export {ProfileContactsInfo} from "./profile";
+export {WorkExpItem} from "./work-exp";
+export {ProfileContactsInfo, WorkExperienceEdit} from "./profile";
 export{NewsList, NewsButtons, MembersTable, AdminProjectsList, AdminProjectsButtons} from "./admin";
-export {HierarchySidebar, MembersList, CurrentMemberInfo, WorkExperience, SkillsList, CertificatesList} from "./members";
+export {HierarchySidebar, MembersList, CurrentMemberInfo, WorkExperience, SkillsList, CertificatesList, MemberContacts, MemberInfo} from "./members";
 export {ProjectsList} from "./projects";
 
 //usefull

@@ -32,3 +32,8 @@ export const deleteData = async <T>(url: string): Promise<T> => {
     const response = await axiosInstance.delete(url);
     return response.data;
 };
+
+export const patchData = async <T>(url: string, body?: object): Promise<T> => {
+    const response = await axiosInstance.patch(url, body);
+    return response.data;
+};
