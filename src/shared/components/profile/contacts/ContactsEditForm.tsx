@@ -4,8 +4,8 @@ import * as yup from "yup";
 import { FC } from "react";
 import { toast } from "react-hot-toast";
 import { Button, InputWithLabel } from "@/shared/ui";
-import axios from "axios";
 import useProfileStore from "@/store/useProfileStore";
+import {axiosInstance} from "@/api/axiosInstance";
 
 const schema = yup.object({
     phoneNumber: yup.string().optional(),
@@ -46,7 +46,7 @@ export const ContactsEditForm: FC = () => {
                 return;
             }
 
-            await axios.post("/api/contacts", { contacts }); // Отправка на бэкенд
+            await axiosInstance.post("/contacts", { contacts }); // Отправка на бэкенд
 
             toast.success("Контакты успешно сохранены!");
             reset();
