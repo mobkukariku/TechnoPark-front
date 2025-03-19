@@ -13,17 +13,10 @@ export type ProfileFull = {
     imageURL?: string ;
     position?: string;
 };
-export type Contacts = {
-    id: string;
-    userId: string;
-    type: string;
-    value: string;
-};
 
 
 export type ProfileFullInfo = ProfileData & {
     memberProfile?: ProfileFull,
-    contacts?: Contacts[]
 }
 
 

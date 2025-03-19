@@ -5,7 +5,6 @@ import useProfileStore from "@/store/useProfileStore";
 import {Pencil} from "lucide-react";
 import {ProfileContactsDialog} from "@/shared/components/profile/ProfileContactsDialog";
 import Link from "next/link";
-import {ContactsEditDialog} from "@/shared/components/profile/contacts";
 
 export const ProfileContactsInfo:FC = () => {
 
@@ -28,7 +27,9 @@ export const ProfileContactsInfo:FC = () => {
                 {profile ? (
                     <div className={"relative"}>
                         <MemberContacts profile={profile} />
-                        <ContactsEditDialog />
+                        <Link href={'/profile/contacts'}>
+                            <Pencil  className={"absolute top-[-30px] right-0  cursor-pointer hover:text-[#2D7DFF] transition-colors"}/>
+                        </Link>
                     </div>
                 ) : <p>Загрузка...</p>}
 

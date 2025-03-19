@@ -43,7 +43,6 @@ export type MemberRead = BaseMember & {
 
 export type SelectedMember = BaseMember & {
     memberProfile?: MemberProfileFull;
-    contacts?: Contacts[];
 }
 
 interface MembersState {

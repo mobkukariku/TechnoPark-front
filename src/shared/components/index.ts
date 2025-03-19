@@ -15,7 +15,7 @@ export {NewsPageList, NewsPageItem, NewsFiltration, NewsItem, CurrentNewsInfo} f
 export {AdminSideBar} from "./sidebar";
 export {TagCheckboxes} from "./filtration";
 export {WorkExpItem} from "./work-exp";
-export {ProfileContactsInfo, WorkExperienceEdit} from "./profile";
+export {ProfileContactsInfo, WorkExperienceEdit, ContactsList} from "./profile";
 export{NewsList, NewsButtons, MembersTable, AdminProjectsList, AdminProjectsButtons} from "./admin";
 export {HierarchySidebar, MembersList, CurrentMemberInfo, WorkExperience, SkillsList, CertificatesList, MemberContacts, MemberInfo} from "./members";
 export {ProjectsList} from "./projects";
