@@ -6,7 +6,10 @@ export {ContactsMainInfo, ContactsDetails} from "./contacts";
 export {SoftwareInfo} from "./software";
 export {HardwareInfo} from "./hardware";
 export {AboutUsContent} from "./aboutus";
+export {CampusToor} from "./toor";
+export {PhotoGallery} from "./gallery"
 export {DirectionBanner} from "./direction";
+
 
 
 
@@ -23,6 +26,7 @@ export {ProjectsList} from "./projects";
 //usefull
 export {Container} from "./container";
 export {Header, BurgerMenu, HeaderMenu} from "./header";
+export {Footer} from "./footer"
 
 
 // forms

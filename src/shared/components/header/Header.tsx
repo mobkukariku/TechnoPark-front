@@ -2,19 +2,18 @@
 import {FC,  useEffect, useState} from "react";
 import Image from "next/image";
 import { BurgerMenu, Container } from "@/shared/components";
-import { Button } from "@/shared/ui";
-import { HeaderMenu } from "@/shared/components/header/HeaderMenu";
+import {Button, DropdownNav} from "@/shared/ui";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {AlignJustify, X} from "lucide-react";
 import {useTranslations} from "use-intl";
 import {LangSelect} from "@/shared/components/header/LangSelect";
+import {menuData} from "@/shared/components/header/HeaderMenuInfo";
 
 export const Header: FC = () => {
     const [isDesktop, setIsDesktop] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const t = useTranslations('Header');
-
 
 
     useEffect(() => {
@@ -38,7 +37,7 @@ export const Header: FC = () => {
                                     <Image width={61} height={61} src="/logo.svg" alt="Логотип" />
                                 </Link>
                                 <div className={"mt-[20px]"}>
-                                    <HeaderMenu />
+                                    <DropdownNav items={menuData} />
                                 </div>
                             </div>
                            <div className={"flex mt-[20px] gap-2"}>

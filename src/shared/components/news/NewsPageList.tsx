@@ -4,7 +4,7 @@ import useNewsStore from "@/store/useNewsStore";
 import {NewsPageItem} from "@/shared/components/news/NewsPageItem";
 import {Container, NewsFiltration} from "@/shared/components";
 import {NewsPagination} from "@/shared/components/news/NewsPagination";
-import {NewsListSkeleton} from "@/shared/components/news";
+import {NewsListSkeleton, NewsNotFound} from "@/shared/components/news";
 
 export const NewsPageList: FC = () => {
     const { newsData, fetchNewsData, isLoading, page, totalPages, setPage } = useNewsStore();
@@ -30,13 +30,22 @@ export const NewsPageList: FC = () => {
                         <div className="flex flex-col gap-[35px] max-[500px]:items-center">
                             {isLoading ? (
                                 <NewsListSkeleton />
-                            ) : (
+                            ) : newsData.length > 0 ? (
                                 newsData.map((item, index) => (
-                                    <NewsPageItem _id={item.id} key={index} title={item.title} content={item.content}
-                                                  imageURL={item.imageURL} createdAt={item.createdAt} />
+                                    <NewsPageItem
+                                        _id={item.id}
+                                        key={index}
+                                        title={item.title}
+                                        content={item.content}
+                                        imageURL={item.imageURL}
+                                        createdAt={item.createdAt}
+                                    />
                                 ))
+                            ) : (
+                                <NewsNotFound/>
                             )}
                         </div>
+
                     </div>
                 </div>
                 <NewsFiltration />
