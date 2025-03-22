@@ -1,4 +1,13 @@
-import {CampusToor, Directions, Footer, Header, LandingBanner, ShortAboutUs, ShortNews} from "@/shared/components";
+import {
+    CampusToor,
+    Directions,
+    Footer,
+    Header,
+    LandingBanner,
+    PhotoGallery,
+    ShortAboutUs,
+    ShortNews
+} from "@/shared/components";
 
 export default function Home() {
     return (
@@ -10,6 +19,7 @@ export default function Home() {
                    <ShortAboutUs />
                    <Directions />
                    <ShortNews />
+                   <PhotoGallery />
                    <CampusToor/>
                </main>
                <Footer />

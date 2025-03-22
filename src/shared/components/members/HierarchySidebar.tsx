@@ -5,6 +5,9 @@ import { axiosInstance } from "@/api/axiosInstance";
 import { useRouter } from "next/navigation";
 import { Sidebar, SidebarHeader } from "@/shared/ui/sidebar";
 import {transformDepartmentsToTree} from "@/shared/components/members/transformDepartmentsToTree";
+import Link from "next/link";
+import {Button} from "@/shared/ui";
+import {ChevronsLeft} from "lucide-react";
 
 
 export const HierarchySidebar: FC = () => {
@@ -35,6 +38,10 @@ export const HierarchySidebar: FC = () => {
     return (
         <Sidebar>
             <SidebarHeader>
+                <Link href={"/"} className={"flex hover:text-blue-500 transition-colors text-[14px]"}>
+                    <ChevronsLeft />
+                   Вернуться в главное
+                </Link>
                 <h1 className="font-bold text-[20px]">Список Участников</h1>
             </SidebarHeader>
             <TreeView data={data} />

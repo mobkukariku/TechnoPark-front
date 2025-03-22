@@ -10,7 +10,7 @@ import {
 import {
     Sidebar,
     SidebarContent,
-    SidebarFooter,
+    SidebarFooter, SidebarHeader,
     SidebarRail,
 } from "@/shared/ui/sidebar";
 import { NavMain } from "@/shared/components/sidebar/navMain";
