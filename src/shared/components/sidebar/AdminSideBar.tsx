@@ -1,6 +1,7 @@
 "use client"
 import { FC, useEffect } from "react";
 import {
+    Network,
     Newspaper,
     Presentation,
     SquareTerminal,
@@ -18,7 +19,7 @@ import { NavUser } from "@/shared/components/sidebar/navUser";
 
 import useProfileStore from "@/store/useProfileStore";
 
-export const AdminSideBar: FC = () => {
+export const    AdminSideBar: FC = () => {
     const profile = useProfileStore(state => state.profile);
     const isProfileLoading = useProfileStore(state => state.isProfileLoading);
     const fetchProfile = useProfileStore(state => state.fetchProfile);
@@ -52,6 +53,11 @@ export const AdminSideBar: FC = () => {
                 title: "Projects",
                 url: "/admin/projects",
                 icon: Presentation,
+            },
+            {
+                title: "Departments",
+                url: "/admin/departments",
+                icon: Network,
             },
         ],
     };

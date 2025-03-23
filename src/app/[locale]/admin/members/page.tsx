@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {MembersTable} from "@/shared/components";
+import {MembersTable} from "@/shared/components/admin/members/MembersTable";
 
 const AdminMembersPage:FC = () => {
     return (

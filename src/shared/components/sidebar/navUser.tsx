@@ -27,6 +27,7 @@ import {
     useSidebar,
 } from "@/shared/ui/sidebar"
 import useProfileStore from "@/store/useProfileStore";
+import Link from "next/link";
 
 export function NavUser({user,}: {
     user: {
@@ -78,10 +79,12 @@ export function NavUser({user,}: {
                         <DropdownMenuSeparator />
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem>
-                                <BadgeCheck />
-                                Account
-                            </DropdownMenuItem>
+                            <Link href={"/profile"}>
+                                <DropdownMenuItem>
+                                    <BadgeCheck />
+                                        Account
+                                </DropdownMenuItem>
+                            </Link>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getMembersForAdmins, getMembersForUsers, getMemberById } from "@/api/usersApi";
+import {getMembersForAdmins, getMembersForUsers, getMemberById, patchMemberById} from "@/api/usersApi";
 
 export type DepartmentMembership = {
     departmentId: string;
@@ -7,14 +7,14 @@ export type DepartmentMembership = {
 };
 
 export type MemberProfile = {
-    imageURL?: string ;
+    imageURL?: string;
     position?: string;
 };
 
 export type MemberProfileFull = {
     skills?: string[];
     description?: string;
-    imageURL?: string ;
+    imageURL?: string;
     position?: string;
 };
 
@@ -43,7 +43,7 @@ export type MemberRead = BaseMember & {
 
 export type SelectedMember = BaseMember & {
     memberProfile?: MemberProfileFull;
-}
+};
 
 interface MembersState {
     membersForAdmin: Member[];
@@ -55,6 +55,11 @@ interface MembersState {
     fetchingMembersForUsers: () => Promise<void>;
     fetchMembersforAdmins: () => Promise<void>;
     fetchMemberById: (id: string | Array<string> | undefined) => Promise<void>;
+    updateMember: (id: string, updates: Partial<BaseMember & {
+        role: string;
+        isActive: boolean;
+        departmentMemberships?: DepartmentMembership[]
+    }>) => void;
 }
 
 const useMembersStore = create<MembersState>((set, get) => ({
@@ -72,7 +77,7 @@ const useMembersStore = create<MembersState>((set, get) => ({
         set({ isLoading: true });
 
         try {
-            const members: MemberRead[] = await getMembersForUsers(search) as MemberRead[];
+            const members: MemberRead[] = (await getMembersForUsers(search)) as MemberRead[];
             set({ membersForUsers: members });
         } catch (err) {
             throw err;
@@ -88,7 +93,7 @@ const useMembersStore = create<MembersState>((set, get) => ({
         set({ isLoading: true });
 
         try {
-            const members: Member[] = await getMembersForAdmins(search) as Member[];
+            const members: Member[] = (await getMembersForAdmins(search)) as Member[];
             set({ membersForAdmin: members });
         } catch (error) {
             throw error;
@@ -104,7 +109,7 @@ const useMembersStore = create<MembersState>((set, get) => ({
         set({ isLoading: true });
 
         try {
-            const member: SelectedMember = await getMemberById(id) as SelectedMember;
+            const member: SelectedMember = (await getMemberById(id)) as SelectedMember;
             set({ currentMember: member });
         } catch (error) {
             throw error;
@@ -112,6 +117,22 @@ const useMembersStore = create<MembersState>((set, get) => ({
             set({ isLoading: false });
         }
     },
+
+    updateMember: async (id: string, updates: Partial<Member>) => {
+        try {
+            await patchMemberById(id, updates); // Отправляем изменённые данные
+            set((state) => ({
+                membersForAdmin: state.membersForAdmin.map((member) =>
+                    member.id === id ? { ...member, ...updates } : member
+                ),
+            }));
+        } catch (error) {
+            console.error("Failed to update member:", error);
+        }
+    },
+
+
+
 }));
 
 export default useMembersStore;
