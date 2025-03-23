@@ -1,9 +1,10 @@
 import {FC} from "react";
+import {DepartmentsTable} from "@/shared/components";
 
 const DepartmentsPage: FC = () => {
     return (
         <div>
-            s
+            <DepartmentsTable />
         </div>
     )
 }

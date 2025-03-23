@@ -11,7 +11,7 @@ import {
 import {
     Sidebar,
     SidebarContent,
-    SidebarFooter, SidebarHeader,
+    SidebarFooter,
     SidebarRail,
 } from "@/shared/ui/sidebar";
 import { NavMain } from "@/shared/components/sidebar/navMain";

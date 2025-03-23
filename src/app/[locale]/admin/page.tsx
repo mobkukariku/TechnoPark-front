@@ -40,7 +40,6 @@ const AdminPage: FC = () => {
                     </div>
                 </Link>
 
-                {/* Карточка "Настройки" */}
                 <Link href="/admin/projects" className="group">
                     <div className="p-6 bg-white shadow-md rounded-lg flex items-center gap-4 hover:shadow-lg transition">
                         <Presentation className="w-10 h-10 text-purple-500 group-hover:text-purple-600" />

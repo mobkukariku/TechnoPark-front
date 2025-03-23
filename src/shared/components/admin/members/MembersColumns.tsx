@@ -98,7 +98,7 @@ export function MembersColumns(
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="rounded-[8px]">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(member.id)}>Copy name</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(member.name)}>Copy name</DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem onClick={() => navigator.clipboard.writeText(member.email)}>Copy Email</DropdownMenuItem>
                             <DropdownMenuSeparator />
