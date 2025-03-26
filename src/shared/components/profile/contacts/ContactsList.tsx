@@ -3,6 +3,8 @@ import { FC, useEffect } from "react";
 import { Container } from "@/shared/components/container/Container";
 import useContactsStore from "@/store/useContactsStore";
 import useProfileStore from "@/store/useProfileStore";
+import {Button} from "@/shared/ui";
+import {ContactLine} from "@/shared/components/profile/contacts/ContactLine";
 
 export const ContactsList: FC = () => {
     const { fetchContacts, contacts } = useContactsStore();
@@ -20,17 +22,19 @@ export const ContactsList: FC = () => {
 
     return (
         <Container className="mt-8">
-            <h1 className="text-2xl font-semibold">Контакты</h1>
-            {contacts.length > 0 ? (
-                contacts.map((contact) => (
-                    <div key={contact.id} className="flex flex-col gap-2 border-b pb-2">
-                        <p className="font-medium">{contact.type}</p>
-                        <p className="text-gray-600">{contact.value}</p>
-                    </div>
-                ))
-            ) : (
-                <p className="text-gray-500">Нет доступных контактов</p>
-            )}
+            <h1 className="text-2xl font-semibold mb-[20px]">Контакты</h1>
+           <div className={"flex flex-col gap-[10px]"}>
+               {contacts.length > 0 ? (
+                   contacts.map((contact) => (
+                       <ContactLine key={contact.id} id={contact.id} value={contact.value} type={contact.type}/>
+                   ))
+               ) : (
+                   <p className="text-gray-500">Нет доступных контактов</p>
+               )}
+           </div>
+            <div className={"w-full flex my-[20px] justify-center"}>
+                <Button className={"w-[150px]"}>+</Button>
+            </div>
         </Container>
     );
 };

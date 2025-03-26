@@ -1,3 +1,3 @@
-export {ContactsEditDialog} from "./ContactsEditDialog";
-export {ContactsEditForm} from "./ContactsEditForm";
+export {ContactLine} from "./ContactLine";
 export {ContactsList} from "./ContactsList";
+export {ContactSelect} from "./ContactSelect";

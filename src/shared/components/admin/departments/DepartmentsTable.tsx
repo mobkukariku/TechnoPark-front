@@ -25,9 +25,11 @@ import {
 import { DepartmentsColumns } from "@/shared/components/admin/departments/DepartmentsColumns";
 import useDepartmentStore, {Department} from "@/store/useDepartmentStore";
 import {DepartmentCreateDialog} from "@/shared/components/admin/departments/DepartmentCreateDialog";
+import {ConfirmDialog} from "@/shared/components";
+import toast, {Toaster} from "react-hot-toast";
 
 export function DepartmentsTable() {
-    const { departments, fetchDepartments, updateDepartment} = useDepartmentStore();
+    const { departments, fetchDepartments, updateDepartment, deleteDepartment} = useDepartmentStore();
 
     React.useEffect(() => {
         fetchDepartments();
@@ -40,6 +42,8 @@ export function DepartmentsTable() {
     const [rowSelection, setRowSelection] = React.useState({});
     const [isEditing, setIsEditing] = React.useState(false);
     const [editedDepartments, setEditedDepartments] = React.useState<Record<string, Partial<Department>>>({});
+    const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+
 
 
     const handleChange = <K extends keyof Department>(
@@ -60,6 +64,31 @@ export function DepartmentsTable() {
         setIsEditing(false);
         setEditedDepartments({});
     };
+
+    const removeDepartment = async () => {
+        const selectedRowIds = Object.keys(rowSelection);
+        if (selectedRowIds.length > 0) {
+            setIsDialogOpen(true);
+        }else{
+            toast.error("Выберите хотя бы один департамент.")
+        }
+    };
+
+// Функция для подтверждения удаления
+    const confirmRemoveDepartment = async () => {
+        const selectedRowIds = table.getSelectedRowModel().rows.map((row) => row.original.id);
+
+        if (selectedRowIds.length > 0) {
+            for (const id of selectedRowIds) {
+                await deleteDepartment(id);
+            }
+        } else {
+            toast.error("Выберите хотя бы один департамент.");
+        }
+        setIsDialogOpen(false);
+    };
+
+
 
     const table = useReactTable({
         data: departments,
@@ -82,21 +111,28 @@ export function DepartmentsTable() {
 
     return (
         <div className="w-[98%]">
+            <Toaster position="top-center" />
             <div className="flex items-center justify-between py-4">
                 <Input
                     placeholder="Поиск"
                     className="max-w-sm"
                 />
                 <div className="flex gap-2">
-                    <DepartmentCreateDialog />
                     {isEditing && (
                         <Button onClick={() => setIsEditing(false)} variant="outline">
                             Отмена
                         </Button>
                     )}
+                    {isEditing && (
+                        <Button onClick={removeDepartment} variant="secondary">
+                            Удалить
+                        </Button>
+                    )}
+
                     <Button onClick={isEditing ? saveChanges : () => setIsEditing(true)}>
                         {isEditing ? "Сохранить" : "Редактировать"}
                     </Button>
+                    <DepartmentCreateDialog />
                 </div>
             </div>
             <div className="rounded-md border">
@@ -136,6 +172,12 @@ export function DepartmentsTable() {
                     </TableBody>
                 </Table>
             </div>
+            <ConfirmDialog
+                text={"Вы уверены, что хотите удалить выбранные департаменты? Это действие необратимо."}
+                onConfirm={confirmRemoveDepartment}
+                isOpen={isDialogOpen}
+                onClose={() => setIsDialogOpen(false)}
+            />
         </div>
     );
 }

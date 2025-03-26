@@ -1,9 +1,10 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/ui/select";
 import useDepartmentStore, { Department } from "@/store/useDepartmentStore";
 import useMemberStore from "@/store/useMembersStore";
 import { useEffect } from "react";
+import { DepartmentSelect } from "@/shared/components/admin/departments/DepartmentSelect";
+import { Checkbox } from "@/shared/ui";
 
 export const DepartmentsColumns = (
     isEditing: boolean,
@@ -18,7 +19,7 @@ export const DepartmentsColumns = (
         if (membersForAdmin.length === 0) fetchMembersforAdmins();
     }, []);
 
-    return [
+    const columns: ColumnDef<Department>[] = [
         {
             accessorKey: "name",
             header: "Название",
@@ -29,6 +30,7 @@ export const DepartmentsColumns = (
             header: "Руководитель",
             cell: ({ row }) => (
                 <DepartmentSelect
+                    key={row.original.headId}
                     value={row.original.headId || ""}
                     options={membersForAdmin}
                     onChange={(value) => handleChange(row.original.id, "headId", value)}
@@ -51,40 +53,31 @@ export const DepartmentsColumns = (
             ),
         },
     ];
-};
 
-interface Option {
-    id: string;
-    name: string;
-}
+    if (isEditing) {
+        columns.unshift({
+            id: "select",
+            header: ({ table }) => (
+                <Checkbox
+                    checked={
+                        table.getIsAllPageRowsSelected() ||
+                        (table.getIsSomePageRowsSelected() && "indeterminate")
+                    }
+                    onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                    aria-label="Select all"
+                />
+            ),
+            cell: ({ row }) => (
+                <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                />
+            ),
+            enableSorting: false,
+            enableHiding: false,
+        });
+    }
 
-const DepartmentSelect = ({
-                              value,
-                              options,
-                              onChange,
-                              isEditing,
-                              placeholder,
-                          }: {
-    value: string;
-    options: Option[];
-    onChange: (value: string) => void;
-    isEditing: boolean;
-    placeholder: string;
-}) => {
-    return isEditing ? (
-        <Select value={value} onValueChange={onChange}>
-            <SelectTrigger>
-                <SelectValue>{options.find((opt) => opt.id === value)?.name || placeholder}</SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-                {options.map((opt) => (
-                    <SelectItem key={opt.id} value={opt.id}>
-                        {opt.name}
-                    </SelectItem>
-                ))}
-            </SelectContent>
-        </Select>
-    ) : (
-        options.find((opt) => opt.id === value)?.name || "—"
-    );
+    return columns;
 };

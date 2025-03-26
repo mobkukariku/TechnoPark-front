@@ -16,6 +16,7 @@ import { Label } from "@/shared/ui/label";
 import { motion } from "framer-motion";
 
 interface DepartmentFormData {
+    id: string | undefined;
     name: string;
     headId?: string;
     parentDepartmentId?: string;
@@ -64,9 +65,10 @@ export const DepartmentCreateDialog: FC = () => {
 
     const onSubmit = (data: DepartmentFormData) => {
         createDepartment({
+            id: undefined,
             name: data.name,
             headId: data.headId || null,
-            parentDepartmentId: data.parentDepartmentId || null,
+            parentDepartmentId: data.parentDepartmentId || null
         });
         reset();
     };

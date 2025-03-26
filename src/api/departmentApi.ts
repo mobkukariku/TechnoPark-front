@@ -1,4 +1,4 @@
-import {getData, patchData, postData} from "./axiosInstance";
+import {deleteData, getData, patchData, postData} from "./axiosInstance";
 import {Department} from "@/store/useDepartmentStore";
 
 export const getDepartments = () =>
@@ -9,3 +9,6 @@ export const createDepartment = (data:Department) =>
 
 export const updateDepartment = (id:string, data: Partial<Department>) =>
     patchData(`/departments/${id}`, data)
+
+export const deleteDepartment = (id:string) =>
+    deleteData(`/departments/${id}`,)

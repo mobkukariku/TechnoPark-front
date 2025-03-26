@@ -26,7 +26,8 @@ export {ProjectsList} from "./projects";
 //usefull
 export {Container} from "./container";
 export {Header, BurgerMenu, HeaderMenu} from "./header";
-export {Footer} from "./footer"
+export {Footer} from "./footer";
+export {ConfirmDialog} from "./dialogs";
 
 
 // forms

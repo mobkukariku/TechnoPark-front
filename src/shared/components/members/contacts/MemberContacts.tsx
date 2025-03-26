@@ -14,26 +14,12 @@ const contactLabels: Record<string, string> = {
     OTHER: "Другое"
 };
 
-const getContactLink = (type: string, value: string) => {
-    switch (type) {
-        case "PHONE":
-            return `tel:${value}`;
-        case "TELEGRAM":
-            return `https://t.me/${value.replace("@", "")}`;
-        case "LINKEDIN":
-            return `https://www.linkedin.com/in/${value}`;
-        case "GITHUB":
-            return `https://github.com/${value}`;
-        case "EMAIL":
-            return `mailto:${value}`;
-        default:
-            return value;
-    }
-};
+import { useContactLink } from "@/hooks/useContactLink"; // <-- Импортируем хук
 
 export const MemberContacts: FC<{ profile?: ProfileFullInfo }> = ({ profile }) => {
     const { currentMember } = useMembersStore();
     const { contacts, fetchContacts, isContactsLoading } = useContactsStore();
+    const getContactLink = useContactLink(); // <-- Используем как хук
 
     const memberId = profile?.id ?? currentMember?.id;
 

@@ -1,8 +1,8 @@
 import { create } from "zustand";
-import { createDepartment, getDepartments, updateDepartment } from "@/api/departmentApi";
+import {createDepartment, deleteDepartment, getDepartments, updateDepartment} from "@/api/departmentApi";
 
 export interface Department {
-    id: string;
+    id: string | undefined;
     name: string;
     headId?: string | null;
     parentDepartmentId?: string | null;
@@ -14,6 +14,7 @@ interface DepartmentStore {
     fetchDepartments: () => Promise<void>;
     createDepartment: (data: Department) => Promise<void>;
     updateDepartment: (id: string, data: Partial<Department>) => Promise<void>;
+    deleteDepartment: (id: string) => Promise<void>;
 }
 
 const useDepartmentStore = create<DepartmentStore>((set) => ({
@@ -61,6 +62,21 @@ const useDepartmentStore = create<DepartmentStore>((set) => ({
             set({ isLoading: false });
         }
     },
+    deleteDepartment: async (id: string) => {
+        set({ isLoading: true });
+
+        try{
+            await deleteDepartment(id) as Department;
+            set((state) => ({
+                departments: state.departments.filter((dep) => dep.id !== id),
+            }));
+        }catch(error) {
+            console.error(error);
+            throw error;
+        }finally {
+            set({ isLoading: false });
+        }
+    }
 }));
 
 export default useDepartmentStore;
