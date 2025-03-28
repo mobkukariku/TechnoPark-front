@@ -3,7 +3,7 @@ import {FC, useEffect} from "react";
 import {CertificatesList, Container, SkillsList, WorkExperience, MemberContacts, MemberInfo} from "@/shared/components";
 import useProfileStore from "@/store/useProfileStore";
 import {Pencil} from "lucide-react";
-import {ProfileContactsDialog} from "@/shared/components/profile/ProfileContactsDialog";
+import {ProfileChangeMainDialog} from "@/shared/components/profile/main/ProfileChangeMainDialog";
 import Link from "next/link";
 
 export const ProfileContactsInfo:FC = () => {
@@ -20,7 +20,7 @@ export const ProfileContactsInfo:FC = () => {
                 {profile ? (
                     <div className={"relative"}>
                         <MemberInfo member={profile} />
-                        <ProfileContactsDialog className={"absolute"} />
+                        <ProfileChangeMainDialog className={"absolute"} />
                     </div>
                 ) : <p>Загрузка...</p>}
 

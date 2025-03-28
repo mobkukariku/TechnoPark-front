@@ -5,7 +5,7 @@ import useNewsStore from "@/store/useNewsStore";
 import Link from "next/link";
 
 export const NewsSideBar: FC<{ _id: string | Array<string> | undefined }> = ({ _id }) => {
-    const { lastNews, setLastNews, isLastNewsLoading } = useNewsStore();
+    const { lastNews, setLastNews, } = useNewsStore();
 
 
     const formatDate = (date?: string) => {
@@ -18,9 +18,9 @@ export const NewsSideBar: FC<{ _id: string | Array<string> | undefined }> = ({ _
     }, []);
 
     return (
-        <div className="w-[250px] ">
+        <div className="w-[250px] max-[1060px]:w-full">
             <p className="text-center font-semibold text-[20px] mt-[10px]">Последние новости</p>
-            <div className="max-w-[290px] mt-[21px] flex flex-col gap-[20px]">
+            <div className="max-w-[290px] max-[1060px]:max-w-full max-[1060px]:mb-[30px] mt-[21px] flex flex-col gap-[20px]">
                 {lastNews.map((item) => (
                     <div key={item.id} className="flex flex-col gap-[6px]">
                         <Link href={`/news/${item.id}`}>

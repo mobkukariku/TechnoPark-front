@@ -1,8 +1,8 @@
 import {create} from "zustand";
-import {getContactsById, patchContact} from "@/api/contactsApi";
+import {addContact, deleteContact, getContactsById, patchContact} from "@/api/contactsApi";
 
 export type Contacts = {
-    id: string;
+    id?: string;
     userId: string;
     type: string;
     value: string;
@@ -14,10 +14,12 @@ interface ContactsState {
     isContactsLoading: boolean;
     fetchContacts: (id: string | undefined) => Promise<void>;
     updateContacts: (id: string | undefined, updatedData: Partial<Contacts>) => Promise<void>;
+    addContact: (contact: Contacts) => Promise<void>;
+    deleteContact: (id: string | undefined) => Promise<void>;
 
 }
 
-const useContactsStore = create<ContactsState>((set, get) => ({
+const useContactsStore = create<ContactsState>((set,) => ({
     contacts: [],
     isContactsLoading: false,
     fetchContacts: async (id: string | undefined) => {
@@ -47,8 +49,38 @@ const useContactsStore = create<ContactsState>((set, get) => ({
         }finally {
             set({ isContactsLoading: false });
         }
+    },
+    addContact: async (contact: Contacts) => {
+        set({ isContactsLoading: true });
 
+        try {
+            const newContact: Contacts = await addContact(contact) as Contacts;
+
+            set((state) => ({
+                contacts: [...state.contacts, newContact], // Добавляем новый контакт в список
+            }));
+        } catch (error) {
+            console.error("Failed to add contact:", error);
+            throw error;
+        } finally {
+            set({ isContactsLoading: false });
+        }
+    },
+    deleteContact: async (id: string | undefined) => {
+        set({ isContactsLoading: true });
+
+        try {
+            await deleteContact(id) as Contacts;
+
+            set((state) => ({
+                contacts: state.contacts.filter((dep) => dep.id !== id),
+            }));
+        } catch (error) {
+            console.error("Failed to delete contact:", error);
+            throw error;
+        } finally {
+            set({ isContactsLoading: false });
     }
-}));
+}}));
 
 export default useContactsStore;

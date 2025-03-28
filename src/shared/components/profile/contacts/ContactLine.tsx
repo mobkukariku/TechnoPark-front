@@ -1,9 +1,10 @@
 "use client";
-import {FC, useEffect, useState} from "react";
+import { FC, useState } from "react";
 import { Button, Input } from "@/shared/ui";
 import { ContactSelect } from "@/shared/components/profile/contacts/ContactSelect";
 import { useContactLink } from "@/hooks/useContactLink";
 import useContactsStore from "@/store/useContactsStore";
+import { ConfirmDialog } from "@/shared/components"; // Импортируем диалог
 
 export interface IContactProps {
     id: string;
@@ -12,11 +13,12 @@ export interface IContactProps {
 }
 
 export const ContactLine: FC<IContactProps> = ({ id, type, value }) => {
-    const {updateContacts} = useContactsStore();
+    const { updateContacts, deleteContact } = useContactsStore(); // Добавил deleteContact
 
     const [isEdit, setIsEdit] = useState(false);
     const [editedValue, setEditedValue] = useState(value);
     const [editedType, setEditedType] = useState(type);
+    const [isDialogOpen, setIsDialogOpen] = useState(false); // Состояние для открытия диалога
 
     const getContactLink = useContactLink();
     const link = getContactLink(type, value);
@@ -30,6 +32,17 @@ export const ContactLine: FC<IContactProps> = ({ id, type, value }) => {
             console.error("Failed to update contact:", error);
         }
     };
+
+    const handleDelete = async () => {
+        try {
+            await deleteContact(id);
+        } catch (error) {
+            console.error("Failed to delete contact:", error);
+        } finally {
+            setIsDialogOpen(false);
+        }
+    };
+
     return (
         <div className="border-b flex justify-between items-center">
             <div className="flex flex-col gap-2 pb-2">
@@ -57,7 +70,7 @@ export const ContactLine: FC<IContactProps> = ({ id, type, value }) => {
                 {isEdit ? (
                     <>
                         <Button variant="outline" onClick={handleUpdate}>
-                            Confirm
+                            Подтвердить
                         </Button>
                         <Button
                             variant="secondary"
@@ -67,15 +80,27 @@ export const ContactLine: FC<IContactProps> = ({ id, type, value }) => {
                                 setEditedType(type);
                             }}
                         >
-                            Cancel
+                            Отмена
                         </Button>
                     </>
                 ) : (
-                    <Button variant="outline" onClick={() => setIsEdit(true)}>
-                        Edit
-                    </Button>
+                    <>
+                        <Button variant="outline" onClick={() => setIsEdit(true)}>
+                            Изменить
+                        </Button>
+                        <Button variant="destructive" className={"rounded-[8px]"} onClick={() => setIsDialogOpen(true)}>
+                            Удалить
+                        </Button>
+                    </>
                 )}
             </div>
+
+            <ConfirmDialog
+                text="Вы уверены, что хотите удалить этот контакт? Это действие нельзя отменить."
+                onConfirm={handleDelete}
+                isOpen={isDialogOpen}
+                onClose={() => setIsDialogOpen(false)}
+            />
         </div>
     );
 };

@@ -4,6 +4,7 @@ import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
 import {Toaster} from "react-hot-toast";
 import * as React from "react";
+import {Footer, Header} from "@/shared/components";
 
 export default async function LocaleLayout({
                                                children,
@@ -12,19 +13,22 @@ export default async function LocaleLayout({
     children: React.ReactNode;
     params: Promise<{locale: string}>;
 }) {
-    // Ensure that the incoming `locale` is valid
     const {locale} = await params;
     if (!routing.locales.includes(locale as any)) {
         notFound();
     }
 
-    // Providing all messages to the client
-    // side is the easiest way to get started
     const messages = await getMessages();
 
     return (
         <NextIntlClientProvider messages={messages}>
-            {children}
+            <Header />
+            <div className="min-h-screen mt-[150px] flex flex-col">
+                <main className="flex-grow">
+                    {children}
+                </main>
+            </div>
+            <Footer />
         </NextIntlClientProvider>
     );
 }

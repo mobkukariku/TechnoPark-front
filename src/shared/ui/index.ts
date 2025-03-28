@@ -15,5 +15,6 @@ export {InputWithLabel} from "./InputWithLabel";
 export {TextareaWithLabel} from "./TextareaWithLabel";
 
 export {Tags} from './tags';
+export {Label} from './label';
 
 export {DropdownNav} from "./dropdown-nav";

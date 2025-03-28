@@ -1,18 +1,16 @@
-"use client"
-import {FC, useEffect} from "react";
+"use client";
+import { FC, useEffect } from "react";
 import useNewsStore from "@/store/useNewsStore";
-import {NewsPageItem} from "@/shared/components/news/NewsPageItem";
-import {Container, NewsFiltration} from "@/shared/components";
-import {NewsPagination} from "@/shared/components/news/NewsPagination";
-import {NewsListSkeleton, NewsNotFound} from "@/shared/components/news";
+import { NewsPageItem } from "@/shared/components/news/NewsPageItem";
+import { Container, NewsFiltration } from "@/shared/components";
+import { NewsPagination } from "@/shared/components/news/NewsPagination";
+import { NewsListSkeleton, NewsNotFound } from "@/shared/components/news";
 
 export const NewsPageList: FC = () => {
-    const { newsData, fetchNewsData, isLoading, page, totalPages, setPage } = useNewsStore();
+    const { newsData, fetchNewsData, isLoading, page, totalPages, setPage, setLoading } = useNewsStore();
 
     useEffect(() => {
-        if (!isLoading) {
-            fetchNewsData();
-        }
+        fetchNewsData();
     }, []);
 
     const handlePageChange = (page: number) => {
@@ -29,32 +27,25 @@ export const NewsPageList: FC = () => {
                         <p className="uppercase text-[32px] max-[500px]:text-[24px] mb-[30px] font-bold max-[500px]:text-center">Новости</p>
                         <div className="flex flex-col gap-[35px] max-[500px]:items-center">
                             {isLoading ? (
-                                <NewsListSkeleton />
+                                <NewsListSkeleton /> // Сначала показываем скелетон
                             ) : newsData.length > 0 ? (
-                                newsData.map((item, index) => (
-                                    <NewsPageItem
-                                        _id={item.id}
-                                        key={index}
-                                        title={item.title}
-                                        content={item.content}
-                                        imageURL={item.imageURL}
-                                        createdAt={item.createdAt}
-                                    />
+                                newsData.map((news, index) => (
+                                    <NewsPageItem key={news.id} {...news} index={index} />
                                 ))
                             ) : (
-                                <NewsNotFound/>
+                                <NewsNotFound /> // А `NewsNotFound` только если `newsData.length === 0` и загрузка завершена
                             )}
-                        </div>
 
+                        </div>
                     </div>
                 </div>
                 <NewsFiltration />
             </div>
-            <div className={"mb-[20px]"}>
+            <div className="mb-[20px]">
                 <NewsPagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
             </div>
-            <div className={"absolute z-0 rounded-full left-[-200px]  max-[500px]:w-[200px] max-[500px]:h-[200px] blur-[100px]  max-[500px]:left-[-20px] max-[500px]:top-[50px]  opacity-70 top-[200px] w-[300px] h-[300px] bg-[#4E48FE5C]"} />
-            <div className={"absolute z-0 rounded-full right-[-200px]  max-[500px]:w-[250px] max-[500px]:h-[250px] blur-[100px]  opacity-70 max-[500px]:right-[0px] max-[500px]:top-[300px]  top-[550px] w-[330px] h-[330px] bg-[#1170FF5C]"} />
+            <div className="absolute z-0 rounded-full left-[-200px] max-[500px]:w-[200px] max-[500px]:h-[200px] blur-[100px] max-[500px]:left-[-20px] max-[500px]:top-[50px] opacity-70 top-[200px] w-[300px] h-[300px] bg-[#4E48FE5C]" />
+            <div className="absolute z-0 rounded-full right-[-200px] max-[500px]:w-[250px] max-[500px]:h-[250px] blur-[100px] opacity-70 max-[500px]:right-[0px] max-[500px]:top-[300px] top-[550px] w-[330px] h-[330px] bg-[#1170FF5C]" />
         </Container>
     );
 };

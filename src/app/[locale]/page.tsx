@@ -1,8 +1,6 @@
 import {
     CampusToor,
     Directions,
-    Footer,
-    Header,
     LandingBanner,
     PhotoGallery,
     ShortAboutUs,
@@ -12,18 +10,12 @@ import {
 export default function Home() {
     return (
        <>
-           <Header />
-           <div className="min-h-screen flex flex-col">
-               <main className="flex-grow">
-                   <LandingBanner />
-                   <ShortAboutUs />
-                   <Directions />
-                   <ShortNews />
-                   <PhotoGallery />
-                   <CampusToor/>
-               </main>
-               <Footer />
-           </div>
+           <LandingBanner />
+           <ShortAboutUs />
+           <Directions />
+           <ShortNews />
+           <PhotoGallery />
+           <CampusToor/>
        </>
     );
 }

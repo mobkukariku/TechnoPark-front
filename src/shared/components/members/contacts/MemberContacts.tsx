@@ -32,12 +32,12 @@ export const MemberContacts: FC<{ profile?: ProfileFullInfo }> = ({ profile }) =
     const mem = profile ?? currentMember;
 
     return (
-        <Container className="p-5 mt-10">
+        <Container className="p-5 max-[500px]:p-0 mt-10">
             <div className="flex flex-col gap-3">
                 {isContactsLoading && <p className="text-gray-500">Загрузка контактов...</p>}
 
                 {!isContactsLoading && mem?.email && (
-                    <div className="flex justify-between w-full border-b border-gray-200 pb-2">
+                    <div className="flex justify-between max-[500px]:text-[14px] max-[500px]:w-[94%] w-full border-b border-gray-200 pb-2">
                         <p className="font-medium">{contactLabels.EMAIL}</p>
                         <a href={getContactLink("EMAIL", mem.email)}
                            className="text-blue-500 hover:underline">
@@ -48,7 +48,7 @@ export const MemberContacts: FC<{ profile?: ProfileFullInfo }> = ({ profile }) =
 
                 {!isContactsLoading && contacts.length > 0 ? (
                     contacts.map((item, index) => (
-                        <div key={index} className="flex justify-between w-full border-b border-gray-200 pb-2">
+                        <div key={index} className="flex justify-between  max-[500px]:text-[14px] max-[500px]:w-[93%] w-full border-b border-gray-200 pb-2">
                             <p className="font-medium">{contactLabels[item.type] || item.type}</p>
                             {["PHONE", "TELEGRAM", "LINKEDIN", "GITHUB", "EMAIL"].includes(item.type) ? (
                                 <a href={getContactLink(item.type, item.value)}

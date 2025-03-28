@@ -13,7 +13,7 @@ export const WorkExperience: FC<{ id: string | Array<string> | undefined }> = ({
     }, [id]);
 
     return (
-        <Container className="mt-[80px] p-[20px] ">
+        <Container className="mt-[80px] max-[500px]:p-0 p-[20px] ">
             <p className="text-[20px]  font-semibold">Опыт работы</p>
 
             {isLoading ? (

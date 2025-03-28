@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { AboutUsContent, DirectionBanner, Header } from "@/shared/components";
+import {AboutUsContent, DirectionBanner, Footer, Header} from "@/shared/components";
 import { useTranslations } from "next-intl";
 
 const AboutUsPage: FC = () => {
@@ -7,7 +7,6 @@ const AboutUsPage: FC = () => {
 
     return (
         <>
-            <Header />
             <DirectionBanner title={t("pageTitle")} imageURL={"/aboutus/about-us-banner.png"} />
             <AboutUsContent />
         </>

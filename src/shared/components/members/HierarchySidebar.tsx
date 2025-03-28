@@ -8,6 +8,7 @@ import {transformDepartmentsToTree} from "@/shared/components/members/transformD
 import Link from "next/link";
 import {Button} from "@/shared/ui";
 import {ChevronsLeft} from "lucide-react";
+import Image from "next/image";
 
 
 export const HierarchySidebar: FC = () => {
@@ -38,12 +39,13 @@ export const HierarchySidebar: FC = () => {
     return (
         <Sidebar>
             <SidebarHeader>
-                <Link href={"/"} className={"flex hover:text-blue-500 transition-colors text-[14px]"}>
-                    <ChevronsLeft />
-                   Вернуться в главное
-                </Link>
-                <h1 className="font-bold text-[20px]">Список Участников</h1>
+                <div className={"flex my-[20px] justify-center"}>
+                    <Link href={"/"} >
+                        <Image src={"/logo.svg"} alt={"logo"} width={100} height={100} />
+                    </Link>
+                </div>
             </SidebarHeader>
+            <hr  />
             <TreeView data={data} />
         </Sidebar>
     );

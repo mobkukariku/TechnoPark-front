@@ -29,7 +29,7 @@ export const ProjectsList: FC<{id:string}> = ({id}) => {
     };
 
     return (
-        <Container className="mt-[100px]">
+        <Container className="mt-[100px] mb-[200px]">
             <h1 className="text-center text-[32px] mb-[30px] font-bold max-[500px]:text-[24px]">
                 {t("title")}
             </h1>

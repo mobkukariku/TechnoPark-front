@@ -13,8 +13,8 @@ import {
 interface IDialogProps {
     text: string;
     onConfirm: () => void;
-    isOpen: boolean;  // Добавляем параметр для контроля открытия
-    onClose: () => void; // Функция для закрытия диалога
+    isOpen: boolean;
+    onClose: () => void;
 }
 
 export const ConfirmDialog: FC<IDialogProps> = ({ text, onConfirm, isOpen, onClose }) => {

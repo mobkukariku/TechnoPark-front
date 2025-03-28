@@ -32,7 +32,7 @@ export const LangSelect: FC = () => {
             <SelectTrigger className="">
                 <SelectValue placeholder={currentLocale.toUpperCase()} className="border-none" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className={"z-[80]"}>
                 <SelectItem value="en">🇬🇧 EN</SelectItem>
                 <SelectItem value="ru">🇷🇺 RU</SelectItem>
             </SelectContent>

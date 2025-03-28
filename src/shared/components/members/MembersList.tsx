@@ -17,8 +17,8 @@ export const MembersList:FC = () => {
 
     return (
         <div className={"mt-[50px]  "}>
-            <div className={"flex justify-center"}>
-                <Input placeholder={"Поиск"} className={"w-[500px]"} value={search}  onChange={(e) => setSearch(e.target.value)} />
+            <div className={"flex "}>
+                <Input placeholder={"Поиск"} className={"max-w-[500px] w-[93%]"} value={search}  onChange={(e) => setSearch(e.target.value)} />
             </div>
            <div className={"flex mt-[50px] flex-wrap gap-[20px]"}>
                {membersForUsers.map((item, index) =>(
@@ -37,7 +37,7 @@ export const MembersList:FC = () => {
                            <hr className={"border-1 mt-[10px] w-[80%]"}/>
                            <span className={"text-[14px] text-[#777777]"}>{item.memberProfile?.position}</span>
                            <Link href={`/members/${item.id}`}>
-                               <p className={"text-[20px] font-semibold"}>{item.name} </p>
+                               <p className={"text-[20px] font-semibold "}>{item.name} </p>
                            </Link>
                        </div>
                    </div>

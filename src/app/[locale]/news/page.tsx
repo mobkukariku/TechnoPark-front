@@ -1,11 +1,10 @@
 import {FC} from "react";
-import { Header, NewsPageList} from "@/shared/components";
+import {Footer, Header, NewsPageList} from "@/shared/components";
 
 const NewsPage:FC = () => {
 
     return (
         <>
-            <Header/>
             <NewsPageList />
         </>
     )

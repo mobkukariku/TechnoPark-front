@@ -4,7 +4,7 @@ import {GetDataParams} from "@/api/dataParams";
 export const getNews = async (params: GetDataParams = {}) =>
     getData('/news', params);
 
-export const getNewsByID = async (id: string) =>
+export const getNewsByID = async (id: string | Array<string> | undefined) =>
     getData(`/news/${id}`);
 
 export const getLastNews = async (id: string) =>

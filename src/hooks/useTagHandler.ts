@@ -1,19 +1,21 @@
 import useNewsStore from "@/store/useNewsStore";
+import useTagsStore from "@/store/useTagsStore";
 
 export const useTagHandler = (isFilter = false) => {
-    const { tags, setTags, filterTags, setFilterTags } = useNewsStore();
+    const { filterTags, setFilterTags } = useNewsStore();
+    const { allTags } = useTagsStore(); // ✅ Теперь правильно используем теги
 
-    const activeTags = isFilter ? filterTags : tags;
-    const setActiveTags = isFilter ? setFilterTags : setTags;
+    const activeTags = isFilter ? filterTags : "";
+    const setActiveTags = isFilter ? setFilterTags : () => {}; // Если `isFilter = false`, функция заглушка
 
     const handleTag = (tag: string) => {
         const isChecked = activeTags.includes(tag);
         const updatedTags = isChecked
-            ? activeTags.replace(new RegExp(`\\b${tag}\\b,?`, 'g'), '')
+            ? activeTags.replace(new RegExp(`\\b${tag}\\b,?`, "g"), "").trim()
             : activeTags ? `${activeTags},${tag}` : tag;
 
         setActiveTags(updatedTags);
     };
 
-    return { tags: activeTags, handleTag };
+    return { tags: allTags, selectedTags: activeTags, handleTag };
 };

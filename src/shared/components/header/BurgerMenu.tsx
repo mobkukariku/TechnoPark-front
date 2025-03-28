@@ -63,9 +63,6 @@ export const BurgerMenu: FC = () => {
                         <Link href="/news" className="flex w-full items-center py-2 text-lg font-semibold" prefetch={true}>
                             {t("news")}
                         </Link>
-                        <Link href="/contacts" className="flex w-full items-center py-2 text-lg font-semibold" prefetch={true}>
-                            {t("contacts")}
-                        </Link>
                         <Link href="/joinus" className="flex w-full items-center py-2 text-lg font-semibold" prefetch={true}>
                            <Button className={"w-full"}>{d("enter")}</Button>
                         </Link>

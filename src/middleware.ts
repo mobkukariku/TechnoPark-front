@@ -1,24 +1,27 @@
-import createMiddleware from "next-intl/middleware";
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-
-const intlMiddleware = createMiddleware({
-    locales: ["en", "ru"],
-    defaultLocale: "en",
-});
+import { handleLocaleMiddleware } from "./middleware/locale";
+import { handleAuthMiddleware } from "./middleware/auth";
+import {NextRequest, NextResponse} from "next/server";
 
 export function middleware(req: NextRequest) {
-    const token = req.cookies.get("token")?.value;
-    const url = req.nextUrl.pathname;
 
-    if (!token && url.startsWith("/admin")) {
-        return NextResponse.redirect(new URL("/", req.url));
+    const authResponse = handleAuthMiddleware(req);
+    if (authResponse && authResponse.status !== 200) return authResponse;
+
+
+    if (
+        !req.nextUrl.pathname.startsWith("/admin") &&
+        !req.nextUrl.pathname.startsWith("/profile") &&
+        !req.nextUrl.pathname.startsWith("/members")
+    ) {
+        return handleLocaleMiddleware(req);
     }
 
-    return intlMiddleware(req);
+
+
+    return NextResponse.next();
 }
 
-// 3️⃣ Объединенный matcher
+
 export const config = {
-    matcher: ["/((?!api|_next|.*\\..*).*)"], // next-intl нужен для всех страниц
+    matcher: ["/((?!api|_next|.*\\..*).*)"],
 };

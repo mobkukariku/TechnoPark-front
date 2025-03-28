@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
     Dialog,
     DialogContent,
@@ -6,44 +6,46 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/shared/ui/dialog";
-import { Input } from "@/shared/ui/input"
+import { Input } from "@/shared/ui/input";
 import { FC } from "react";
 import { Button } from "@/shared/ui";
 import { CirclePlus } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { TagCheckboxes } from "@/shared/components";
-import  toast from "react-hot-toast";
+import toast from "react-hot-toast";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useNewsStore from "@/store/useNewsStore";
+import { useTagHandler } from "@/hooks/useTagHandler"; // ✅ Добавил хук
 import * as Yup from "yup";
 import NewsContentEditor from "@/shared/components/admin/news/NewsContentEditor";
 
 interface FormData {
     title: string;
     content: string;
-    tags: string;
     image: File | null;
 }
 
 const validationSchema = Yup.object({
     title: Yup.string().required("Название обязательно"),
     content: Yup.string().required("Содержание обязательно"),
-    image: Yup.mixed().nullable().required("Изображение обязательно")
+    image: Yup.mixed().nullable().required("Изображение обязательно"),
 });
 
 export const CreateNewsDialog: FC = () => {
     const { handleSubmit, control } = useForm<FormData>({
         //@ts-expect-error: Type mismatch due to resolver type
         resolver: yupResolver(validationSchema),
-        defaultValues: { title: "", content: "", image: null }
+        defaultValues: { title: "", content: "", image: null },
     });
-    const { submitNews, tags } = useNewsStore();
+
+    const { submitNews } = useNewsStore();
+    const { selectedTags } = useTagHandler(true); // ✅ Получаем выбранные теги
 
     const onSubmit = async (data: FormData) => {
         try {
-            await submitNews(data.title, data.content, data.image, tags);
+            await submitNews(data.title, data.content, data.image, selectedTags);
             toast.success("Новость была создана!");
-            console.log(tags);
+            console.log(selectedTags); // ✅ Теперь тут корректные теги
         } catch {
             toast.error("Ошибка при отправке");
         }
@@ -52,7 +54,10 @@ export const CreateNewsDialog: FC = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button><CirclePlus />Добавить</Button>
+                <Button>
+                    <CirclePlus />
+                    Добавить
+                </Button>
             </DialogTrigger>
             <DialogContent className="max-w-[1000px]">
                 <DialogHeader>
@@ -73,19 +78,16 @@ export const CreateNewsDialog: FC = () => {
                         <Controller
                             name="title"
                             control={control}
-                            render={({ field }) => (
-                                <Input {...field} type="text" placeholder="Название" />
-                            )}
+                            render={({ field }) => <Input {...field} type="text" placeholder="Название" />}
                         />
-                        <TagCheckboxes className={"flex flex-wrap gap-[10px]"} />
+                        <TagCheckboxes className={"flex flex-wrap gap-[10px]"} isFilter={true} /> {/* ✅ Теперь выбирает теги */}
                         <Controller
                             name="content"
                             control={control}
                             render={({ field: { onChange, value } }) => (
-                                <NewsContentEditor onChange={onChange} content={value}  />
+                                <NewsContentEditor onChange={onChange} content={value} />
                             )}
                         />
-
                         <Button type="submit">Отправить</Button>
                     </div>
                 </form>

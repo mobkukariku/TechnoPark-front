@@ -12,7 +12,7 @@ export const CurrentMemberInfo: FC<{ id: string | Array<string> | undefined }> =
     }, []);
 
     return (
-        <Container className={"mt-[30px]"}>
+        <Container className={"mt-[30px] "}>
             {currentMember ? <MemberInfo member={currentMember} /> : <p>Загрузка...</p>}
         </Container>
     );

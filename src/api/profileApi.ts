@@ -1,26 +1,13 @@
 import {getData, patchData} from "@/api/axiosInstance";
 
-export const updateProfileContacts = async (id: string, data: {
-    position?: string;
-    description?: string;
-    skills?: string[];
-    imageURL?: File | null;
-}) => {
-    const formData = new FormData();
-
-    formData.append("position", data.position || "");
-    formData.append("description", data.description || "");
-
-    data.skills?.forEach((skill, index) => {
-        formData.append(`skills[${index}]`, skill);
-    });
-
-    if (data.imageURL) {
-        formData.append("image", data.imageURL);
-    }
-
-    return patchData(`/profile/${id}`, formData);
+export const updateProfile = async (id: string, formData: FormData) => {
+    return patchData(`/profile/${id}`, formData, true);
 };
 
-export const getProfileData = async (id: string) =>
+
+export const getUserProfile = async (id: string) =>
     getData(`/profile/${id}`);
+
+export const getProfile = async () =>
+    getData('/users/me');
+

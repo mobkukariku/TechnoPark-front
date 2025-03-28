@@ -1,6 +1,6 @@
 "use client"
 import {FC} from "react";
-import {CurrentNewsInfo, Header} from "@/shared/components";
+import {CurrentNewsInfo, Footer, Header} from "@/shared/components";
 import {useParams} from "next/navigation";
 
 const CurrentNewsPage:FC = () => {
@@ -9,7 +9,6 @@ const CurrentNewsPage:FC = () => {
 
     return (
         <>
-            <Header />
             <CurrentNewsInfo newsId={id} />
         </>
     )

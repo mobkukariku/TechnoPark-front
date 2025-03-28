@@ -1,21 +1,24 @@
 import { FC } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 interface NewsPageItemProps {
-    _id: string;
+    id: string;
     title: string;
     content: string;
     imageURL: string | null;
     createdAt: string;
+    index: number; // Передаем индекс для задержки
 }
 
 export const NewsPageItem: FC<NewsPageItemProps> = ({
-                                                        _id,
+                                                        id,
                                                         title,
                                                         content,
                                                         imageURL,
                                                         createdAt,
+                                                        index,
                                                     }) => {
     const formatDate = (date: string | Date) => {
         const d = new Date(date);
@@ -23,9 +26,14 @@ export const NewsPageItem: FC<NewsPageItemProps> = ({
     };
 
     return (
-        <div className="flex max-[500px]:flex-col gap-[15px] max-[500px]:gap-[0px] relative z-50">
+        <motion.div
+            initial={{ opacity: 0, filter: "blur(3px)", y: 10 }}
+            animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut", delay: index * 0.1 }} // Индивидуальная задержка
+            className="flex max-[500px]:flex-col gap-[15px] max-[500px]:gap-[0px] relative z-50"
+        >
             <div className="relative w-[319px] h-[165px] overflow-hidden rounded-[8px]">
-                <Link href={`/news/${_id}`}>
+                <Link href={`/news/${id}`}>
                     {imageURL ? (
                         <Image
                             src={imageURL}
@@ -38,7 +46,7 @@ export const NewsPageItem: FC<NewsPageItemProps> = ({
                 </Link>
             </div>
             <div className="flex flex-col mt-[10px]">
-                <Link href={`/news/${_id}`}>
+                <Link href={`/news/${id}`}>
                     <p className="font-bold hover:text-[#5998FF] w-[550px] max-[500px]:w-[320px] leading-[25px] transition-colors text-[20px]">
                         {title}
                     </p>
@@ -51,6 +59,6 @@ export const NewsPageItem: FC<NewsPageItemProps> = ({
                     dangerouslySetInnerHTML={{ __html: content || "" }}
                 />
             </div>
-        </div>
+        </motion.div>
     );
 };

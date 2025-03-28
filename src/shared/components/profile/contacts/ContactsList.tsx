@@ -5,6 +5,7 @@ import useContactsStore from "@/store/useContactsStore";
 import useProfileStore from "@/store/useProfileStore";
 import {Button} from "@/shared/ui";
 import {ContactLine} from "@/shared/components/profile/contacts/ContactLine";
+import {ContactsAddDialog} from "@/shared/components/profile/contacts/ContactsAddDialog";
 
 export const ContactsList: FC = () => {
     const { fetchContacts, contacts } = useContactsStore();
@@ -33,7 +34,7 @@ export const ContactsList: FC = () => {
                )}
            </div>
             <div className={"w-full flex my-[20px] justify-center"}>
-                <Button className={"w-[150px]"}>+</Button>
+                <ContactsAddDialog />
             </div>
         </Container>
     );

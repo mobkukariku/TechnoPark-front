@@ -33,7 +33,8 @@ export const deleteData = async <T>(url: string): Promise<T> => {
     return response.data;
 };
 
-export const patchData = async <T>(url: string, body?: object): Promise<T> => {
-    const response = await axiosInstance.patch(url, body);
+export const patchData = async <T>(url: string, body?: object | FormData, isFormData = false): Promise<T> => {
+    const headers = isFormData ? { 'Content-Type': 'multipart/form-data' } : {};
+    const response = await axiosInstance.patch(url, body, { headers });
     return response.data;
 };
