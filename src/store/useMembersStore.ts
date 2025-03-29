@@ -12,7 +12,6 @@ export type MemberProfile = {
 };
 
 export type MemberProfileFull = {
-    skills?: string[];
     description?: string;
     imageURL?: string;
     position?: string;

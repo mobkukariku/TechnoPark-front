@@ -9,7 +9,7 @@ import {CreateTagsDialog} from "@/shared/components/admin/news/tags";
 
 export const NewsButtons: FC = () => {
     const { search, setSearch, fetchNewsData, isLoading, filterTags } = useNewsStore();
-    useEffect(() => { if (!isLoading) fetchNewsData(); }, [search, filterTags]);
+    useEffect(() => { if (!isLoading) fetchNewsData(); }, [search, filterTags, isLoading, fetchNewsData]);
     return (
         <div>
             <div className="mt-[20px] mb-[10px] mr-[20px] flex justify-between">

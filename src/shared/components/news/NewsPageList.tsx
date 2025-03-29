@@ -7,11 +7,11 @@ import { NewsPagination } from "@/shared/components/news/NewsPagination";
 import { NewsListSkeleton, NewsNotFound } from "@/shared/components/news";
 
 export const NewsPageList: FC = () => {
-    const { newsData, fetchNewsData, isLoading, page, totalPages, setPage, setLoading } = useNewsStore();
+    const { newsData, fetchNewsData, isLoading, page, totalPages, setPage, } = useNewsStore();
 
     useEffect(() => {
         fetchNewsData();
-    }, []);
+    }, [fetchNewsData]);
 
     const handlePageChange = (page: number) => {
         setPage(page);

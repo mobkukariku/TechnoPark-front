@@ -6,8 +6,6 @@ import { useRouter } from "next/navigation";
 import { Sidebar, SidebarHeader } from "@/shared/ui/sidebar";
 import {transformDepartmentsToTree} from "@/shared/components/members/transformDepartmentsToTree";
 import Link from "next/link";
-import {Button} from "@/shared/ui";
-import {ChevronsLeft} from "lucide-react";
 import Image from "next/image";
 
 
@@ -31,7 +29,7 @@ export const HierarchySidebar: FC = () => {
         };
 
         fetchDepartments();
-    }, []);
+    }, [router]);
 
     if (loading) return <p>Загрузка...</p>;
     if (error) return <p>{error}</p>;

@@ -33,7 +33,7 @@ export function DepartmentsTable() {
 
     React.useEffect(() => {
         fetchDepartments();
-    }, []);
+    }, [fetchDepartments]);
 
 
     const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -47,10 +47,11 @@ export function DepartmentsTable() {
 
 
     const handleChange = <K extends keyof Department>(
-        id: string,
+        id: string | undefined,
         key: K,
         value: Department[K]
     ) => {
+        if (!id) return;
         setEditedDepartments((prev) => ({
             ...prev,
             [id]: { ...prev[id], [key]: value },
@@ -80,7 +81,7 @@ export function DepartmentsTable() {
 
         if (selectedRowIds.length > 0) {
             for (const id of selectedRowIds) {
-                await deleteDepartment(id);
+                await deleteDepartment(id || "");
             }
         } else {
             toast.error("Выберите хотя бы один департамент.");

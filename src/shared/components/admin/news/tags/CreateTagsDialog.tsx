@@ -21,7 +21,7 @@ export const CreateTagsDialog: FC = () => {
         if (allTags.length === 0) {
             fetchTags();
         }
-    }, [fetchTags]);
+    }, [allTags.length, fetchTags]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault(); // Чтобы форма не перезагружала страницу

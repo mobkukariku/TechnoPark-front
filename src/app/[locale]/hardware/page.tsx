@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {DirectionBanner, Footer, HardwareInfo, Header, ProjectsList} from "@/shared/components";
+import {DirectionBanner, HardwareInfo, ProjectsList} from "@/shared/components";
 
 const HardwarePage:FC = () => {
     return(

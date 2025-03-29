@@ -1,20 +1,20 @@
-import {NextIntlClientProvider} from 'next-intl';
-import {getMessages} from 'next-intl/server';
-import {notFound} from 'next/navigation';
-import {routing} from '@/i18n/routing';
-import {Toaster} from "react-hot-toast";
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+import { notFound } from 'next/navigation';
+import { routing } from '@/i18n/routing';
 import * as React from "react";
-import {Footer, Header} from "@/shared/components";
+import { Footer, Header } from "@/shared/components";
 
 export default async function LocaleLayout({
                                                children,
                                                params
                                            }: {
     children: React.ReactNode;
-    params: Promise<{locale: string}>;
+    params: Promise<{ locale: "en" | "ru" }>; // Явно указываем допустимые локали
 }) {
-    const {locale} = await params;
-    if (!routing.locales.includes(locale as any)) {
+    const { locale } = await params;
+
+    if (!routing.locales.includes(locale)) {
         notFound();
     }
 

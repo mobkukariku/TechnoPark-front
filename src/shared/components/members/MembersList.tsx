@@ -13,7 +13,7 @@ export const MembersList:FC = () => {
         if(!isLoading){
             fetchingMembersForUsers();
         }
-    }, [search]);
+    }, [fetchingMembersForUsers, isLoading, search]);
 
     return (
         <div className={"mt-[50px]  "}>

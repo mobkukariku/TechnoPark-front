@@ -33,7 +33,7 @@ const useTagsStore = create<TagsState>((set, get) => ({
         }
     },
     addTag: async (tag: {name:string}) => {
-        const { isLoading, allTags } = get();
+        const { allTags } = get();
 
         set({ isLoading: true });
 

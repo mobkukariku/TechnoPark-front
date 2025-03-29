@@ -7,7 +7,7 @@ import {SortingSelect} from "@/shared/components/news/SortingSelect";
 
 export const NewsFiltration: FC = () => {
     const { search, setSearch, fetchNewsData, isLoading, sort, setSort, filterTags } = useNewsStore();
-    useEffect(() => { if (!isLoading) fetchNewsData(); }, [search, sort, filterTags]);
+    useEffect(() => { if (!isLoading) fetchNewsData(); }, [search, sort, filterTags, isLoading, fetchNewsData]);
     return (
         <div className="w-[280px] max-[1000px]:w-full flex flex-col gap-[20px] max-[500px]:gap-[10px] relative z-50">
             <p className="text-[20px] font-semibold">Фильтрация</p>

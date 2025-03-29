@@ -12,7 +12,7 @@ export const CurrentNewsInfo: FC<{ newsId: string | Array<string> | undefined }>
 
     useEffect(() => {
         setCurrentNews(newsId);
-    }, []);
+    }, [newsId, setCurrentNews]);
 
     const formatDate = (date?: string) => {
         if (!date) return;

@@ -47,7 +47,7 @@ export const JoinUsForm: FC = () => {
         try {
             await postRequest(data.firstName, data.lastName, data.email, data.selectedCourse, data.coverLetter);
             toast.success(t("success"));
-        } catch (error) {
+        } catch {
             toast.error(t("error"));
         }
     };

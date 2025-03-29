@@ -1,4 +1,4 @@
-import {postData, getData, patchData} from "./axiosInstance";
+import {postData} from "./axiosInstance";
 
 export const login = async (email: string, password: string) =>
     postData('/auth/login', { email, password });

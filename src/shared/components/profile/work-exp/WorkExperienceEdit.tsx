@@ -15,7 +15,7 @@ export const WorkExperienceEdit: FC = () => {
         if (!profile) {
             fetchProfile();
         }
-    }, [profile]);
+    }, [fetchProfile, profile]);
 
     useEffect(() => {
         if (profile?.id && WorkExperience.length === 0) {
@@ -25,7 +25,7 @@ export const WorkExperienceEdit: FC = () => {
                 }
             });
         }
-    }, [profile]);
+    }, [WorkExperience.length, fetchWorkExperience, profile]);
 
 
     return (

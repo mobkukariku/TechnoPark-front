@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {Footer, Header, NewsPageList} from "@/shared/components";
+import {NewsPageList} from "@/shared/components";
 
 const NewsPage:FC = () => {
 

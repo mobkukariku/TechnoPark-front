@@ -33,7 +33,7 @@ export function MembersTable() {
         if (!isLoading) {
             fetchMembersforAdmins();
         }
-    }, [search]);
+    }, [fetchMembersforAdmins, isLoading, search]);
 
 
     const handleChange = <K extends keyof Member>(id: string, key: K, value: Member[K]) => {

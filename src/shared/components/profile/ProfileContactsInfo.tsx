@@ -5,6 +5,7 @@ import useProfileStore from "@/store/useProfileStore";
 import {Pencil} from "lucide-react";
 import {ProfileChangeMainDialog} from "@/shared/components/profile/main/ProfileChangeMainDialog";
 import Link from "next/link";
+import {DialogChangeDialog} from "@/shared/components/profile/skills";
 
 export const ProfileContactsInfo:FC = () => {
 
@@ -12,7 +13,7 @@ export const ProfileContactsInfo:FC = () => {
 
     useEffect(() => {
         fetchProfile()
-    }, []);
+    }, [fetchProfile]);
 
     return (
         <div>
@@ -43,7 +44,7 @@ export const ProfileContactsInfo:FC = () => {
                 ) : <p>Загрузка...</p>}
                 <div className={"relative"}>
                     <SkillsList />
-                    <Pencil  className={"absolute top-[30px] right-0  cursor-pointer hover:text-[#2D7DFF] transition-colors"}/>
+                    <DialogChangeDialog />
                 </div>
                 <div className={"relative"}>
                     <CertificatesList />

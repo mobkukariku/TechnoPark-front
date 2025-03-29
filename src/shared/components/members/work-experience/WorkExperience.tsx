@@ -10,7 +10,7 @@ export const WorkExperience: FC<{ id: string | Array<string> | undefined }> = ({
 
     useEffect(() => {
         if (id) fetchWorkExperience(id as string);
-    }, [id]);
+    }, [fetchWorkExperience, id]);
 
     return (
         <Container className="mt-[80px] max-[500px]:p-0 p-[20px] ">

@@ -6,18 +6,18 @@ import { useEffect } from "react";
 import { DepartmentSelect } from "@/shared/components/admin/departments/DepartmentSelect";
 import { Checkbox } from "@/shared/ui";
 
-export const DepartmentsColumns = (
+export function DepartmentsColumns(
     isEditing: boolean,
     editedDepartments: Record<string, Partial<Department>>,
-    handleChange: <K extends keyof Department>(id: string, key: K, value: Department[K]) => void
-): ColumnDef<Department>[] => {
+    handleChange: <K extends keyof Department>(id: string | undefined, key: K, value: Department[K]) => void
+) {
     const { fetchDepartments, departments } = useDepartmentStore();
     const { fetchMembersforAdmins, membersForAdmin } = useMemberStore();
 
     useEffect(() => {
         if (departments.length === 0) fetchDepartments();
         if (membersForAdmin.length === 0) fetchMembersforAdmins();
-    }, []);
+    }, [departments.length, fetchDepartments, fetchMembersforAdmins, membersForAdmin.length]);
 
     const columns: ColumnDef<Department>[] = [
         {
@@ -45,7 +45,7 @@ export const DepartmentsColumns = (
             cell: ({ row }) => (
                 <DepartmentSelect
                     value={row.original.parentDepartmentId || ""}
-                    options={departments}
+                    options={departments.map((dep) => ({ id: dep.id ?? "", name: dep.name }))}
                     onChange={(value) => handleChange(row.original.id, "parentDepartmentId", value)}
                     isEditing={isEditing}
                     placeholder="Выберите отдел"

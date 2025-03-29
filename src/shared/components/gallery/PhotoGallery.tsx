@@ -28,6 +28,7 @@ export const PhotoGallery: FC = () => {
             >
                 <SlideshowLightbox theme="lightbox" className={"grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"}>
                     {images.map((item, index) => (
+                        // eslint-disable-next-line @next/next/no-img-element
                         <img
                             key={index}
                             src={item.src}

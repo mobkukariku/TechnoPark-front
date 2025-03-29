@@ -30,7 +30,7 @@ export const    AdminSideBar: FC = () => {
         if (!profile && !isProfileLoading) {
             fetchProfile();
         }
-    }, [profile, fetchProfile]);
+    }, [profile, fetchProfile, isProfileLoading]);
 
     const data = {
         navMain: [

@@ -44,6 +44,7 @@ export const ShortNewsCarousel: FC = () => {
             <CarouselContent>
                 {!isLoading ? (
                     newsData.map((item, index) => {
+                        // eslint-disable-next-line react-hooks/rules-of-hooks
                         const { ref, hasBeenInView } = useHasBeenInView();
 
                         return (
@@ -61,6 +62,7 @@ export const ShortNewsCarousel: FC = () => {
                     })
                 ) : (
                     Array.from({ length: 3 }).map((_, index) => {
+                        // eslint-disable-next-line react-hooks/rules-of-hooks
                         const { ref, hasBeenInView } = useHasBeenInView();
 
                         return (

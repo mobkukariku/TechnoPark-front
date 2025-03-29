@@ -12,7 +12,7 @@ export const AdminProjectsList:FC = () => {
         if(!isLoading){
             fetchProjectsData();
         }
-    }, [fetchProjectsData]);
+    }, [fetchProjectsData, isLoading]);
 
     return (
         <div className={"mr-[20px] rounded-[22px] p-[20px] flex flex-col gap-[10px]"}>

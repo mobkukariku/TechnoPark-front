@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {DirectionBanner, Footer, Header, ProjectsList, SoftwareInfo} from "@/shared/components";
+import {DirectionBanner, ProjectsList, SoftwareInfo} from "@/shared/components";
 
 const SoftwarePage:FC = () => {
     return (

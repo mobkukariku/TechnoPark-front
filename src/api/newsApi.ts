@@ -7,7 +7,7 @@ export const getNews = async (params: GetDataParams = {}) =>
 export const getNewsByID = async (id: string | Array<string> | undefined) =>
     getData(`/news/${id}`);
 
-export const getLastNews = async (id: string) =>
+export const getLastNews = async (id: string | Array<string> | undefined) =>
     getData(`/news/lastnews/${id}`);
 
 export const postNews = async (

@@ -15,7 +15,7 @@ export const NewsSideBar: FC<{ _id: string | Array<string> | undefined }> = ({ _
 
     useEffect(() => {
         setLastNews(_id)
-    }, []);
+    }, [_id, setLastNews]);
 
     return (
         <div className="w-[250px] max-[1060px]:w-full">

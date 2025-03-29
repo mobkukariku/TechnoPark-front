@@ -17,21 +17,22 @@ const selectedTreeVariants = cva(
 interface TreeDataItem {
     id: string
     name: string
-    icon?: any
-    selectedIcon?: any
-    openIcon?: any
+    icon?: React.ElementType
+    selectedIcon?: React.ElementType
+    openIcon?: React.ElementType
     children?: TreeDataItem[]
     actions?: React.ReactNode
     onClick?: () => void
 }
+
 
 type TreeProps = React.HTMLAttributes<HTMLDivElement> & {
     data: TreeDataItem[] | TreeDataItem
     initialSelectedItemId?: string
     onSelectChange?: (item: TreeDataItem | undefined) => void
     expandAll?: boolean
-    defaultNodeIcon?: any
-    defaultLeafIcon?: any
+    defaultNodeIcon?: React.ElementType
+    defaultLeafIcon?: React.ElementType
 }
 
 const TreeView = React.forwardRef<HTMLDivElement, TreeProps>(
@@ -114,8 +115,8 @@ type TreeItemProps = TreeProps & {
     selectedItemId?: string
     handleSelectChange: (item: TreeDataItem | undefined) => void
     expandedItemIds: string[]
-    defaultNodeIcon?: any
-    defaultLeafIcon?: any
+    defaultNodeIcon?: React.ElementType
+    defaultLeafIcon?: React.ElementType
 }
 
 const TreeItem = React.forwardRef<HTMLDivElement, TreeItemProps>(
@@ -178,8 +179,8 @@ const TreeNode = ({
     handleSelectChange: (item: TreeDataItem | undefined) => void
     expandedItemIds: string[]
     selectedItemId?: string
-    defaultNodeIcon?: any
-    defaultLeafIcon?: any
+    defaultNodeIcon?: React.ElementType
+    defaultLeafIcon?: React.ElementType
 }) => {
     const [value, setValue] = React.useState(
         expandedItemIds.includes(item.id) ? [item.id] : []
@@ -233,7 +234,7 @@ const TreeLeaf = React.forwardRef<
         item: TreeDataItem
         selectedItemId?: string
         handleSelectChange: (item: TreeDataItem | undefined) => void
-        defaultLeafIcon?: any
+        defaultLeafIcon?: React.ElementType
     }
 >(
     (
@@ -323,7 +324,7 @@ const TreeIcon = ({
     item: TreeDataItem
     isOpen?: boolean
     isSelected?: boolean
-    default?: any
+    default?: React.ElementType
 }) => {
     let Icon = defaultIcon
     if (isSelected && item.selectedIcon) {

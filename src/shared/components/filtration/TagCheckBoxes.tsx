@@ -10,7 +10,7 @@ export const TagCheckboxes: FC<{ isFilter?: boolean; className?: string }> = ({ 
 
     useEffect(() => {
         fetchTags();
-    }, []);
+    }, [fetchTags]);
 
     return (
         <div className={`${className}`}>

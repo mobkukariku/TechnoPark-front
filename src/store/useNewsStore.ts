@@ -34,7 +34,7 @@ interface NewsState {
     deleteNews: (id: string) => Promise<void>;
     submitNews: (title: string, content: string, imageFile: File | null, tags: string) => Promise<void>;
     setCurrentNews: (newsId: string | Array<string> | undefined) => Promise<void>;
-    setLastNews: (exceptId: string) => Promise<void>;
+    setLastNews: (exceptId: string | Array<string> | undefined) => Promise<void>;
     setLoading: (loading: boolean) => void;
 
 }

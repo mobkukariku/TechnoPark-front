@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState,} from "react";
 import { useInView } from "react-intersection-observer";
 
 export const useHasBeenInView = (threshold = 0.2) => {

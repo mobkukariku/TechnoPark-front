@@ -1,5 +1,4 @@
 import {FC} from "react";
-import {NewsIcons} from "@/shared/components/news/selectnews/NewsIcons";
 import { Skeleton } from "@/shared/ui/skeleton";
 
 export const CurrentNewsSkeleton:FC = () => {

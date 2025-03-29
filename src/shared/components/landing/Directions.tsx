@@ -47,6 +47,7 @@ export const Directions: FC = () => {
                         link: "/software",
                     },
                 ].map((item, index) => {
+                    // eslint-disable-next-line react-hooks/rules-of-hooks
                     const { ref, hasBeenInView } = useHasBeenInView(0.2);
                     return (
                         <motion.div

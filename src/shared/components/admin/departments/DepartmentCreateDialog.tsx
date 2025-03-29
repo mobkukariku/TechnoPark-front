@@ -39,7 +39,8 @@ export const DepartmentCreateDialog: FC = () => {
         if (departments.length === 0) {
             fetchDepartments();
         }
-    }, []);
+    }, [membersForAdmin.length, departments.length, fetchMembersforAdmins, fetchDepartments]);
+
 
     // Фильтрация сотрудников
     useEffect(() => {

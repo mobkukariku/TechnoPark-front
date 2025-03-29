@@ -16,7 +16,7 @@ export const ProjectsList: FC<{id:string}> = ({id}) => {
             setDepartmentId(id);
             fetchProjectsData();
         }
-    }, [fetchProjectsData, limit]);
+    }, [fetchProjectsData, id, isLoading, limit, setDepartmentId]);
 
     const handleMoreButton = () => {
         setLimit(20);

@@ -10,11 +10,11 @@ export const NewsList: FC = () => {
 
     useEffect(() => {
         setLimit(10);
-    }, []);
+    }, [setLimit]);
 
     useEffect(() => {
         fetchNewsData();
-    }, [page]);
+    }, [fetchNewsData, page]);
 
 
     const handlePageChange = (page: number) => {

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import {AboutUsContent, DirectionBanner, Footer, Header} from "@/shared/components";
+import {AboutUsContent, DirectionBanner} from "@/shared/components";
 import { useTranslations } from "next-intl";
 
 const AboutUsPage: FC = () => {
