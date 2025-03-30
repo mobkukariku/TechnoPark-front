@@ -6,17 +6,26 @@ import { ProjectImageCarousel } from "@/shared/components/projects/ProjectsImage
 import { useTranslations } from "next-intl";
 
 export const ProjectsList: FC<{id:string}> = ({id}) => {
-    const { projects, fetchProjectsData, setLimit, isLoading, limit, setDepartmentId } = useProjectsStore();
+    const { projects, fetchProjectsData, setLimit, isLoading, setDepartmentId, departmentId } = useProjectsStore();
     const [isPressed, setIsPressed] = useState(false);
     const t = useTranslations("projects");
 
 
     useEffect(() => {
-        if (!isLoading) {
+        if (id && id !== departmentId) {
             setDepartmentId(id);
-            fetchProjectsData();
         }
-    }, [fetchProjectsData, id, isLoading, limit, setDepartmentId]);
+    }, [id, departmentId, setDepartmentId]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!isLoading && departmentId && projects.length === 0) {
+                await fetchProjectsData();
+            }
+        };
+        fetchData();
+    }, [fetchProjectsData, isLoading, departmentId, projects.length]);
+
 
     const handleMoreButton = () => {
         setLimit(20);

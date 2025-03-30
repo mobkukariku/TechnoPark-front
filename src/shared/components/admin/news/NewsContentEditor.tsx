@@ -1,15 +1,9 @@
 "use client";
 
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Underline from "@tiptap/extension-underline";
-import Image from "@tiptap/extension-image";
-import Blockquote from "@tiptap/extension-blockquote";
-import Heading from "@tiptap/extension-heading";
-import BulletList from "@tiptap/extension-bullet-list";
-import OrderedList from "@tiptap/extension-ordered-list";
-import ListItem from "@tiptap/extension-list-item";
-import Dropcursor from "@tiptap/extension-dropcursor";
+import dynamic from "next/dynamic";
+import "@toast-ui/editor/dist/toastui-editor.css";
+import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
+import { useEffect, useRef } from "react";
 
 import {
     ContextMenu,
@@ -18,6 +12,14 @@ import {
     ContextMenuSeparator,
     ContextMenuTrigger,
 } from "@/shared/ui/context-menu";
+import type { Editor as EditorType } from "@toast-ui/react-editor";
+
+
+// Динамический импорт без SSR + заглушка на время загрузки
+const Editor = dynamic(() => import("@toast-ui/react-editor").then((mod) => mod.Editor), {
+    ssr: false,
+    loading: () => <div>Загрузка редактора...</div>,
+});
 
 interface NewsContentEditorProps {
     onChange: (content: string) => void;
@@ -25,27 +27,21 @@ interface NewsContentEditorProps {
 }
 
 export default function NewsContentEditor({ onChange, content }: NewsContentEditorProps) {
-    const editor = useEditor({
-        extensions: [
-            StarterKit,
-            Underline,
-            Image.configure({ allowBase64: true }), // Разрешаем base64
-            Blockquote,
-            Heading.configure({ levels: [1, 2, 3] }),
-            BulletList,
-            OrderedList,
-            ListItem,
-            Dropcursor,
-        ],
-        content: content || "<p>Напиши что-то...</p>",
-        onUpdate: ({ editor }) => {
-            let html = editor.getHTML();
-            html = html.replace(/<p><\/p>/g, "<p>&nbsp;</p>"); // Заменяет пустые <p>
-            onChange(html);
-        },
-    });
+    const editorRef = useRef<EditorType | null>(null);
 
-    if (!editor) return null;
+
+    useEffect(() => {
+        if (editorRef.current) {
+            editorRef.current.getInstance().setHTML(content || "");
+        }
+    }, [content]);
+
+    const handleChange = () => {
+        if (editorRef.current) {
+            const html = editorRef.current.getInstance().getHTML();
+            onChange(html);
+        }
+    };
 
     // Функция загрузки изображения
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +51,9 @@ export default function NewsContentEditor({ onChange, content }: NewsContentEdit
         const reader = new FileReader();
         reader.onload = () => {
             const base64 = reader.result as string;
-            editor.chain().focus().setImage({ src: base64 }).run();
+            if (editorRef.current) {
+                editorRef.current.getInstance().insertText(`![image](${base64})`);
+            }
         };
         reader.readAsDataURL(file);
     };
@@ -64,47 +62,43 @@ export default function NewsContentEditor({ onChange, content }: NewsContentEdit
         <ContextMenu>
             <ContextMenuTrigger>
                 <div className="border p-2 rounded min-h-[200px] h-[500px]">
-                    {/* Поле редактирования */}
-                    <EditorContent editor={editor} className="min-h-[200px] space-y-4" />
+                    <Editor
+                        ref={editorRef}
+                        initialValue="Напиши что-то..."
+                        previewStyle="vertical"
+                        height="100%"
+                        initialEditType="wysiwyg"
+                        useCommandShortcut={true}
+                        onChange={handleChange}
+                    />
                 </div>
             </ContextMenuTrigger>
             <ContextMenuContent className="w-48">
-                <ContextMenuItem onClick={() => editor.chain().focus().toggleBold().run()}>Bold (Жирный)</ContextMenuItem>
-                <ContextMenuItem onClick={() => editor.chain().focus().toggleItalic().run()}>Italic (Курсив)</ContextMenuItem>
-                <ContextMenuItem onClick={() => editor.chain().focus().toggleUnderline().run()}>
-                    Underline (Подчёркнутый)
+                <ContextMenuItem onClick={() => editorRef.current?.getInstance().exec("bold")}>
+                    Bold (Жирный)
+                </ContextMenuItem>
+                <ContextMenuItem onClick={() => editorRef.current?.getInstance().exec("italic")}>
+                    Italic (Курсив)
                 </ContextMenuItem>
                 <ContextMenuSeparator />
-                <ContextMenuItem onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}>
+                <ContextMenuItem onClick={() => editorRef.current?.getInstance().exec("heading", { level: 1 })}>
                     Заголовок H1
                 </ContextMenuItem>
-                <ContextMenuItem onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}>
+                <ContextMenuItem onClick={() => editorRef.current?.getInstance().exec("heading", { level: 2 })}>
                     Заголовок H2
                 </ContextMenuItem>
-                <ContextMenuItem onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}>
-                    Заголовок H3
-                </ContextMenuItem>
                 <ContextMenuSeparator />
-                <ContextMenuItem onClick={() => editor.chain().focus().toggleBulletList().run()}>
+                <ContextMenuItem onClick={() => editorRef.current?.getInstance().exec("ul")}>
                     • Список
                 </ContextMenuItem>
-                <ContextMenuItem onClick={() => editor.chain().focus().toggleOrderedList().run()}>
+                <ContextMenuItem onClick={() => editorRef.current?.getInstance().exec("ol")}>
                     1. Нумерованный список
-                </ContextMenuItem>
-                <ContextMenuSeparator />
-                <ContextMenuItem onClick={() => editor.chain().focus().toggleBlockquote().run()}>
-                    ✨ Добавить цитату
                 </ContextMenuItem>
                 <ContextMenuSeparator />
                 {/* Поле для загрузки файла */}
                 <label className="cursor-pointer block px-2 py-1 text-sm hover:bg-gray-100">
                     🖼 Добавить изображение
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageUpload}
-                        className="hidden"
-                    />
+                    <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
                 </label>
             </ContextMenuContent>
         </ContextMenu>

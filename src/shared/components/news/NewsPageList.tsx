@@ -10,8 +10,10 @@ export const NewsPageList: FC = () => {
     const { newsData, fetchNewsData, isLoading, page, totalPages, setPage, } = useNewsStore();
 
     useEffect(() => {
-        fetchNewsData();
+            fetchNewsData();
     }, [fetchNewsData]);
+
+
 
     const handlePageChange = (page: number) => {
         setPage(page);
@@ -27,13 +29,13 @@ export const NewsPageList: FC = () => {
                         <p className="uppercase text-[32px] max-[500px]:text-[24px] mb-[30px] font-bold max-[500px]:text-center">Новости</p>
                         <div className="flex flex-col gap-[35px] max-[500px]:items-center">
                             {isLoading ? (
-                                <NewsListSkeleton /> // Сначала показываем скелетон
+                                <NewsListSkeleton />
                             ) : newsData.length > 0 ? (
                                 newsData.map((news, index) => (
                                     <NewsPageItem key={news.id} {...news} index={index} />
                                 ))
                             ) : (
-                                <NewsNotFound /> // А `NewsNotFound` только если `newsData.length === 0` и загрузка завершена
+                                <NewsNotFound />
                             )}
 
                         </div>

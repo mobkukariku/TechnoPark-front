@@ -8,9 +8,10 @@ const nextConfig: NextConfig = {
             'www.figma.com',
             'letsenhance.io',
             'localhost',
-            'localhost:4000'
-        ], // Разрешенные домены
+            'localhost:5000'
+        ],
     },
+    reactStrictMode: false,
 };
 
 const withNextIntl = createNextIntlPlugin();

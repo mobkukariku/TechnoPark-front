@@ -36,8 +36,10 @@ interface NewsState {
     setCurrentNews: (newsId: string | Array<string> | undefined) => Promise<void>;
     setLastNews: (exceptId: string | Array<string> | undefined) => Promise<void>;
     setLoading: (loading: boolean) => void;
+    
 
 }
+
 
 const useNewsStore = create<NewsState>((set, get) => ({
     newsData: [],
@@ -62,20 +64,23 @@ const useNewsStore = create<NewsState>((set, get) => ({
 
 
     fetchNewsData: async () => {
-        const { search, filterTags, sort, page, limit } = get();
+        const { search, filterTags, sort, page, limit, lastSearchParams } = get();
+
         const currentParams: GetDataParams = { search, tags: filterTags, sort, page, limit };
 
+        if (JSON.stringify(lastSearchParams) === JSON.stringify(currentParams)) return;
+
+        // Перемещаем сюда, чтобы fetch запускался корректно
         set({ isLoading: true, lastSearchParams: currentParams });
 
         try {
             const response: NewsData[] = await getNews(currentParams) as NewsData[];
-            set({ newsData: response.length === 0 ? [] : response, isLoading: false });
+            set({ newsData: response, isLoading: false });
         } catch (error) {
-            set({ newsData: [], isLoading: false });
             console.error("Ошибка загрузки новостей:", error);
+            set({ newsData: [], isLoading: false });
         }
     },
-
     submitNews: async (title, content, image, tags) => {
         const { isLoading } = get();
         if (isLoading) return;

@@ -50,17 +50,18 @@ const useProjectsStore = create<ProjectState>((set, get) => ({
 
     fetchProjectsData: async () => {
         const { isLoading, search, sort, page, limit, departmentId } = get();
+
+        if (isLoading || !departmentId) return;
+
+
         const currentParams: GetDataParams = { search, sort, page, limit, departmentId };
 
-        if (isLoading) return;
-        set({ isLoading: true });
 
         try {
             const response: ProjectData[] = await getProjects(currentParams) as ProjectData[];
             set({ projects: response.length === 0 ? [] : response, isLoading: false });
         } catch (error) {
             console.error("Ошибка загрузки проектов:", error);
-        } finally {
             set({ isLoading: false });
         }
     },

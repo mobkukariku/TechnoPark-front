@@ -5,4 +5,5 @@ export {MemberInfo} from "./MemberInfo";
 export {WorkExperience, WorkExperienceSkeleton, HasNotExperience} from "./work-experience";
 export {SkillsList} from "./skills";
 export {CertificatesList} from "./certificates";
-export {MemberContacts} from "./contacts";
+export {MemberContacts, MemberContactsSkeleton} from "./contacts";
+export {MemberSkeleton} from "./MemberSkeleton";

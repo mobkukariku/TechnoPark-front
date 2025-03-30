@@ -20,7 +20,7 @@ import { MembersColumns } from "@/shared/components/admin/members/MembersColumns
 import { Member } from "@/store/useMembersStore";
 
 export function MembersTable() {
-    const { isLoading, membersForAdmin, fetchMembersforAdmins, search, setSearch, updateMember } = useMembersStore();
+    const { membersForAdmin, fetchMembersforAdmins, search, setSearch, updateMember } = useMembersStore();
 
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -30,10 +30,8 @@ export function MembersTable() {
     const [editedMembers, setEditedMembers] = React.useState<Record<string, Partial<Member>>>({});
 
     React.useEffect(() => {
-        if (!isLoading) {
             fetchMembersforAdmins();
-        }
-    }, [fetchMembersforAdmins, isLoading, search]);
+    }, [fetchMembersforAdmins, search]);
 
 
     const handleChange = <K extends keyof Member>(id: string, key: K, value: Member[K]) => {
@@ -46,7 +44,7 @@ export function MembersTable() {
     // Сохранение всех изменений
     const saveChanges = async () => {
         for (const id in editedMembers) {
-            await updateMember(id, editedMembers[id]);
+            updateMember(id, editedMembers[id]);
         }
         setIsEditing(false);
         setEditedMembers({});
