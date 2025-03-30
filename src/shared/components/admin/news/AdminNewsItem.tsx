@@ -1,6 +1,7 @@
 import { FC } from "react";
 import Image from "next/image";
 import { Button } from "@/shared/ui";
+import {EditNewsDialog} from "@/shared/components/admin/news/EditNewsDialog";
 
 export const AdminNewsItem: FC<{
     id: string;
@@ -35,7 +36,7 @@ export const AdminNewsItem: FC<{
 
             {/* Кнопки */}
             <div className="flex flex-col gap-2">
-                <Button className="text-[12px] rounded-[5px]">Изменить</Button>
+                <EditNewsDialog id={id}  />
                 <Button
                     variant="secondary"
                     className="text-[12px] rounded-[5px]"

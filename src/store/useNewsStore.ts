@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { GetDataParams } from "@/api/dataParams";
-import { deleteNews, getLastNews, getNews, getNewsByID, postNews } from "@/api/newsApi";
+import {deleteNews, getLastNews, getNews, getNewsByID, postNews, updateNews} from "@/api/newsApi";
 
 export interface NewsData {
     id: string;
@@ -36,7 +36,7 @@ interface NewsState {
     setCurrentNews: (newsId: string | Array<string> | undefined) => Promise<void>;
     setLastNews: (exceptId: string | Array<string> | undefined) => Promise<void>;
     setLoading: (loading: boolean) => void;
-    
+    updateNews: (id:string, data: Partial<NewsData>) => Promise<void>;
 
 }
 
@@ -139,6 +139,22 @@ const useNewsStore = create<NewsState>((set, get) => ({
             set({ isLastNewsLoading: false });
         }
     },
+    updateNews: async (id, data) => {
+        const { isLoading, newsData } = get();
+        if (isLoading) return;
+
+        set({ isLoading: true });
+
+        try {
+            await updateNews(id, data);
+            const updatedNews = newsData.map((news) => (news.id === id ? { ...news, ...data } : news));
+            set({ newsData: updatedNews });
+        } catch (error) {
+            console.error("Ошибка при обновлении новости:", error);
+        } finally {
+            set({isLoading: false});
+        }
+    }
 }));
 
 export default useNewsStore;

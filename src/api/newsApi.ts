@@ -1,5 +1,6 @@
-import { getData, postData, deleteData } from "./axiosInstance";
+import {getData, postData, deleteData, patchData} from "./axiosInstance";
 import {GetDataParams} from "@/api/dataParams";
+import {NewsData} from "@/store/useNewsStore";
 
 export const getNews = async (params: GetDataParams = {}) =>
     getData('/news', params);
@@ -27,3 +28,6 @@ export const postNews = async (
 
 export const deleteNews = async (id: string) =>
     deleteData(`/news/${id}`);
+
+export const updateNews = async (id: string, data: Partial<NewsData>) =>
+    patchData(`/news/${id}`, data, true);
