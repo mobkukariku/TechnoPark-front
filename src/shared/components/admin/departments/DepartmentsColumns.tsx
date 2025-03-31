@@ -3,8 +3,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import useDepartmentStore, { Department } from "@/store/useDepartmentStore";
 import useMemberStore from "@/store/useMembersStore";
 import { useEffect } from "react";
-import { DepartmentSelect } from "@/shared/components/admin/departments/DepartmentSelect";
 import { Checkbox } from "@/shared/ui";
+import { Combobox } from "@/shared/ui/Combobox";
 
 export function DepartmentsColumns(
     isEditing: boolean,
@@ -29,10 +29,10 @@ export function DepartmentsColumns(
             accessorKey: "headId",
             header: "Руководитель",
             cell: ({ row }) => (
-                <DepartmentSelect
+                <Combobox
                     key={row.original.headId}
-                    value={row.original.headId || ""}
-                    options={membersForAdmin}
+                    value={editedDepartments[row.original.id ?? ""]?.parentDepartmentId ?? row.original.parentDepartmentId ?? ""}
+                    options={membersForAdmin.map(member => ({ label: member.name, value: member.id }))}
                     onChange={(value) => handleChange(row.original.id, "headId", value)}
                     isEditing={isEditing}
                     placeholder="Выберите руководителя"
@@ -43,9 +43,9 @@ export function DepartmentsColumns(
             accessorKey: "parentDepartmentId",
             header: "Родительский отдел",
             cell: ({ row }) => (
-                <DepartmentSelect
-                    value={row.original.parentDepartmentId || ""}
-                    options={departments.map((dep) => ({ id: dep.id ?? "", name: dep.name }))}
+                <Combobox
+                    value={editedDepartments[row.original.id ?? ""]?.parentDepartmentId ?? row.original.parentDepartmentId ?? ""}
+                    options={departments.map(dep => ({ label: dep.name, value: dep.id ?? "" }))}
                     onChange={(value) => handleChange(row.original.id, "parentDepartmentId", value)}
                     isEditing={isEditing}
                     placeholder="Выберите отдел"

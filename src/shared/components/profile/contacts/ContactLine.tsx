@@ -13,12 +13,12 @@ export interface IContactProps {
 }
 
 export const ContactLine: FC<IContactProps> = ({ id, type, value }) => {
-    const { updateContacts, deleteContact } = useContactsStore(); // Добавил deleteContact
+    const { updateContacts, deleteContact } = useContactsStore();
 
     const [isEdit, setIsEdit] = useState(false);
     const [editedValue, setEditedValue] = useState(value);
     const [editedType, setEditedType] = useState(type);
-    const [isDialogOpen, setIsDialogOpen] = useState(false); // Состояние для открытия диалога
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const getContactLink = useContactLink();
     const link = getContactLink(type, value);
@@ -47,7 +47,7 @@ export const ContactLine: FC<IContactProps> = ({ id, type, value }) => {
         <div className="border-b flex justify-between items-center">
             <div className="flex flex-col gap-2 pb-2">
                 {isEdit ? (
-                    <ContactSelect value={editedType} onChange={setEditedType} />
+                    <ContactSelect className={"w-[250px]"} value={editedType} onChange={setEditedType} />
                 ) : (
                     <p className="font-medium">{type}</p>
                 )}

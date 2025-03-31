@@ -109,6 +109,17 @@ export function DepartmentsTable() {
             rowSelection,
         },
     });
+    const startEditing = () => {
+        setEditedDepartments(Object.fromEntries(
+            departments.map(dep => [dep.id, { ...dep }])
+        ));
+        setIsEditing(true);
+    };
+
+    const cancelEditing = () => {
+        setEditedDepartments({});
+        setIsEditing(false);
+    };
 
     return (
         <div className="w-[98%]">
@@ -120,7 +131,7 @@ export function DepartmentsTable() {
                 />
                 <div className="flex gap-2">
                     {isEditing && (
-                        <Button onClick={() => setIsEditing(false)} variant="outline">
+                        <Button onClick={cancelEditing} variant="outline">
                             Отмена
                         </Button>
                     )}
@@ -130,7 +141,7 @@ export function DepartmentsTable() {
                         </Button>
                     )}
 
-                    <Button onClick={isEditing ? saveChanges : () => setIsEditing(true)}>
+                    <Button onClick={isEditing ? saveChanges : startEditing}>
                         {isEditing ? "Сохранить" : "Редактировать"}
                     </Button>
                     <DepartmentCreateDialog />

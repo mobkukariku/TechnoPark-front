@@ -1,10 +1,9 @@
 import {FC} from "react";
-import {Header, LoginForm} from "@/shared/components";
+import {LoginForm} from "@/shared/components";
 
 const LoginPage: FC = () => {
     return (
         <>
-            <Header />
             <LoginForm />
         </>
     )

@@ -12,12 +12,13 @@ import {
 interface ContactSelectProps {
     value?: string;
     onChange?: (value: string) => void;
+    className?: string
 }
 
-export const ContactSelect: FC<ContactSelectProps> = ({ value, onChange }) => {
+export const ContactSelect: FC<ContactSelectProps> = ({ value, onChange, className }) => {
     return (
         <Select value={value} onValueChange={onChange}>
-            <SelectTrigger className="w-[250px]">
+            <SelectTrigger className={`${className}`}>
                 <SelectValue placeholder="Выберите тип контакта" />
             </SelectTrigger>
             <SelectContent>

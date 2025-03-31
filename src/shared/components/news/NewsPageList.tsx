@@ -11,12 +11,13 @@ export const NewsPageList: FC = () => {
 
     useEffect(() => {
             fetchNewsData();
-    }, [fetchNewsData]);
+    }, [fetchNewsData, page]);
 
 
 
     const handlePageChange = (page: number) => {
         setPage(page);
+        console.log(page)
     };
 
     return (

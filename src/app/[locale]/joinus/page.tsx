@@ -4,7 +4,6 @@ import { Header, JoinUsForm} from "@/shared/components";
 const joinusPage:FC = () => {
     return (
         <>
-            <Header />
             <JoinUsForm />
         </>
     )

@@ -17,20 +17,20 @@ export const Header: FC = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [visible, setVisible] = useState(true);
+    const menuRef = useRef<HTMLDivElement>(null);
     const isFirstRender = useRef(true);
 
     const t = useTranslations("Header");
 
     useEffect(() => {
+        setIsDesktop(window.innerWidth > 1000);
+
         const handleResize = () => {
-            const isWide = window.innerWidth > 1000;
-            setIsDesktop(isWide);
-            if (isWide) setIsMenuOpen(false);
+            setIsDesktop(window.innerWidth > 1000);
         };
 
         const checkAuth = () => {
-            const authStatus = localStorage.getItem("isAuthenticated");
-            setIsAuthenticated(authStatus === "true");
+            setIsAuthenticated(localStorage.getItem("isAuthenticated") === "true");
         };
 
         const handleScroll = () => {
@@ -40,17 +40,22 @@ export const Header: FC = () => {
             setPrevScrollPos(currentScrollPos);
         };
 
-        handleResize();
-        checkAuth();
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setIsMenuOpen(false);
+            }
+        };
 
         window.addEventListener("resize", handleResize);
         window.addEventListener("scroll", handleScroll);
         window.addEventListener("storage", checkAuth);
+        document.addEventListener("mousedown", handleClickOutside);
 
         return () => {
             window.removeEventListener("resize", handleResize);
             window.removeEventListener("scroll", handleScroll);
             window.removeEventListener("storage", checkAuth);
+            document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [prevScrollPos]);
 
@@ -63,19 +68,19 @@ export const Header: FC = () => {
             initial={isFirstRender.current ? { opacity: 0, y: -100 } : false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeIn" }}
-            className={`fixed top-0 w-full h-[90px] z-[60] transition-all duration-300 ${
+            className={`fixed top-0 w-full h-[90px] z-[60] transition-all duration-300  max-w-full ${
                 isScrolled ? "bg-white shadow py-2" : "bg-transparent py-4"
             } ${visible ? "translate-y-0" : "-translate-y-full"}`}
         >
-            <Container className="relative z-40 p-0">
-                <header className="w-full flex justify-between items-center">
+            <Container className="relative z-40 p-0 ">
+                <header className="flex justify-between items-center">
                     {isDesktop ? (
                         <div className="flex items-start w-full justify-between gap-[39px] relative z-20">
                             <div className="flex gap-[20px] items-center">
                                 <Link href="/" prefetch={true}>
                                     <Image width={61} height={61} src="/logo.svg" alt="Логотип" />
                                 </Link>
-                                <div className="mt-[20px]">
+                                <div className="mt-[20px]  z-[90]">
                                     <DropdownNav items={menuData} />
                                 </div>
                             </div>
@@ -114,12 +119,14 @@ export const Header: FC = () => {
                             <AnimatePresence>
                                 {isMenuOpen && (
                                     <motion.div
+                                        ref={menuRef}
                                         initial={{ opacity: 0, y: -20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -20 }}
-                                        transition={{ duration: 0.2, ease: "easeInOut" }}
-                                        className="absolute top-full left-0 w-full bg-white shadow-lg z-50"
+                                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                                        className="fixed top-[14px] left-[20px] w-full z-[100]"
                                     >
+
                                         <BurgerMenu />
                                     </motion.div>
                                 )}

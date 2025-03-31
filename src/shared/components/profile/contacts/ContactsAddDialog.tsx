@@ -52,7 +52,7 @@ export const ContactsAddDialog: FC = () => {
                         name="type"
                         control={control}
                         render={({ field }) => (
-                            <ContactSelect value={field.value} onChange={field.onChange} />
+                            <ContactSelect className={"w-full"} value={field.value} onChange={field.onChange} />
                         )}
                     />
                     {/* Поле ввода */}

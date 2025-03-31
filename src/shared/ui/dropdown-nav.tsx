@@ -27,7 +27,7 @@ const NavItem: FC<{ item: DropdownNavItemProps }> = ({ item }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className="relative" onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
+        <div className="relative " onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
             {item.link ? (
                 <Link href={item.link} className="text-black font-medium">
                     {item.name}
@@ -37,7 +37,7 @@ const NavItem: FC<{ item: DropdownNavItemProps }> = ({ item }) => {
             )}
             {item.childItems && isOpen && (
                 <motion.div
-                    className="absolute border-2 p-2 rounded-[8px] shadow-lg w-[250px] bg-white"
+                    className="absolute border-2 z-[100] p-2 rounded-[8px]  shadow-lg w-[250px] bg-white"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}

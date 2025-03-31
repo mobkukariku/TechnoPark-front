@@ -93,6 +93,7 @@ export const EditNewsDialog: FC<EditNewsDialogProps> = ({ id }) => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex flex-col mt-[10px] gap-[23px]">
                         {currentNews?.imageURL && (
+                            // eslint-disable-next-line @next/next/no-img-element
                             <img
                                 src={currentNews.imageURL}
                                 alt="Текущее изображение"

@@ -5,13 +5,6 @@ import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 import { useEffect, useRef } from "react";
 
-import {
-    ContextMenu,
-    ContextMenuContent,
-    ContextMenuItem,
-    ContextMenuSeparator,
-    ContextMenuTrigger,
-} from "@/shared/ui/context-menu";
 import type { Editor as EditorType } from "@toast-ui/react-editor";
 
 
