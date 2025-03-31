@@ -31,7 +31,7 @@ export function DepartmentsColumns(
             cell: ({ row }) => (
                 <Combobox
                     key={row.original.headId}
-                    value={editedDepartments[row.original.id ?? ""]?.parentDepartmentId ?? row.original.parentDepartmentId ?? ""}
+                    value={editedDepartments[row.original.id ?? ""]?.headId ?? row.original.headId ?? ""}
                     options={membersForAdmin.map(member => ({ label: member.name, value: member.id }))}
                     onChange={(value) => handleChange(row.original.id, "headId", value)}
                     isEditing={isEditing}
