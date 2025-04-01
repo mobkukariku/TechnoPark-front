@@ -69,6 +69,15 @@
       "point3": "Prototyping and implementation of technologies in the real sector."
     }
   },
+  "software": {
+    "why": "Why",
+    "direction": "Direction",
+    "points": {
+      "point1": "Innovative technologies: we work with the most modern development tools.",
+      "point2": "International approach: courses and programs meet global standards.",
+      "point3": "Practical focus: students and participants gain real experience working on projects."
+    }
+  },
   "projects": {
     "title": "Our Projects:",
     "show_more": "Show more...",
@@ -97,5 +106,23 @@
     "requiredCourse": "Please select a course",
     "selectDirection": "Select a direction",
     "direction": "Direction"
+  },
+  "gallery": "Gallery",
+  "visit": {
+    "title": "Plan a Visit",
+    "description": "Want to learn more about our technopark? Book a tour and get to know our labs, projects, and residents!",
+    "button": "Submit a request"
+  },
+  "learnMore": "Learn more",
+  "footer": {
+    "copyright": "Copyright © 2025 IT Park All rights reserved",
+    "navigation": "Navigation",
+    "aboutUs": "About Us",
+    "hardware": "Hardware",
+    "software": "Software",
+    "members": "Members",
+    "contacts": "Contacts",
+    "phone": "Phone: +7 777 777 7777",
+    "email": "Email: example@gmail.com"
   }
 }

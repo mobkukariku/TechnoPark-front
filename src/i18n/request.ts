@@ -1,19 +1,19 @@
-import { getRequestConfig } from 'next-intl/server';
-import { routing } from './routing';
+import { getRequestConfig } from "next-intl/server";
+import { routing } from "./routing";
 
-const isValidLocale = (locale: string): locale is "en" | "ru" => {
-    return routing.locales.includes(locale as "en" | "ru");
+const isValidLocale = (locale: string): locale is "en" | "ru" | "kz" => {
+  return routing.locales.includes(locale as "en" | "ru" | "kz");
 };
 
 export default getRequestConfig(async ({ requestLocale }) => {
-    let locale = await requestLocale;
+  let locale = await requestLocale;
 
-    if (!locale || !isValidLocale(locale)) {
-        locale = routing.defaultLocale;
-    }
+  if (!locale || !isValidLocale(locale)) {
+    locale = routing.defaultLocale;
+  }
 
-    return {
-        locale,
-        messages: (await import(`../../messages/${locale}.json`)).default
-    };
+  return {
+    locale,
+    messages: (await import(`../../messages/${locale}.json`)).default,
+  };
 });
