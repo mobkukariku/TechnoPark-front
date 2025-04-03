@@ -1,22 +1,20 @@
 FROM node:18-alpine
 
-
 WORKDIR /app
 
-COPY package*.json ./
+# Копируем package.json и package-lock.json для установки зависимостей
+COPY package.json package-lock.json ./
 
+# Устанавливаем все зависимости (включая dev-зависимости для сборки)
+RUN npm install --legacy-peer-deps
 
-RUN npm install || cat /root/.npm/_logs/*.log
-
-
+# Копируем весь проект
 COPY . .
 
-RUN ls -la /app
-RUN cat /app/tsconfig.json
+# Билдим Next.js приложение
+RUN npm run build
 
+EXPOSE 3000
 
-RUN ls -la && npm run build
-
-
-CMD ["npm", "start"]
-
+# Запускаем приложение
+CMD ["npm", "run", "start"]

@@ -10,7 +10,7 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: "en" | "ru" | "kz" }>; // Явно указываем допустимые локали
+  params: Promise<{ locale: "en" | "ru" | "kz" }>;
 }) {
   const { locale } = await params;
 

@@ -1,12 +1,12 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  frontend:
+  nextjs:
     build: .
-    container_name: technopark-frontend
-    restart: always
     ports:
       - "3000:3000"
-    env_file:
-      - .env
-    depends_on: []
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - .:/app
+      - /app/node_modules
