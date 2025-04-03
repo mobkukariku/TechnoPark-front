@@ -70,7 +70,7 @@ export const Header: FC = () => {
       initial={isFirstRender.current ? { opacity: 0, y: -100 } : false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeIn" }}
-      className={`fixed top-0 w-full h-[90px] z-[60] transition-all duration-300  max-w-full ${
+      className={`fixed top-0 w-full h-[90px] z-[60] transition-all duration-300 ${
         isScrolled ? "bg-white shadow py-2" : "bg-transparent py-4"
       } ${visible ? "translate-y-0" : "-translate-y-full"}`}
     >

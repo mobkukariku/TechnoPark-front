@@ -90,22 +90,28 @@
     "phone": "Телефон"
   },
   "joinUs": {
-    "title": "Өтініш қалдырыңыз!",
-    "firstName": "Аты",
-    "lastName": "Тегі",
+    "title": "Өтінім беріңіз",
+    "jobApplication": "Жұмысқа өтініш",
+    "fullName": "Толық аты-жөні",
+    "telegramUsername": "Telegram қолданушы аты",
     "email": "Электрондық пошта",
+    "jobRole": "Лауазым",
+    "selectJobRole": "Лауазымды таңдаңыз",
+    "cv": "Түйіндеме",
     "coverLetter": "Мотивациялық хат",
     "submit": "Жіберу",
-    "success": "Өтініш сәтті жіберілді!",
-    "error": "Өтініш жіберу кезінде қате пайда болды.",
-    "requiredFirstName": "Аты міндетті",
-    "requiredLastName": "Тегі міндетті",
-    "requiredEmail": "Электрондық пошта міндетті",
-    "invalidEmail": "Электрондық пошта пішімі дұрыс емес",
-    "requiredCoverLetter": "Мотивациялық хат міндетті",
-    "requiredCourse": "Курсты таңдаңыз",
-    "selectDirection": "Бағытты таңдаңыз",
-    "direction": "Бағыт"
+    "success": "Сіздің өтініміңіз сәтті жіберілді!",
+    "error": "Өтінім жіберілгенде қате пайда болды."
+  },
+  "partnerForm": {
+    "title": "Серіктестік сұрауы",
+    "placeholderTitle": "Жоба атауы",
+    "placeholderDescription": "Жобаңызды сипаттаңыз...",
+    "placeholderSenderName": "Атыңыз / Ұйымыңыз",
+    "placeholderEmail": "Электрондық поштаңыз",
+    "submit": "Сұрауды жіберу",
+    "success": "Серіктестік сұрауы сәтті жіберілді!",
+    "error": "Қате орын алды. Қайтадан көріңіз."
   },
   "gallery": "Галерея",
   "visit": {

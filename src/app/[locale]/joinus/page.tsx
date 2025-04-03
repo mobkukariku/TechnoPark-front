@@ -1,12 +1,7 @@
-import {FC} from "react";
-import { Header, JoinUsForm} from "@/shared/components";
+import React from "react";
 
-const joinusPage:FC = () => {
-    return (
-        <>
-            <JoinUsForm />
-        </>
-    )
-}
+const JoinUs = () => {
+  return <div>JoinUs</div>;
+};
 
-export default joinusPage;
+export default JoinUs;

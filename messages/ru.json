@@ -90,22 +90,28 @@
     "phone": "Телефон"
   },
   "joinUs": {
-    "title": "Оставьте заявку!",
-    "firstName": "Имя",
-    "lastName": "Фамилия",
-    "email": "Почта",
+    "title": "Подать заявку",
+    "jobApplication": "Заявка на работу",
+    "fullName": "Полное имя",
+    "telegramUsername": "Имя пользователя Telegram",
+    "email": "Электронная почта",
+    "jobRole": "Должность",
+    "selectJobRole": "Выберите должность",
+    "cv": "Резюме",
     "coverLetter": "Сопроводительное письмо",
     "submit": "Отправить",
-    "success": "Заявка отправлена!",
-    "error": "Ошибка при отправке заявки.",
-    "requiredFirstName": "Имя обязательно",
-    "requiredLastName": "Фамилия обязательна",
-    "requiredEmail": "Почта обязательна",
-    "invalidEmail": "Неверный формат почты",
-    "requiredCoverLetter": "Сопроводительное письмо обязательно",
-    "requiredCourse": "Выберите курс",
-    "selectDirection": "Выберите направление",
-    "direction": "Направление"
+    "success": "Ваша заявка успешно отправлена!",
+    "error": "Произошла ошибка при отправке заявки."
+  },
+  "partnerForm": {
+    "title": "Запрос на партнерство",
+    "placeholderTitle": "Название проекта",
+    "placeholderDescription": "Опишите ваш проект...",
+    "placeholderSenderName": "Ваше имя / организация",
+    "placeholderEmail": "Ваш email",
+    "submit": "Отправить запрос",
+    "success": "Запрос на партнерство успешно отправлен!",
+    "error": "Что-то пошло не так. Пожалуйста, попробуйте еще раз."
   },
   "gallery": "Галерея",
   "visit": {
