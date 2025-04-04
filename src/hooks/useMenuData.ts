@@ -20,6 +20,10 @@ const useMenuData = () => {
           name: "Hardware", // Same here
           link: "/hardware",
         },
+        {
+          name: "Data Science",
+          link: "/data-science",
+        },
       ],
     },
     {

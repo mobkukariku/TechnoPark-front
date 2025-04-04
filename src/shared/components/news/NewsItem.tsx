@@ -2,6 +2,7 @@ import { FC } from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export const NewsItem: FC<{
   id: string;
@@ -21,6 +22,8 @@ export const NewsItem: FC<{
     return text;
   };
 
+  const t = useTranslations();
+
   return (
     <div
       className={
@@ -38,7 +41,9 @@ export const NewsItem: FC<{
         </Link>
       </div>
       <span className={"text-[#8B8B8B]"}>{formatDate(createdAt)}</span>
-      <h3 className={"font-bold text-[20px]"}>{truncateText(title, 60)}</h3>
+      <h3 className="font-bold text-[20px] overflow-hidden text-ellipsis break-words line-clamp-2">
+        {truncateText(title, 60)}
+      </h3>
       <Link href={`news/${id}`} className={"bottom-2 absolute right-2"}>
         <div className={""}>
           <p
@@ -46,7 +51,7 @@ export const NewsItem: FC<{
               "text-end flex gap-[5px] hover:text-[#2D7DFF] transition-colors  justify-center items-center font-semibold"
             }
           >
-            Подробнее <ArrowRight width={17} />
+            {t("learnMore")} <ArrowRight width={17} />
           </p>
         </div>
       </Link>

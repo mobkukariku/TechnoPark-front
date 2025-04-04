@@ -117,7 +117,7 @@ export const ApplyForm: FC = () => {
           />
           {/* File Input for CV */}
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium">Upload CV</label>
+            <label className="text-sm font-medium">{t("uploadCV")}</label>
             <label
               className={`block w-full cursor-pointer rounded-[8px] border px-4 py-2 text-center text-sm font-medium transition-colors ${
                 errors.cvFile
@@ -125,7 +125,7 @@ export const ApplyForm: FC = () => {
                   : "border-gray-300 bg-white hover:bg-gray-50"
               }`}
             >
-              {cvFile && cvFile.length > 0 ? cvFile[0].name : "Choose file"}
+              {cvFile && cvFile.length > 0 ? cvFile[0].name : t("chooseFile")}
               <input
                 type="file"
                 accept=".pdf,.doc,.docx"
@@ -139,11 +139,13 @@ export const ApplyForm: FC = () => {
           </div>
           {/* File Input for Cover Letter */}
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium">Upload Cover Letter</label>
+            <label className="text-sm font-medium">
+              {t("uploadCoverLetter")}
+            </label>
             <label className="block w-full cursor-pointer rounded-[8px] border px-4 py-2 text-center text-sm font-medium transition-colors border-gray-300 bg-white hover:bg-gray-50">
               {coverLetterFile && coverLetterFile.length > 0
                 ? coverLetterFile[0].name
-                : "Choose file"}
+                : t("chooseFile")}
               <input
                 type="file"
                 accept=".pdf,.doc,.docx"

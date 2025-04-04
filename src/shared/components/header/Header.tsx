@@ -79,6 +79,11 @@ export const Header: FC = () => {
     setIsModalOpen(false);
   };
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    setIsMenuOpen(false);
+  };
+
   return (
     <motion.div
       initial={isFirstRender.current ? { opacity: 0, y: -100 } : false}
@@ -151,7 +156,7 @@ export const Header: FC = () => {
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                     className="fixed top-[14px] left-[20px] w-full z-[100]"
                   >
-                    <BurgerMenu />
+                    <BurgerMenu onOpenModal={handleOpenModal} />
                   </motion.div>
                 )}
               </AnimatePresence>

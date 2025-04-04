@@ -30,6 +30,10 @@
     "software": {
       "title": "Software",
       "description": "Development of software for various systems"
+    },
+    "dataScience": {
+      "title": "Data Science",
+      "description": "Data analysis and processing using machine learning and artificial intelligence to discover new solutions and optimize processes."
     }
   },
   "ShortNews": {
@@ -78,6 +82,15 @@
       "point3": "Practical focus: students and participants gain real experience working on projects."
     }
   },
+  "dataScience": {
+    "why": "Неліктен",
+    "direction": "бағыт",
+    "points": {
+      "point1": "Инновациялық технологиялар: біз ең заманауи құралдармен жұмыс істейміз.",
+      "point2": "Халықаралық тәсіл: курстар мен бағдарламалар әлемдік стандарттарға сәйкес.",
+      "point3": "Практикалық бағыт: студенттер нақты жобаларда жұмыс тәжірибесін алады."
+    }
+  },
   "projects": {
     "title": "Our Projects:",
     "show_more": "Show more...",
@@ -101,7 +114,16 @@
     "coverLetter": "Cover Letter",
     "submit": "Submit",
     "success": "Application submitted successfully!",
-    "error": "There was an error submitting your application."
+    "error": "There was an error submitting your application.",
+    "descriptionWarning": "Description must be at least 10 characters",
+    "who": "Who are you?",
+    "candidate": "Candidate",
+    "partner": "Partner",
+    "uploadAttachments": "Upload Attachments",
+    "uploadCV": "Upload CV",
+    "uploadCoverLetter": "Upload Cover Letter",
+    "chooseFile": "Choose file",
+    "chooseFiles": "Choose file(s)"
   },
   "partnerForm": {
     "title": "Request a Partnership",
@@ -128,7 +150,10 @@
     "software": "Software",
     "members": "Members",
     "contacts": "Contacts",
-    "phone": "Phone: +7 777 777 7777",
-    "email": "Email: example@gmail.com"
+    "phone": "Phone: +7 702 408 4809",
+    "email": "Email: technopark@sdu.edu.kz"
+  },
+  "news": {
+    "news": "News"
   }
 }

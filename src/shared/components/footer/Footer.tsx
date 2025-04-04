@@ -88,12 +88,15 @@ export const Footer: FC = () => {
             <h3 className="font-medium">{t("contacts")}</h3>
             <ul className="space-y-2 text-[14px] font-light">
               <li>
-                <a href="tel:+77777777777" className="hover:underline">
+                <a href="tel:+77024084809" className="hover:underline">
                   {t("phone")}
                 </a>
               </li>
               <li>
-                <a href="mailto:example@gmail.com" className="hover:underline">
+                <a
+                  href="mailto:technopark@sdu.edu.kz"
+                  className="hover:underline"
+                >
                   {t("email")}
                 </a>
               </li>

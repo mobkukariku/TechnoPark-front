@@ -15,6 +15,10 @@ const menuData = [
         name: "Hardware",
         link: "/hardware",
       },
+      {
+        name: "Data Science",
+        link: "/data-science",
+      },
     ],
   },
   {

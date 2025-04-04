@@ -23,7 +23,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
   return (
     <div
       className={
-        "flex relative overflow-hidden z-50 flex-col px-[31px] pt-[35px] pb-[50px]  w-[426px] max-[500px]:w-[380px] bg-[#D8E7FF] rounded-[22px] border-2 border-[#2D7DFF] justify-center items-center"
+        "flex relative overflow-hidden z-50 flex-col px-[31px] pt-[35px] pb-[50px]  w-[330px] max-[500px]:w-[380px] bg-[#D8E7FF] rounded-[22px] border-2 border-[#2D7DFF] justify-center items-center"
       }
     >
       <Image
@@ -36,7 +36,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
       <div className={"mt-[38px] flex flex-col relative z-50 text-center"}>
         <p className={"uppercase font-[700] text-[24px] mb-[8px]"}>{title}</p>
         <span className={"h-[90px]"}>{description}</span>
-        <Link href={link} className={"mt-[24px]"}>
+        <Link href={link} className={"mt-[32px]"}>
           <Button className={"w-[60%]"}>{t("learnMore")}</Button>
         </Link>
       </div>

@@ -2,6 +2,8 @@
 
 import React from "react";
 import { Button } from "./button";
+import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 interface JoinUsModalProps {
   isOpen: boolean;
@@ -16,45 +18,73 @@ export const JoinUsModal: React.FC<JoinUsModalProps> = ({
   onCandidateClick,
   onPartnerClick,
 }) => {
-  if (!isOpen) return null;
-
+  const t = useTranslations("joinUs");
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-      onClick={onClose} // allow closing by clicking the backdrop
-    >
-      {/* Stop click propagation so clicking the white box doesn't close it */}
-      <div
-        className="relative mx-4 max-w-sm w-full rounded-[10px] bg-white p-6"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <h2 className="text-center text-xl font-bold mb-6">Кто вы?</h2>
-
-        <div className="flex space-x-4 justify-center">
-          <button
-            className="flex-1 rounded-[7px] bg-[#2D7DFF] font-bold text-white py-2 hover:bg-[#2D7DFF]/90 transition-colors"
-            onClick={onCandidateClick}
-          >
-            Кандидат
-          </button>
-
-          <button
-            className="flex-1 rounded-[7px] bg-white border border-gray-300 text-black py-2 hover:bg-gray-50 transition-colors"
-            onClick={onPartnerClick}
-          >
-            Партнер
-          </button>
-        </div>
-
-        {/* Optional close button in top-right corner */}
-        <button
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           onClick={onClose}
-          aria-label="Close modal"
         >
-          ✕
-        </button>
-      </div>
-    </div>
+          {/* Backdrop - separate from content for independent animation */}
+          <motion.div
+            className="absolute inset-0 bg-black/50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+
+          {/* Modal content with animation */}
+          <motion.div
+            className="relative mx-4 max-w-sm w-full rounded-[10px] bg-white p-6"
+            onClick={(e) => e.stopPropagation()}
+            initial={{ scale: 0.9, y: 20, opacity: 0 }}
+            animate={{ scale: 1, y: 0, opacity: 1 }}
+            exit={{ scale: 0.95, y: 10, opacity: 0 }}
+            transition={{
+              type: "spring",
+              damping: 25,
+              stiffness: 300,
+            }}
+          >
+            <h2 className="text-center text-xl font-bold mb-6">{t("who")}</h2>
+
+            <div className="flex space-x-4 justify-center">
+              <motion.button
+                className="flex-1 rounded-[7px] bg-[#2D7DFF] font-bold text-white py-2 hover:bg-[#2D7DFF]/90 transition-colors"
+                onClick={onCandidateClick}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                {t("candidate")}
+              </motion.button>
+
+              <motion.button
+                className="flex-1 rounded-[7px] bg-white border border-gray-300 text-black py-2 hover:bg-gray-50 transition-colors"
+                onClick={onPartnerClick}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                {t("partner")}
+              </motion.button>
+            </div>
+
+            {/* Close button with hover animation */}
+            <motion.button
+              className="absolute top-2 right-2 text-gray-500"
+              onClick={onClose}
+              aria-label="Close modal"
+              whileHover={{ scale: 1.2, color: "#000" }}
+              whileTap={{ scale: 0.9 }}
+            >
+              ✕
+            </motion.button>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };

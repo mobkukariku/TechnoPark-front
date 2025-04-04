@@ -31,7 +31,7 @@ const MAX_FILES = 5;
 
 export const PartnerForm: FC = () => {
   const t = useTranslations("partnerForm");
-
+  const d = useTranslations("joinUs");
   const {
     register,
     handleSubmit,
@@ -143,7 +143,9 @@ export const PartnerForm: FC = () => {
 
           {/* File Input for Attachments */}
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium">Upload Attachments</label>
+            <label className="text-sm font-medium">
+              {d("uploadAttachments")}
+            </label>
             <div className="flex flex-col gap-2 border rounded-[8px] px-4 py-2">
               {/* Display file chips if any are selected */}
               {attachments && attachments.length > 0 && (
@@ -176,7 +178,7 @@ export const PartnerForm: FC = () => {
                       : "border-gray-300 bg-white hover:bg-gray-50"
                   }`}
                 >
-                  Choose file(s)
+                  {d("chooseFiles")}
                   <input
                     type="file"
                     multiple
