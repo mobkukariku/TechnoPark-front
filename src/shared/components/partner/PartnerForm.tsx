@@ -17,27 +17,61 @@ interface FormValues {
   attachments: FileList | null;
 }
 
+// Define allowed file types matching backend restrictions
+const allowedDocumentTypes = [
+  "application/pdf",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/msword",
+];
+
+const allowedImageTypes = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
+
+const allowedFileTypes = [...allowedDocumentTypes, ...allowedImageTypes];
+
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
-  description: Yup.string().required("Description is required"),
+  description: Yup.string()
+    .min(10, "Description must be at least 10 characters")
+    .required("Description is required"),
   senderName: Yup.string().required("Sender name is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
-  attachments: Yup.mixed().notRequired(),
+  attachments: Yup.mixed()
+    .nullable()
+    .test(
+      "fileType",
+      "Files must be PDF, DOC, DOCX, PNG, JPG, JPEG, or WEBP",
+      (value) => {
+        if (value && value instanceof FileList && value.length > 0) {
+          for (let i = 0; i < value.length; i++) {
+            if (!allowedFileTypes.includes(value[i].type)) {
+              return false;
+            }
+          }
+        }
+        return true;
+      }
+    ),
 });
 
-// Define the maximum number of allowed files
 const MAX_FILES = 5;
 
 export const PartnerForm: FC = () => {
   const t = useTranslations("partnerForm");
-
+  const d = useTranslations("joinUs");
   const {
     register,
     handleSubmit,
     watch,
     setValue,
     formState: { errors, isSubmitting },
+    setError,
   } = useForm<FormValues>({
+    // @ts-expect-error - Yup typing issue with FileList
     resolver: yupResolver(validationSchema),
     defaultValues: {
       title: "",
@@ -46,18 +80,30 @@ export const PartnerForm: FC = () => {
       email: "",
       attachments: null,
     },
+    mode: "onChange",
   });
 
-  // Watch attachments for displaying file names
   const attachments = watch("attachments");
 
-  // Handle new file selections and merge with any existing files (limit to MAX_FILES)
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = e.target.files;
     const currentFiles = attachments ? Array.from(attachments) : [];
+
     if (newFiles) {
-      // Combine current and new files, then limit to MAX_FILES
       const newFilesArray = Array.from(newFiles);
+
+      // Check file types before adding
+      const invalidFiles = newFilesArray.filter(
+        (file) => !allowedFileTypes.includes(file.type)
+      );
+      if (invalidFiles.length > 0) {
+        setError("attachments", {
+          type: "manual",
+          message: "One or more files have an invalid format",
+        });
+        return;
+      }
+
       const combined = [...currentFiles, ...newFilesArray].slice(0, MAX_FILES);
       const dt = new DataTransfer();
       combined.forEach((file) => dt.items.add(file));
@@ -65,7 +111,6 @@ export const PartnerForm: FC = () => {
     }
   };
 
-  // Remove a file at a given index
   const removeFile = (index: number) => {
     const currentFiles = attachments ? Array.from(attachments) : [];
     currentFiles.splice(index, 1);
@@ -87,10 +132,9 @@ export const PartnerForm: FC = () => {
           formData.append("attachments", file);
         });
       }
-      console.log(data.attachments);
       await postPartnershipRequest(formData);
       toast.success(t("success"));
-    } catch (error) {
+    } catch {
       toast.error(t("error"));
     }
   };
@@ -111,13 +155,21 @@ export const PartnerForm: FC = () => {
               errors.title ? "border-red-500" : ""
             }`}
           />
-          <textarea
-            {...register("description")}
-            placeholder={t("placeholderDescription")}
-            className={`w-full h-24 p-2 rounded-md border border-gray-300 transition-colors ${
-              errors.description ? "border-red-500" : ""
-            }`}
-          />
+          <div>
+            <textarea
+              {...register("description")}
+              placeholder={t("placeholderDescription")}
+              className={`w-full h-24 p-2 rounded-[4px] border border-gray-300 transition-colors ${
+                errors.description ? "border-red-500" : ""
+              }`}
+            />
+            {errors.description && (
+              <p className="text-red-500 text-xs">
+                {errors.description.message}
+              </p>
+            )}
+          </div>
+
           <Input
             {...register("senderName")}
             type="text"
@@ -137,7 +189,9 @@ export const PartnerForm: FC = () => {
 
           {/* File Input for Attachments */}
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium">Upload Attachments</label>
+            <label className="text-sm font-medium">
+              {d("uploadAttachments")}
+            </label>
             <div className="flex flex-col gap-2 border rounded-[8px] px-4 py-2">
               {/* Display file chips if any are selected */}
               {attachments && attachments.length > 0 && (
@@ -170,16 +224,20 @@ export const PartnerForm: FC = () => {
                       : "border-gray-300 bg-white hover:bg-gray-50"
                   }`}
                 >
-                  Choose file(s)
+                  {d("chooseFiles")}
                   <input
                     type="file"
                     multiple
-                    accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+                    accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.webp"
                     onChange={handleFileChange}
                     className="hidden"
                   />
                 </label>
               )}
+              <p className="text-xs text-gray-500">
+                Allowed formats: PDF, DOC, DOCX, PNG, JPG, JPEG, WEBP (Max:{" "}
+                {MAX_FILES} files)
+              </p>
             </div>
             {errors.attachments && (
               <p className="text-red-500 text-xs">
