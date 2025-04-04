@@ -19,13 +19,14 @@ interface FormValues {
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
-  description: Yup.string().required("Description is required"),
+  description: Yup.string()
+    .min(10, "Description must be at least 10 characters")
+    .required("Description is required"),
   senderName: Yup.string().required("Sender name is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
   attachments: Yup.mixed().notRequired(),
 });
 
-// Define the maximum number of allowed files
 const MAX_FILES = 5;
 
 export const PartnerForm: FC = () => {
@@ -46,17 +47,15 @@ export const PartnerForm: FC = () => {
       email: "",
       attachments: null,
     },
+    mode: "onChange",
   });
 
-  // Watch attachments for displaying file names
   const attachments = watch("attachments");
 
-  // Handle new file selections and merge with any existing files (limit to MAX_FILES)
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = e.target.files;
     const currentFiles = attachments ? Array.from(attachments) : [];
     if (newFiles) {
-      // Combine current and new files, then limit to MAX_FILES
       const newFilesArray = Array.from(newFiles);
       const combined = [...currentFiles, ...newFilesArray].slice(0, MAX_FILES);
       const dt = new DataTransfer();
@@ -65,7 +64,6 @@ export const PartnerForm: FC = () => {
     }
   };
 
-  // Remove a file at a given index
   const removeFile = (index: number) => {
     const currentFiles = attachments ? Array.from(attachments) : [];
     currentFiles.splice(index, 1);
@@ -111,13 +109,21 @@ export const PartnerForm: FC = () => {
               errors.title ? "border-red-500" : ""
             }`}
           />
-          <textarea
-            {...register("description")}
-            placeholder={t("placeholderDescription")}
-            className={`w-full h-24 p-2 rounded-md border border-gray-300 transition-colors ${
-              errors.description ? "border-red-500" : ""
-            }`}
-          />
+          <div>
+            <textarea
+              {...register("description")}
+              placeholder={t("placeholderDescription")}
+              className={`w-full h-24 p-2 rounded-[4px] border border-gray-300 transition-colors ${
+                errors.description ? "border-red-500" : ""
+              }`}
+            />
+            {errors.description && (
+              <p className="text-red-500 text-xs">
+                {errors.description.message}
+              </p>
+            )}
+          </div>
+
           <Input
             {...register("senderName")}
             type="text"

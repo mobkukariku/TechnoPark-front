@@ -26,7 +26,6 @@ export const postData = async <T>(
   body?: object | FormData,
   isFormData = false
 ): Promise<T> => {
-  // For FormData, do not force a Content-Type header; Axios will set it with the proper boundary.
   const headers = isFormData ? {} : { "Content-Type": "application/json" };
   const response = await axiosInstance.post(url, body, { headers });
   return response.data;
