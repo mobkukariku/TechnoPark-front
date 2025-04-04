@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { postPartnershipRequest } from "@/api/requestsApi";
+import { X } from "lucide-react";
 
 interface FormValues {
   title: string;
@@ -24,12 +25,17 @@ const validationSchema = Yup.object().shape({
   attachments: Yup.mixed().notRequired(),
 });
 
+// Define the maximum number of allowed files
+const MAX_FILES = 5;
+
 export const PartnerForm: FC = () => {
   const t = useTranslations("partnerForm");
 
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: yupResolver(validationSchema),
@@ -41,6 +47,32 @@ export const PartnerForm: FC = () => {
       attachments: null,
     },
   });
+
+  // Watch attachments for displaying file names
+  const attachments = watch("attachments");
+
+  // Handle new file selections and merge with any existing files (limit to MAX_FILES)
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newFiles = e.target.files;
+    const currentFiles = attachments ? Array.from(attachments) : [];
+    if (newFiles) {
+      // Combine current and new files, then limit to MAX_FILES
+      const newFilesArray = Array.from(newFiles);
+      const combined = [...currentFiles, ...newFilesArray].slice(0, MAX_FILES);
+      const dt = new DataTransfer();
+      combined.forEach((file) => dt.items.add(file));
+      setValue("attachments", dt.files);
+    }
+  };
+
+  // Remove a file at a given index
+  const removeFile = (index: number) => {
+    const currentFiles = attachments ? Array.from(attachments) : [];
+    currentFiles.splice(index, 1);
+    const dt = new DataTransfer();
+    currentFiles.forEach((file) => dt.items.add(file));
+    setValue("attachments", dt.files);
+  };
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -55,7 +87,7 @@ export const PartnerForm: FC = () => {
           formData.append("attachments", file);
         });
       }
-
+      console.log(data.attachments);
       await postPartnershipRequest(formData);
       toast.success(t("success"));
     } catch (error) {
@@ -64,57 +96,97 @@ export const PartnerForm: FC = () => {
   };
 
   return (
-    <div className="max-w-[450px] z-20 relative mx-auto">
+    <div className="max-w-md mx-auto relative z-20 p-4">
       <form
-        className="bg-[#D8E7FF] relative z-50 rounded-[6px] pt-[38px] pb-[58px] flex flex-col justify-center items-center"
+        className="bg-[#D8E7FF] rounded-[9px] shadow-md p-8 flex flex-col gap-6"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <p className="font-bold text-[32px] text-center">{t("title")}</p>
-        <div className="flex flex-col w-fit mt-[30px] gap-[16px]">
+        <h1 className="text-3xl font-bold text-center">{t("title")}</h1>
+        <div className="flex flex-col gap-4">
           <Input
             {...register("title")}
             type="text"
             placeholder={t("placeholderTitle")}
-            className={`w-[340px] transition-colors ${
+            className={`w-full transition-colors ${
               errors.title ? "border-red-500" : ""
             }`}
           />
-
           <textarea
             {...register("description")}
             placeholder={t("placeholderDescription")}
-            className={`w-[340px] h-[100px] p-2 rounded-md border border-gray-300 transition-colors ${
+            className={`w-full h-24 p-2 rounded-md border border-gray-300 transition-colors ${
               errors.description ? "border-red-500" : ""
             }`}
           />
-
           <Input
             {...register("senderName")}
             type="text"
             placeholder={t("placeholderSenderName")}
-            className={`w-[340px] transition-colors ${
+            className={`w-full transition-colors ${
               errors.senderName ? "border-red-500" : ""
             }`}
           />
-
           <Input
             {...register("email")}
             type="email"
             placeholder={t("placeholderEmail")}
-            className={`w-[340px] transition-colors ${
+            className={`w-full transition-colors ${
               errors.email ? "border-red-500" : ""
             }`}
           />
 
-          <input
-            type="file"
-            multiple
-            accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
-            {...register("attachments")}
-            className={`w-[340px] file:mr-2 file:py-2 file:px-4 file:border-0 file:bg-[#437DFF] file:text-white ${
-              errors.attachments ? "border border-red-500" : ""
-            }`}
-          />
+          {/* File Input for Attachments */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium">Upload Attachments</label>
+            <div className="flex flex-col gap-2 border rounded-[8px] px-4 py-2">
+              {/* Display file chips if any are selected */}
+              {attachments && attachments.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {Array.from(attachments).map((file, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-2 bg-gray-100 rounded px-2 py-1 text-sm"
+                    >
+                      <span className="truncate max-w-[150px] py-0.5">
+                        {file.name}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => removeFile(index)}
+                        className="text-gray-600 hover:text-gray-800"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {/* Only show the "Choose file(s)" label if fewer than MAX_FILES are selected */}
+              {(!attachments || attachments.length < MAX_FILES) && (
+                <label
+                  className={`block cursor-pointer text-center rounded py-1 transition-colors ${
+                    errors.attachments
+                      ? "border-red-500 bg-red-50"
+                      : "border-gray-300 bg-white hover:bg-gray-50"
+                  }`}
+                >
+                  Choose file(s)
+                  <input
+                    type="file"
+                    multiple
+                    accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
+                </label>
+              )}
+            </div>
+            {errors.attachments && (
+              <p className="text-red-500 text-xs">
+                {errors.attachments.message}
+              </p>
+            )}
+          </div>
 
           <Button
             type="submit"

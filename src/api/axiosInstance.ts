@@ -2,9 +2,8 @@ import axios from "axios";
 
 export const axiosInstance = axios.create({
   baseURL: "http://localhost:5000/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
+  // Remove the default Content-Type header
+  // headers: { "Content-Type": "application/json" },
   withCredentials: true,
   timeout: 10000,
 });
@@ -27,9 +26,9 @@ export const postData = async <T>(
   body?: object | FormData,
   isFormData = false
 ): Promise<T> => {
-  const response = await axiosInstance.post(url, body, {
-    headers: isFormData ? { "Content-Type": undefined } : {},
-  });
+  // For FormData, do not force a Content-Type header; Axios will set it with the proper boundary.
+  const headers = isFormData ? {} : { "Content-Type": "application/json" };
+  const response = await axiosInstance.post(url, body, { headers });
   return response.data;
 };
 

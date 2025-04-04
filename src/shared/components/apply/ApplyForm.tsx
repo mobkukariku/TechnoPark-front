@@ -40,6 +40,7 @@ export const ApplyForm: FC = () => {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: yupResolver(validationSchema),
@@ -52,6 +53,10 @@ export const ApplyForm: FC = () => {
       coverLetterFile: null,
     },
   });
+
+  // Watch file inputs to display the chosen file names.
+  const cvFile = watch("cvFile");
+  const coverLetterFile = watch("coverLetterFile");
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -66,7 +71,6 @@ export const ApplyForm: FC = () => {
       if (data.coverLetterFile && data.coverLetterFile.length > 0) {
         formData.append("coverLetter", data.coverLetterFile[0]);
       }
-      console.log(formData);
       await postJobApplication(formData);
       toast.success(t("success"));
     } catch {
@@ -75,18 +79,18 @@ export const ApplyForm: FC = () => {
   };
 
   return (
-    <div className="max-w-[450px] z-20 relative mx-auto">
+    <div className="max-w-md mx-auto relative z-20 p-4">
       <form
-        className="bg-[#D8E7FF] relative z-50 rounded-[6px] pt-[38px] pb-[58px] flex flex-col justify-center items-center"
+        className="bg-[#D8E7FF] rounded-[9px] shadow-md p-8 flex flex-col gap-6"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <p className="font-bold text-[32px] text-center">{t("title")}</p>
-        <div className="flex flex-col w-fit mt-[30px] gap-[16px]">
+        <h1 className="text-3xl font-bold text-center">{t("title")}</h1>
+        <div className="flex flex-col gap-4">
           <Input
             {...register("fullName")}
             type="text"
             placeholder={t("fullName")}
-            className={`w-[340px] transition-colors ${
+            className={`w-full transition-colors ${
               errors.fullName ? "border-red-500" : ""
             }`}
           />
@@ -94,7 +98,7 @@ export const ApplyForm: FC = () => {
             {...register("email")}
             type="email"
             placeholder={t("email")}
-            className={`w-[340px] transition-colors ${
+            className={`w-full transition-colors ${
               errors.email ? "border-red-500" : ""
             }`}
           />
@@ -102,7 +106,7 @@ export const ApplyForm: FC = () => {
             {...register("telegramUsername")}
             type="text"
             placeholder={t("telegramUsername")}
-            className={`w-[340px] transition-colors ${
+            className={`w-full transition-colors ${
               errors.telegramUsername ? "border-red-500" : ""
             }`}
           />
@@ -111,20 +115,43 @@ export const ApplyForm: FC = () => {
             name="jobRoleId"
             error={errors.jobRoleId?.message}
           />
-          <input
-            type="file"
-            accept=".pdf,.doc,.docx"
-            {...register("cvFile", { required: "CV is required" })}
-            className={`w-[340px] file:mr-2 file:py-2 file:px-4 file:border-0 file:bg-[#437DFF] file:text-white ${
-              errors.cvFile ? "border border-red-500" : ""
-            }`}
-          />
-          <input
-            type="file"
-            accept=".pdf,.doc,.docx"
-            {...register("coverLetterFile")}
-            className={`w-[340px] file:mr-2 file:py-2 file:px-4 file:border-0 file:bg-[#437DFF] file:text-white`}
-          />
+          {/* File Input for CV */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium">Upload CV</label>
+            <label
+              className={`block w-full cursor-pointer rounded-[8px] border px-4 py-2 text-center text-sm font-medium transition-colors ${
+                errors.cvFile
+                  ? "border-red-500 bg-red-50"
+                  : "border-gray-300 bg-white hover:bg-gray-50"
+              }`}
+            >
+              {cvFile && cvFile.length > 0 ? cvFile[0].name : "Choose file"}
+              <input
+                type="file"
+                accept=".pdf,.doc,.docx"
+                {...register("cvFile", { required: "CV is required" })}
+                className="hidden"
+              />
+            </label>
+            {errors.cvFile && (
+              <p className="text-red-500 text-xs">{errors.cvFile.message}</p>
+            )}
+          </div>
+          {/* File Input for Cover Letter */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium">Upload Cover Letter</label>
+            <label className="block w-full cursor-pointer rounded-[8px] border px-4 py-2 text-center text-sm font-medium transition-colors border-gray-300 bg-white hover:bg-gray-50">
+              {coverLetterFile && coverLetterFile.length > 0
+                ? coverLetterFile[0].name
+                : "Choose file"}
+              <input
+                type="file"
+                accept=".pdf,.doc,.docx"
+                {...register("coverLetterFile")}
+                className="hidden"
+              />
+            </label>
+          </div>
           <Button
             type="submit"
             disabled={isSubmitting}

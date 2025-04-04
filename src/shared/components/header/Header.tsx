@@ -2,13 +2,14 @@
 import { FC, useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { BurgerMenu, Container } from "@/shared/components";
-import { Button, DropdownNav } from "@/shared/ui";
+import { Button, DropdownNav, JoinUsModal } from "@/shared/ui";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { AlignJustify, UserRound, X } from "lucide-react";
 import { useTranslations } from "use-intl";
 import { LangSelect } from "@/shared/components/header/LangSelect";
 import useMenuData from "@/hooks/useMenuData";
+import { useRouter } from "next/navigation";
 
 export const Header: FC = () => {
   const [isDesktop, setIsDesktop] = useState(false);
@@ -19,6 +20,9 @@ export const Header: FC = () => {
   const [visible, setVisible] = useState(true);
   const menuRef = useRef<HTMLDivElement>(null);
   const isFirstRender = useRef(true);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const router = useRouter();
 
   const menuData = useMenuData();
 
@@ -65,6 +69,16 @@ export const Header: FC = () => {
     isFirstRender.current = false;
   }, []);
 
+  const handleCandidateClick = () => {
+    router.push("/joinus/apply");
+    setIsModalOpen(false);
+  };
+
+  const handlePartnerClick = () => {
+    router.push("/joinus/partner");
+    setIsModalOpen(false);
+  };
+
   return (
     <motion.div
       initial={isFirstRender.current ? { opacity: 0, y: -100 } : false}
@@ -74,6 +88,12 @@ export const Header: FC = () => {
         isScrolled ? "bg-white shadow py-2" : "bg-transparent py-4"
       } ${visible ? "translate-y-0" : "-translate-y-full"}`}
     >
+      <JoinUsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onCandidateClick={handleCandidateClick}
+        onPartnerClick={handlePartnerClick}
+      />
       <Container className="relative z-40 p-0 ">
         <header className="flex justify-between items-center">
           {isDesktop ? (
@@ -92,19 +112,14 @@ export const Header: FC = () => {
                     <UserRound className="hover:text-[#2D7DFF] transition-colors active:text-[#0B439F]" />
                   </Link>
                 ) : (
-                  <Link
-                    href="/joinus"
-                    className="relative z-50"
-                    prefetch={true}
+                  <Button
+                    size="default"
+                    variant="default"
+                    className="text-[18px]"
+                    onClick={() => setIsModalOpen(true)}
                   >
-                    <Button
-                      size="default"
-                      variant="default"
-                      className="text-[18px]"
-                    >
-                      {t("enter")}
-                    </Button>
-                  </Link>
+                    {t("enter")}
+                  </Button>
                 )}
                 <LangSelect />
               </div>
