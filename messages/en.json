@@ -90,22 +90,28 @@
     "phone": "Phone"
   },
   "joinUs": {
-    "title": "Submit Your Application!",
-    "firstName": "First Name",
-    "lastName": "Last Name",
+    "title": "Apply Now",
+    "jobApplication": "Job Application",
+    "fullName": "Full Name",
+    "telegramUsername": "Telegram Username",
     "email": "Email",
+    "jobRole": "Job Role",
+    "selectJobRole": "Select Job Role",
+    "cv": "CV",
     "coverLetter": "Cover Letter",
     "submit": "Submit",
-    "success": "Application submitted!",
-    "error": "Error submitting application.",
-    "requiredFirstName": "First name is required",
-    "requiredLastName": "Last name is required",
-    "requiredEmail": "Email is required",
-    "invalidEmail": "Invalid email format",
-    "requiredCoverLetter": "Cover letter is required",
-    "requiredCourse": "Please select a course",
-    "selectDirection": "Select a direction",
-    "direction": "Direction"
+    "success": "Application submitted successfully!",
+    "error": "There was an error submitting your application."
+  },
+  "partnerForm": {
+    "title": "Request a Partnership",
+    "placeholderTitle": "Project Title",
+    "placeholderDescription": "Describe your project...",
+    "placeholderSenderName": "Your Name / Organization",
+    "placeholderEmail": "Your Email",
+    "submit": "Send Request",
+    "success": "Partnership request sent successfully!",
+    "error": "Something went wrong. Please try again."
   },
   "gallery": "Gallery",
   "visit": {
