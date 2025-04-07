@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { Button } from "./button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
 

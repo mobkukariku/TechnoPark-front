@@ -17,6 +17,22 @@ interface FormValues {
   attachments: FileList | null;
 }
 
+// Define allowed file types matching backend restrictions
+const allowedDocumentTypes = [
+  "application/pdf",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/msword",
+];
+
+const allowedImageTypes = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
+
+const allowedFileTypes = [...allowedDocumentTypes, ...allowedImageTypes];
+
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
   description: Yup.string()
@@ -24,7 +40,22 @@ const validationSchema = Yup.object().shape({
     .required("Description is required"),
   senderName: Yup.string().required("Sender name is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
-  attachments: Yup.mixed().notRequired(),
+  attachments: Yup.mixed()
+    .nullable()
+    .test(
+      "fileType",
+      "Files must be PDF, DOC, DOCX, PNG, JPG, JPEG, or WEBP",
+      (value) => {
+        if (value && value instanceof FileList && value.length > 0) {
+          for (let i = 0; i < value.length; i++) {
+            if (!allowedFileTypes.includes(value[i].type)) {
+              return false;
+            }
+          }
+        }
+        return true;
+      }
+    ),
 });
 
 const MAX_FILES = 5;
@@ -38,7 +69,9 @@ export const PartnerForm: FC = () => {
     watch,
     setValue,
     formState: { errors, isSubmitting },
+    setError,
   } = useForm<FormValues>({
+    // @ts-expect-error - Yup typing issue with FileList
     resolver: yupResolver(validationSchema),
     defaultValues: {
       title: "",
@@ -55,8 +88,22 @@ export const PartnerForm: FC = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = e.target.files;
     const currentFiles = attachments ? Array.from(attachments) : [];
+
     if (newFiles) {
       const newFilesArray = Array.from(newFiles);
+
+      // Check file types before adding
+      const invalidFiles = newFilesArray.filter(
+        (file) => !allowedFileTypes.includes(file.type)
+      );
+      if (invalidFiles.length > 0) {
+        setError("attachments", {
+          type: "manual",
+          message: "One or more files have an invalid format",
+        });
+        return;
+      }
+
       const combined = [...currentFiles, ...newFilesArray].slice(0, MAX_FILES);
       const dt = new DataTransfer();
       combined.forEach((file) => dt.items.add(file));
@@ -85,10 +132,9 @@ export const PartnerForm: FC = () => {
           formData.append("attachments", file);
         });
       }
-      console.log(data.attachments);
       await postPartnershipRequest(formData);
       toast.success(t("success"));
-    } catch (error) {
+    } catch {
       toast.error(t("error"));
     }
   };
@@ -182,12 +228,16 @@ export const PartnerForm: FC = () => {
                   <input
                     type="file"
                     multiple
-                    accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+                    accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.webp"
                     onChange={handleFileChange}
                     className="hidden"
                   />
                 </label>
               )}
+              <p className="text-xs text-gray-500">
+                Allowed formats: PDF, DOC, DOCX, PNG, JPG, JPEG, WEBP (Max:{" "}
+                {MAX_FILES} files)
+              </p>
             </div>
             {errors.attachments && (
               <p className="text-red-500 text-xs">

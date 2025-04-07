@@ -1,6 +1,6 @@
 "use client";
 import { FC } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Button, Input } from "@/shared/ui";
 import { JobRoleSelect } from "./JobRoleSelect";
 import { Toaster, toast } from "react-hot-toast";
@@ -18,6 +18,13 @@ interface FormValues {
   coverLetterFile?: FileList | null;
 }
 
+// Define allowed file types matching backend restrictions
+const allowedDocumentTypes = [
+  "application/pdf",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/msword",
+];
+
 const validationSchema = Yup.object().shape({
   fullName: Yup.string().required("Full name is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -26,11 +33,24 @@ const validationSchema = Yup.object().shape({
     .required("Telegram username is required"),
   jobRoleId: Yup.string().required("Job role is required"),
   cvFile: Yup.mixed()
-    .test("fileRequired", "CV is required", (value: any) => {
-      return value && value.length > 0;
+    .test("fileRequired", "CV is required", (value) => {
+      return value && value instanceof FileList && value.length > 0;
+    })
+    .test("fileType", "File must be PDF, DOC, or DOCX", (value) => {
+      if (value && value instanceof FileList && value.length > 0) {
+        return allowedDocumentTypes.includes(value[0].type);
+      }
+      return false;
     })
     .required("CV is required"),
-  coverLetterFile: Yup.mixed().notRequired(),
+  coverLetterFile: Yup.mixed()
+    .nullable()
+    .test("fileType", "File must be PDF, DOC, or DOCX", (value) => {
+      if (value && value instanceof FileList && value.length > 0) {
+        return allowedDocumentTypes.includes(value[0].type);
+      }
+      return true; // If no file is selected, pass validation
+    }),
 });
 
 export const ApplyForm: FC = () => {
@@ -43,6 +63,7 @@ export const ApplyForm: FC = () => {
     watch,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
+    // @ts-expect-error - Yup typing issue with FileList
     resolver: yupResolver(validationSchema),
     defaultValues: {
       fullName: "",
@@ -73,7 +94,8 @@ export const ApplyForm: FC = () => {
       }
       await postJobApplication(formData);
       toast.success(t("success"));
-    } catch {
+    } catch (error) {
+      console.error("Error submitting form:", error);
       toast.error(t("error"));
     }
   };
@@ -136,13 +158,22 @@ export const ApplyForm: FC = () => {
             {errors.cvFile && (
               <p className="text-red-500 text-xs">{errors.cvFile.message}</p>
             )}
+            <p className="text-xs text-gray-500">
+              Allowed formats: PDF, DOC, DOCX
+            </p>
           </div>
           {/* File Input for Cover Letter */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">
               {t("uploadCoverLetter")}
             </label>
-            <label className="block w-full cursor-pointer rounded-[8px] border px-4 py-2 text-center text-sm font-medium transition-colors border-gray-300 bg-white hover:bg-gray-50">
+            <label
+              className={`block w-full cursor-pointer rounded-[8px] border px-4 py-2 text-center text-sm font-medium transition-colors ${
+                errors.coverLetterFile
+                  ? "border-red-500 bg-red-50"
+                  : "border-gray-300 bg-white hover:bg-gray-50"
+              }`}
+            >
               {coverLetterFile && coverLetterFile.length > 0
                 ? coverLetterFile[0].name
                 : t("chooseFile")}
@@ -153,6 +184,14 @@ export const ApplyForm: FC = () => {
                 className="hidden"
               />
             </label>
+            {errors.coverLetterFile && (
+              <p className="text-red-500 text-xs">
+                {errors.coverLetterFile.message}
+              </p>
+            )}
+            <p className="text-xs text-gray-500">
+              Allowed formats: PDF, DOC, DOCX
+            </p>
           </div>
           <Button
             type="submit"

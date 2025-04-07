@@ -1,6 +1,6 @@
 "use client";
-import { FC, useEffect, useState } from "react";
-import { Control, Controller } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { Control, Controller, FieldValues, Path } from "react-hook-form";
 import {
   Select,
   SelectContent,
@@ -18,17 +18,17 @@ interface JobRole {
   name: string;
 }
 
-interface JobRoleSelectProps {
-  control: Control<any>;
-  name: string;
+interface JobRoleSelectProps<T extends FieldValues> {
+  control: Control<T>;
+  name: Path<T>;
   error?: string;
 }
 
-export const JobRoleSelect: FC<JobRoleSelectProps> = ({
+export const JobRoleSelect = <T extends FieldValues>({
   control,
   name,
   error,
-}) => {
+}: JobRoleSelectProps<T>) => {
   const [jobRoles, setJobRoles] = useState<JobRole[]>([]);
   const t = useTranslations("joinUs");
 
