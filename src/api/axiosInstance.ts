@@ -26,9 +26,19 @@ export const postData = async <T>(
   body?: object | FormData,
   isFormData = false
 ): Promise<T> => {
-  const headers = isFormData ? {} : { "Content-Type": "application/json" };
-  const response = await axiosInstance.post(url, body, { headers });
-  return response.data;
+  try {
+    const headers = isFormData ? {} : { "Content-Type": "application/json" };
+    const response = await axiosInstance.post(url, body, { headers });
+    return response.data;
+  } catch (error) {
+    // Import AxiosError and type-check the error
+    if (axios.isAxiosError(error) && error.response) {
+      console.error("Server error details:", error.response.data);
+    } else {
+      console.error("Unexpected error:", error);
+    }
+    throw error;
+  }
 };
 
 export const deleteData = async <T>(url: string): Promise<T> => {

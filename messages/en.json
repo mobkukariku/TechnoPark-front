@@ -123,7 +123,12 @@
     "uploadCV": "Upload CV",
     "uploadCoverLetter": "Upload Cover Letter",
     "chooseFile": "Choose file",
-    "chooseFiles": "Choose file(s)"
+    "chooseFiles": "Choose file(s)",
+    "referralSource": "How did you hear about us?",
+    "projectInterests": "What projects would you be interested in working on?",
+    "skills": "What skills do you have?",
+    "organizationInterest": "Which organization are you interested in?",
+    "selectOrganization": "Select Organization"
   },
   "partnerForm": {
     "title": "Request a Partnership",

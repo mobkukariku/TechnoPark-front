@@ -41,10 +41,9 @@ export const CreateNewsDialog: FC = () => {
   const { submitNews } = useNewsStore();
   const { selectedTags } = useTagHandler(true); // ✅ Получаем выбранные теги
 
-  // Updated onSubmit function for CreateNewsDialog
   const onSubmit = async (data: FormData) => {
     try {
-      // Add validation for tags
+      // Validate that tags are selected
       if (
         !selectedTags ||
         (typeof selectedTags === "string" && !selectedTags.trim())
@@ -53,24 +52,18 @@ export const CreateNewsDialog: FC = () => {
         return;
       }
 
-      // Log what we're submitting
-      console.log("Submitting news:", {
+      // Log what we're about to send
+      console.log("Submitting with:", {
         title: data.title,
-        contentLength: data.content.length,
-        image: data.image?.name || "No image",
+        content: data.content,
+        imageFile: data.image,
         selectedTags,
       });
 
-      // Submit the news
       await submitNews(data.title, data.content, data.image, selectedTags);
-
       toast.success("Новость была создана!");
-
-      // You might want to reset the form and close the dialog here
-      // resetForm();
-      // closeDialog();
     } catch (error) {
-      console.error("Ошибка при отправке:", error);
+      console.error("Error submitting:", error);
       toast.error("Ошибка при отправке");
     }
   };

@@ -3,6 +3,7 @@ import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Input } from "@/shared/ui";
 import { JobRoleSelect } from "./JobRoleSelect";
+import { OrganizationSelect } from "./OrganizationSelect";
 import { Toaster, toast } from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import * as Yup from "yup";
@@ -14,6 +15,10 @@ interface FormValues {
   email: string;
   telegramUsername: string;
   jobRoleId: string;
+  referralSource: string; // New required field
+  projectInterests: string; // New required field
+  skills: string; // New required field
+  organizationInterest: string; // New required field
   cvFile: FileList | null;
   coverLetterFile?: FileList | null;
 }
@@ -32,6 +37,12 @@ const validationSchema = Yup.object().shape({
     .matches(/^@/, "Telegram username must start with '@'")
     .required("Telegram username is required"),
   jobRoleId: Yup.string().required("Job role is required"),
+  referralSource: Yup.string().required("Referral source is required"),
+  projectInterests: Yup.string().required("Project interests are required"),
+  skills: Yup.string().required("Skills are required"),
+  organizationInterest: Yup.string().required(
+    "Organization interest is required"
+  ),
   cvFile: Yup.mixed()
     .test("fileRequired", "CV is required", (value) => {
       return value && value instanceof FileList && value.length > 0;
@@ -70,6 +81,10 @@ export const ApplyForm: FC = () => {
       email: "",
       telegramUsername: "",
       jobRoleId: "",
+      referralSource: "",
+      projectInterests: "",
+      skills: "",
+      organizationInterest: "",
       cvFile: null,
       coverLetterFile: null,
     },
@@ -86,6 +101,11 @@ export const ApplyForm: FC = () => {
       formData.append("email", data.email);
       formData.append("telegramUsername", data.telegramUsername);
       formData.append("jobRoleId", data.jobRoleId);
+      formData.append("referralSource", data.referralSource);
+      formData.append("projectInterests", data.projectInterests);
+      formData.append("skills", data.skills);
+      formData.append("organizationInterest", data.organizationInterest);
+
       if (data.cvFile && data.cvFile.length > 0) {
         formData.append("cv", data.cvFile[0]);
       }
@@ -137,6 +157,64 @@ export const ApplyForm: FC = () => {
             name="jobRoleId"
             error={errors.jobRoleId?.message}
           />
+
+          {/* New Required Fields */}
+          <Input
+            {...register("referralSource")}
+            type="text"
+            placeholder={t("referralSource")}
+            className={`w-full transition-colors ${
+              errors.referralSource ? "border-red-500" : ""
+            }`}
+          />
+          {errors.referralSource && (
+            <p className="text-red-500 text-xs">
+              {errors.referralSource.message}
+            </p>
+          )}
+
+          <Input
+            {...register("projectInterests")}
+            type="text"
+            placeholder={t("projectInterests")}
+            className={`w-full transition-colors ${
+              errors.projectInterests ? "border-red-500" : ""
+            }`}
+          />
+          {errors.projectInterests && (
+            <p className="text-red-500 text-xs">
+              {errors.projectInterests.message}
+            </p>
+          )}
+
+          <Input
+            {...register("skills")}
+            type="text"
+            placeholder={t("skills")}
+            className={`w-full transition-colors ${
+              errors.skills ? "border-red-500" : ""
+            }`}
+          />
+          {errors.skills && (
+            <p className="text-red-500 text-xs">{errors.skills.message}</p>
+          )}
+
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium">
+              {t("organizationInterest")}
+            </label>
+            <OrganizationSelect
+              control={control}
+              name="organizationInterest"
+              error={errors.organizationInterest?.message}
+            />
+            {errors.organizationInterest && (
+              <p className="text-red-500 text-xs">
+                {errors.organizationInterest.message}
+              </p>
+            )}
+          </div>
+
           {/* File Input for CV */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">{t("uploadCV")}</label>

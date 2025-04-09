@@ -123,7 +123,12 @@
     "uploadCV": "Загрузить резюме",
     "uploadCoverLetter": "Загрузить сопроводительное письмо",
     "chooseFile": "Выбрать файл",
-    "chooseFiles": "Выбрать файл(ы)"
+    "chooseFiles": "Выбрать файл(ы)",
+    "referralSource": "Как вы о нас узнали?",
+    "projectInterests": "В каких проектах вы хотели бы работать?",
+    "skills": "Какими навыками вы обладаете?",
+    "organizationInterest": "Какая организация вас интересует?",
+    "selectOrganization": "Выберите организацию"
   },
   "partnerForm": {
     "title": "Запрос на партнерство",
