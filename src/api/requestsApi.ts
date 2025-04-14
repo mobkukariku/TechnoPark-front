@@ -32,12 +32,19 @@ export interface JobApplication {
   fullName: string;
   email: string;
   telegramUsername: string;
+  jobRoleId: string;
+  referralSource: string;
+  projectInterests: string;
+  skills: string;
+  organizationInterest: string;
   cvPath: string;
   cvOriginalName: string;
   cvSize: number;
-  coverLetterPath: string;
-  coverLetterOriginalName: string;
-  coverLetterSize: number;
+  cvPublicId: string;
+  coverLetterPath: string | null;
+  coverLetterOriginalName: string | null;
+  coverLetterSize: number | null;
+  coverLetterPublicId: string | null;
   createdAt: string;
   updatedAt: string;
 }

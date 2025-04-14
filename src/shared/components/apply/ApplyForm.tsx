@@ -1,6 +1,6 @@
 "use client";
 import { FC } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Resolver } from "react-hook-form";
 import { Button, Input } from "@/shared/ui";
 import { JobRoleSelect } from "./JobRoleSelect";
 import { OrganizationSelect } from "./OrganizationSelect";
@@ -15,57 +15,103 @@ interface FormValues {
   email: string;
   telegramUsername: string;
   jobRoleId: string;
-  referralSource: string; // New required field
-  projectInterests: string; // New required field
-  skills: string; // New required field
-  organizationInterest: string; // New required field
+  referralSource: string;
+  projectInterests: string;
+  skills: string;
+  organizationInterest: string;
   cvFile: FileList | null;
   coverLetterFile?: FileList | null;
 }
 
-// Define allowed file types matching backend restrictions
 const allowedDocumentTypes = [
   "application/pdf",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   "application/msword",
 ];
 
-const validationSchema = Yup.object().shape({
-  fullName: Yup.string().required("Full name is required"),
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  telegramUsername: Yup.string()
-    .matches(/^@/, "Telegram username must start with '@'")
-    .required("Telegram username is required"),
-  jobRoleId: Yup.string().required("Job role is required"),
-  referralSource: Yup.string().required("Referral source is required"),
-  projectInterests: Yup.string().required("Project interests are required"),
-  skills: Yup.string().required("Skills are required"),
-  organizationInterest: Yup.string().required(
-    "Organization interest is required"
-  ),
-  cvFile: Yup.mixed()
-    .test("fileRequired", "CV is required", (value) => {
-      return value && value instanceof FileList && value.length > 0;
-    })
-    .test("fileType", "File must be PDF, DOC, or DOCX", (value) => {
-      if (value && value instanceof FileList && value.length > 0) {
-        return allowedDocumentTypes.includes(value[0].type);
-      }
-      return false;
-    })
-    .required("CV is required"),
-  coverLetterFile: Yup.mixed()
-    .nullable()
-    .test("fileType", "File must be PDF, DOC, or DOCX", (value) => {
-      if (value && value instanceof FileList && value.length > 0) {
-        return allowedDocumentTypes.includes(value[0].type);
-      }
-      return true; // If no file is selected, pass validation
-    }),
-});
-
 export const ApplyForm: FC = () => {
   const t = useTranslations("joinUs");
+  const v = useTranslations("validation");
+
+  const validationSchema = Yup.object().shape({
+    fullName: Yup.string()
+      .required(v("nameRequired"))
+      .min(2, v("nameMinLength"))
+      .max(100, v("nameMaxLength"))
+      .matches(/^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/, v("nameFormat")),
+
+    email: Yup.string()
+      .email(v("invalidEmail"))
+      .required(v("emailRequired"))
+      .max(255, v("emailMaxLength")),
+
+    telegramUsername: Yup.string()
+      .matches(/^@[a-zA-Z0-9_]{5,32}$/, v("telegramFormat"))
+      .required(v("telegramRequired")),
+
+    jobRoleId: Yup.string()
+      .required(v("jobRoleRequired"))
+      .test(
+        "is-not-default",
+        v("selectJobRole"),
+        (value) => value !== "default"
+      ),
+
+    referralSource: Yup.string()
+      .required(v("referralRequired"))
+      .min(2, v("referralMinLength"))
+      .max(255, v("referralMaxLength"))
+      .matches(/^\S.*\S$/, v("noWhitespace")),
+
+    projectInterests: Yup.string()
+      .required(v("interestsRequired"))
+      .min(10, v("interestsMinLength"))
+      .max(500, v("interestsMaxLength")),
+
+    skills: Yup.string()
+      .required(v("skillsRequired"))
+      .min(5, v("skillsMinLength"))
+      .max(500, v("skillsMaxLength")),
+
+    organizationInterest: Yup.string()
+      .required(v("orgRequired"))
+      .test("is-not-default", v("selectOrg"), (value) => value !== "default"),
+
+    cvFile: Yup.mixed()
+      .nullable()
+      .required(v("cvRequired"))
+      .test("fileType", v("cvFileType"), (value) => {
+        if (value && value instanceof FileList && value.length > 0) {
+          return allowedDocumentTypes.includes(value[0].type);
+        }
+        return false;
+      })
+      .test("fileSize", v("fileSizeLimit"), (value) => {
+        if (value && value instanceof FileList && value.length > 0) {
+          return value[0].size <= 5 * 1024 * 1024;
+        }
+        return false;
+      }),
+
+    coverLetterFile: Yup.mixed()
+      .nullable()
+      .test("fileType", v("coverLetterFileType"), (value) => {
+        if (value && value instanceof FileList && value.length > 0) {
+          return allowedDocumentTypes.includes(value[0].type);
+        }
+        return true;
+      })
+      .test("fileSize", v("fileSizeLimit"), (value) => {
+        if (value && value instanceof FileList && value.length > 0) {
+          return value[0].size <= 5 * 1024 * 1024;
+        }
+        return true;
+      }),
+  });
+
+  const resolver = yupResolver(
+    validationSchema
+  ) as unknown as Resolver<FormValues>;
 
   const {
     register,
@@ -74,8 +120,7 @@ export const ApplyForm: FC = () => {
     watch,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
-    // @ts-expect-error - Yup typing issue with FileList
-    resolver: yupResolver(validationSchema),
+    resolver,
     defaultValues: {
       fullName: "",
       email: "",
@@ -90,7 +135,6 @@ export const ApplyForm: FC = () => {
     },
   });
 
-  // Watch file inputs to display the chosen file names.
   const cvFile = watch("cvFile");
   const coverLetterFile = watch("coverLetterFile");
 
@@ -112,6 +156,7 @@ export const ApplyForm: FC = () => {
       if (data.coverLetterFile && data.coverLetterFile.length > 0) {
         formData.append("coverLetter", data.coverLetterFile[0]);
       }
+
       await postJobApplication(formData);
       toast.success(t("success"));
     } catch (error) {
@@ -136,6 +181,10 @@ export const ApplyForm: FC = () => {
               errors.fullName ? "border-red-500" : ""
             }`}
           />
+          {errors.fullName && (
+            <p className="text-red-500 text-xs">{errors.fullName.message}</p>
+          )}
+
           <Input
             {...register("email")}
             type="email"
@@ -144,6 +193,10 @@ export const ApplyForm: FC = () => {
               errors.email ? "border-red-500" : ""
             }`}
           />
+          {errors.email && (
+            <p className="text-red-500 text-xs">{errors.email.message}</p>
+          )}
+
           <Input
             {...register("telegramUsername")}
             type="text"
@@ -152,13 +205,18 @@ export const ApplyForm: FC = () => {
               errors.telegramUsername ? "border-red-500" : ""
             }`}
           />
+          {errors.telegramUsername && (
+            <p className="text-red-500 text-xs">
+              {errors.telegramUsername.message}
+            </p>
+          )}
+
           <JobRoleSelect
             control={control}
             name="jobRoleId"
             error={errors.jobRoleId?.message}
           />
 
-          {/* New Required Fields */}
           <Input
             {...register("referralSource")}
             type="text"
@@ -229,17 +287,16 @@ export const ApplyForm: FC = () => {
               <input
                 type="file"
                 accept=".pdf,.doc,.docx"
-                {...register("cvFile", { required: "CV is required" })}
+                {...register("cvFile")}
                 className="hidden"
               />
             </label>
             {errors.cvFile && (
               <p className="text-red-500 text-xs">{errors.cvFile.message}</p>
             )}
-            <p className="text-xs text-gray-500">
-              Allowed formats: PDF, DOC, DOCX
-            </p>
+            <p className="text-xs text-gray-500">{v("allowedFormats")}</p>
           </div>
+
           {/* File Input for Cover Letter */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">
@@ -267,10 +324,9 @@ export const ApplyForm: FC = () => {
                 {errors.coverLetterFile.message}
               </p>
             )}
-            <p className="text-xs text-gray-500">
-              Allowed formats: PDF, DOC, DOCX
-            </p>
+            <p className="text-xs text-gray-500">{v("allowedFormats")}</p>
           </div>
+
           <Button
             type="submit"
             disabled={isSubmitting}

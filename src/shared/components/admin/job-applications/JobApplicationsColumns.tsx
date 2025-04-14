@@ -1,6 +1,7 @@
 import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { JobApplication } from "@/api/requestsApi";
+import TruncatedText from "../TruncatedText";
 
 export const JobApplicationsColumns = (): ColumnDef<JobApplication>[] => [
   {
@@ -19,6 +20,50 @@ export const JobApplicationsColumns = (): ColumnDef<JobApplication>[] => [
     cell: ({ row }) => <div>{row.original.telegramUsername}</div>,
   },
   {
+    accessorKey: "jobRoleId",
+    header: "Job Role ID",
+    cell: ({ row }) => <div>{row.original.jobRoleId}</div>,
+  },
+  {
+    accessorKey: "referralSource",
+    header: "Referral Source",
+    cell: ({ row }) => (
+      <div>
+        <TruncatedText text={row.original.referralSource} maxLength={30} />
+      </div>
+    ),
+  },
+  {
+    accessorKey: "projectInterests",
+    header: "Project Interests",
+    cell: ({ row }) => (
+      <div>
+        <TruncatedText text={row.original.projectInterests} maxLength={30} />
+      </div>
+    ),
+  },
+  {
+    accessorKey: "skills",
+    header: "Skills",
+    cell: ({ row }) => (
+      <div>
+        <TruncatedText text={row.original.skills} maxLength={30} />
+      </div>
+    ),
+  },
+  {
+    accessorKey: "organizationInterest",
+    header: "Organization Interest",
+    cell: ({ row }) => (
+      <div>
+        <TruncatedText
+          text={row.original.organizationInterest}
+          maxLength={30}
+        />
+      </div>
+    ),
+  },
+  {
     accessorKey: "createdAt",
     header: "Creation Date",
     cell: ({ row }) => {
@@ -30,34 +75,26 @@ export const JobApplicationsColumns = (): ColumnDef<JobApplication>[] => [
     id: "cv",
     header: "CV",
     cell: ({ row }) => (
-      <div className="flex items-center gap-2">
-        <a
-          href={row.original.cvPath}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-600 hover:underline"
-        >
-          {row.original.cvOriginalName}
-        </a>
-      </div>
+      <a href={row.original.cvPath} target="_blank" rel="noopener noreferrer">
+        <div>{row.original.cvOriginalName}</div>
+      </a>
     ),
   },
   {
     id: "coverLetter",
     header: "Cover Letter",
     cell: ({ row }) => (
-      <div className="flex items-center gap-2">
+      <div>
         {row.original.coverLetterPath ? (
           <a
             href={row.original.coverLetterPath}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:underline"
           >
             {row.original.coverLetterOriginalName}
           </a>
         ) : (
-          <p>No</p>
+          <div>No</div>
         )}
       </div>
     ),

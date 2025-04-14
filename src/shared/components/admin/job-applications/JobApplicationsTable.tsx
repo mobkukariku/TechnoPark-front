@@ -34,10 +34,11 @@ export function JobApplicationsTable() {
   });
 
   return (
-    <div className="w-full">
-      <h2 className="mb-4 text-lg font-bold">Job Applications</h2>
+    <div className="space-y-4">
+      <h2 className="text-2xl font-bold">Job Applications</h2>
+
       {isLoading ? (
-        <div>Loading...</div>
+        <div className="p-4 text-center">Loading...</div>
       ) : (
         <div className="rounded-md border">
           <Table>
@@ -73,7 +74,7 @@ export function JobApplicationsTable() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={6} className="h-24 text-center">
+                  <TableCell colSpan={columns.length} className="text-center">
                     No results.
                   </TableCell>
                 </TableRow>

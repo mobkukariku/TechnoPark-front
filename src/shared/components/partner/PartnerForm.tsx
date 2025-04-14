@@ -1,6 +1,6 @@
 "use client";
 import { FC } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Resolver } from "react-hook-form";
 import { Button, Input } from "@/shared/ui";
 import { Toaster, toast } from "react-hot-toast";
 import { useTranslations } from "next-intl";
@@ -33,19 +33,41 @@ const allowedImageTypes = [
 
 const allowedFileTypes = [...allowedDocumentTypes, ...allowedImageTypes];
 
-const validationSchema = Yup.object().shape({
-  title: Yup.string().required("Title is required"),
-  description: Yup.string()
-    .min(10, "Description must be at least 10 characters")
-    .required("Description is required"),
-  senderName: Yup.string().required("Sender name is required"),
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  attachments: Yup.mixed()
-    .nullable()
-    .test(
-      "fileType",
-      "Files must be PDF, DOC, DOCX, PNG, JPG, JPEG, or WEBP",
-      (value) => {
+const MAX_FILES = 5;
+
+export const PartnerForm: FC = () => {
+  // Get translations
+  const t = useTranslations("partnerForm");
+  const d = useTranslations("joinUs");
+  const v = useTranslations("validation"); // Assuming we'll have a validation section later
+
+  // Create validation schema with translations
+  const validationSchema = Yup.object().shape({
+    title: Yup.string()
+      .required(v("titleRequired"))
+      .min(2, v("titleMinLength"))
+      .max(100, v("titleMaxLength"))
+      .matches(/^\S.*\S$/, v("noWhitespace")),
+
+    description: Yup.string()
+      .min(10, d("descriptionWarning"))
+      .max(500, v("descriptionMaxLength"))
+      .required(v("descriptionRequired")),
+
+    senderName: Yup.string()
+      .required(v("nameRequired"))
+      .min(2, v("nameMinLength"))
+      .max(100, v("nameMaxLength"))
+      .matches(/^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/, v("nameFormat")),
+
+    email: Yup.string()
+      .email(v("invalidEmail"))
+      .required(v("emailRequired"))
+      .max(255, v("emailMaxLength")),
+
+    attachments: Yup.mixed()
+      .nullable()
+      .test("fileType", v("fileTypesInvalid"), (value) => {
         if (value && value instanceof FileList && value.length > 0) {
           for (let i = 0; i < value.length; i++) {
             if (!allowedFileTypes.includes(value[i].type)) {
@@ -54,15 +76,27 @@ const validationSchema = Yup.object().shape({
           }
         }
         return true;
-      }
-    ),
-});
+      })
+      .test("fileSize", v("fileSizeLimit"), (value) => {
+        if (value && value instanceof FileList && value.length > 0) {
+          for (let i = 0; i < value.length; i++) {
+            if (value[i].size > 5 * 1024 * 1024) {
+              // 5MB in bytes
+              return false;
+            }
+          }
+        }
+        return true;
+      })
+      .test("fileCount", v("fileCountLimit"), (value) => {
+        return !(
+          value &&
+          value instanceof FileList &&
+          value.length > MAX_FILES
+        );
+      }),
+  });
 
-const MAX_FILES = 5;
-
-export const PartnerForm: FC = () => {
-  const t = useTranslations("partnerForm");
-  const d = useTranslations("joinUs");
   const {
     register,
     handleSubmit,
@@ -71,8 +105,7 @@ export const PartnerForm: FC = () => {
     formState: { errors, isSubmitting },
     setError,
   } = useForm<FormValues>({
-    // @ts-expect-error - Yup typing issue with FileList
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(validationSchema) as unknown as Resolver<FormValues>,
     defaultValues: {
       title: "",
       description: "",
@@ -80,7 +113,7 @@ export const PartnerForm: FC = () => {
       email: "",
       attachments: null,
     },
-    mode: "onChange",
+    // Removed mode: "onChange" to match ApplyForm behavior
   });
 
   const attachments = watch("attachments");
@@ -99,7 +132,7 @@ export const PartnerForm: FC = () => {
       if (invalidFiles.length > 0) {
         setError("attachments", {
           type: "manual",
-          message: "One or more files have an invalid format",
+          message: v("fileTypesInvalid"),
         });
         return;
       }
@@ -155,20 +188,20 @@ export const PartnerForm: FC = () => {
               errors.title ? "border-red-500" : ""
             }`}
           />
-          <div>
-            <textarea
-              {...register("description")}
-              placeholder={t("placeholderDescription")}
-              className={`w-full h-24 p-2 rounded-[4px] border border-gray-300 transition-colors ${
-                errors.description ? "border-red-500" : ""
-              }`}
-            />
-            {errors.description && (
-              <p className="text-red-500 text-xs">
-                {errors.description.message}
-              </p>
-            )}
-          </div>
+          {errors.title && (
+            <p className="text-red-500 text-xs">{errors.title.message}</p>
+          )}
+
+          <textarea
+            {...register("description")}
+            placeholder={t("placeholderDescription")}
+            className={`w-full h-24 p-2 rounded-[4px] border border-gray-300 transition-colors ${
+              errors.description ? "border-red-500" : ""
+            }`}
+          />
+          {errors.description && (
+            <p className="text-red-500 text-xs">{errors.description.message}</p>
+          )}
 
           <Input
             {...register("senderName")}
@@ -178,6 +211,10 @@ export const PartnerForm: FC = () => {
               errors.senderName ? "border-red-500" : ""
             }`}
           />
+          {errors.senderName && (
+            <p className="text-red-500 text-xs">{errors.senderName.message}</p>
+          )}
+
           <Input
             {...register("email")}
             type="email"
@@ -186,14 +223,15 @@ export const PartnerForm: FC = () => {
               errors.email ? "border-red-500" : ""
             }`}
           />
+          {errors.email && (
+            <p className="text-red-500 text-xs">{errors.email.message}</p>
+          )}
 
-          {/* File Input for Attachments */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">
               {d("uploadAttachments")}
             </label>
             <div className="flex flex-col gap-2 border rounded-[8px] px-4 py-2">
-              {/* Display file chips if any are selected */}
               {attachments && attachments.length > 0 && (
                 <div className="flex flex-wrap gap-2">
                   {Array.from(attachments).map((file, index) => (
@@ -215,7 +253,6 @@ export const PartnerForm: FC = () => {
                   ))}
                 </div>
               )}
-              {/* Only show the "Choose file(s)" label if fewer than MAX_FILES are selected */}
               {(!attachments || attachments.length < MAX_FILES) && (
                 <label
                   className={`block cursor-pointer text-center rounded py-1 transition-colors ${
@@ -235,8 +272,7 @@ export const PartnerForm: FC = () => {
                 </label>
               )}
               <p className="text-xs text-gray-500">
-                Allowed formats: PDF, DOC, DOCX, PNG, JPG, JPEG, WEBP (Max:{" "}
-                {MAX_FILES} files)
+                {v("allowedFormats")} (Max: {MAX_FILES} files)
               </p>
             </div>
             {errors.attachments && (
