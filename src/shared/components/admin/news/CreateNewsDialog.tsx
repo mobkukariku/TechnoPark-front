@@ -76,7 +76,7 @@ export const CreateNewsDialog: FC = () => {
           Добавить
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[1000px]">
+      <DialogContent className="max-w-[1000px] max-h-[600px]">
         <DialogHeader>
           <DialogTitle className="font-bold text-[32px] text-center">
             Создать новость
