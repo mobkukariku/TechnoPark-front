@@ -38,7 +38,7 @@ export const LangSelect: FC = () => {
       <SelectContent className={"z-[80]"}>
         <SelectItem value="en">🇬🇧 EN</SelectItem>
         <SelectItem value="ru">🇷🇺 RU</SelectItem>
-        <SelectItem value="kz">kz KZ</SelectItem>
+        <SelectItem value="kz">🇰🇿 KZ</SelectItem>
       </SelectContent>
     </Select>
   );
