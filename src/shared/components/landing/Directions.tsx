@@ -36,18 +36,21 @@ export const Directions: FC = () => {
         {[
           {
             directionImage: "/landing/hardware.svg",
+            directionPicture: "/landing/hard.png",
             title: t("hardware.title"),
             description: t("hardware.description"),
             link: "/hardware",
           },
           {
             directionImage: "/landing/software.svg",
+            directionPicture: "/landing/soft.png",
             title: t("software.title"),
             description: t("software.description"),
             link: "/software",
           },
           {
             directionImage: "/landing/software.svg",
+            directionPicture: "/landing/data.png",
             title: t("dataScience.title"),
             description: t("dataScience.description"),
             link: "/data-science",
@@ -65,7 +68,7 @@ export const Directions: FC = () => {
             >
               <DirectionCard
                 directionImage={item.directionImage}
-                image="https://www.figma.com/file/6gbT120loIYOOu4SHCmIli/image/2c77b164a259775e39ad5975d431db95eb332cfc"
+                image={item.directionPicture}
                 title={item.title}
                 description={item.description}
                 link={item.link}

@@ -23,7 +23,9 @@ export const CampusToor: FC = () => {
       >
         <p className="font-bold text-2xl sm:text-3xl">{t("title")}</p>
         <span className="text-lg sm:text-xl">{t("description")}</span>
-        <Button className="w-full sm:w-fit">{t("button")}</Button>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLScK6OE0zBHXVJwjGlZ6IaIeAFLUUVZCwPUcbfnQ42hz8_muzA/viewform">
+              <Button  className="w-full sm:w-fit">{t("button")}</Button>
+          </a>
       </motion.div>
     </Container>
   );
