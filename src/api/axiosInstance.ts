@@ -1,13 +1,14 @@
 import axios from "axios";
 
+const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const timeout = parseInt(process.env.NEXT_PUBLIC_API_TIMEOUT || '10000');
+
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api",
-  // Remove the default Content-Type header
+  baseURL,
   // headers: { "Content-Type": "application/json" },
   withCredentials: true,
-  timeout: 10000,
+  timeout,
 });
-
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
