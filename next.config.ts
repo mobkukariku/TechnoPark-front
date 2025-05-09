@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
             'www.figma.com',
             'letsenhance.io',
             'localhost',
-            'localhost:5000'
+            'sdutechnopark.kz'
         ],
     },
     reactStrictMode: false,
