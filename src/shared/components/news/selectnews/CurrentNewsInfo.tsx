@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect, useState } from "react"; // Import useState
+import { FC, useEffect } from "react"; // Import useState
 import { Container } from "@/shared/components";
 import { NewsSideBar } from "@/shared/components/news/selectnews";
 import Image from "next/image";
@@ -7,17 +7,12 @@ import useNewsStore from "@/store/useNewsStore";
 import { CurrentNewsSkeleton } from "@/shared/components/news/selectnews/CurrentNewsSkeleton";
 import { motion, AnimatePresence } from "framer-motion";
 
-import placeholderImage from "C:/codingProjects/TechnoparkSite/Current TechnoPark-front/TechnoPark-front/public/placeholder.webp";
-
 export const CurrentNewsInfo: FC<{
   newsId: string | Array<string> | undefined;
 }> = ({ newsId }) => {
   const { currentNews, setCurrentNews, isLoading } = useNewsStore();
-  const [imageLoadError, setImageLoadError] = useState(false); // State to track image load error
-
   useEffect(() => {
     setCurrentNews(newsId as string | undefined);
-    setImageLoadError(false); // Reset error state when newsId changes
   }, [newsId, setCurrentNews]);
 
   const formatDate = (date?: string) => {
@@ -25,7 +20,7 @@ export const CurrentNewsInfo: FC<{
     return new Date(date).toLocaleDateString("ru-RU");
   };
 
-  const imageSrc = currentNews?.imageURL || placeholderImage;
+  const imageSrc = currentNews?.imageURL;
 
   return (
     <Container className={"mb-[200px]"}>
@@ -67,16 +62,17 @@ export const CurrentNewsInfo: FC<{
                                       aspect-video
                                       overflow-hidden rounded-[8px]"
                   >
-                    <Image
-                      src={imageLoadError ? placeholderImage : imageSrc} // Use placeholder on error
-                      alt={currentNews.title || "Новостное изображение"}
-                      fill
-                      quality={100}
-                      priority
-                      className="object-cover w-full h-full"
-                      sizes="(max-width: 500px) 100vw, (max-width: 812px) 569px, 813px"
-                      onError={() => setImageLoadError(true)} // Set error state on load failure
-                    />
+                    {imageSrc && (
+                        <Image
+                            src={imageSrc} // Use placeholder on error
+                            alt={currentNews.title || "Новостное изображение"}
+                            fill
+                            quality={100}
+                            priority
+                            className="object-cover w-full h-full"
+                            sizes="(max-width: 500px) 100vw, (max-width: 812px) 569px, 813px"
+                        />
+                    )}
                   </motion.div>
 
                   <motion.div
