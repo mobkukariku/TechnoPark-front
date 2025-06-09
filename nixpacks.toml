@@ -1,0 +1,14 @@
+[build]
+nixpkgs = ["nodejs_18", "openssl", "pkg-config"]
+
+[phases.setup]
+nixPkgs = ["nodejs_18"]
+
+[phases.install]
+cmds = ["npm install --legacy-peer-deps"]
+
+[phases.build]
+cmds = ["npm run build"]
+
+[start]
+cmd = "npm run start"
